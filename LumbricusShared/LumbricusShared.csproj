@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TwoWholeWorms.Lumbricus.Shared</RootNamespace>
+    <AssemblyName>LumbricusShared</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.6\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="SocketState.cs" />
+    <Compile Include="Utilities\CoreAssembly.cs" />
+    <Compile Include="IrcConnection.cs" />
+    <Compile Include="Plugins\Core\TrackUserPlugin.cs" />
+    <Compile Include="Plugins\Core\TrackBanPlugin.cs" />
+    <Compile Include="Plugins\Core\TrackKickPlugin.cs" />
+    <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\Ban.cs" />
+    <Compile Include="Model\Channel.cs" />
+    <Compile Include="Model\Log.cs" />
+    <Compile Include="Model\Nick.cs" />
+    <Compile Include="Model\Seen.cs" />
+    <Compile Include="Model\Server.cs" />
+    <Compile Include="IrcCommand.cs" />
+    <Compile Include="IrcLine.cs" />
+    <Compile Include="AbstractCommand.cs" />
+    <Compile Include="Plugins\Core\HelpPlugin.cs" />
+    <Compile Include="Plugins\Core\Commands\Help.cs" />
+    <Compile Include="Plugins\Core\Commands\Seen.cs" />
+    <Compile Include="Plugins\Core\SeenPlugin.cs" />
+    <Compile Include="Model\SeenAccount.cs" />
+    <Compile Include="Model\SeenNick.cs" />
+    <Compile Include="Model\ISeen.cs" />
+    <Compile Include="Plugins\AbstractPlugin.cs" />
+    <Compile Include="LumbricusContext.cs" />
+    <Compile Include="LumbricusConfiguration.cs" />
+    <Compile Include="PluginConfigurationElement.cs" />
+    <Compile Include="PluginConfigCollection.cs" />
+    <Compile Include="Model\Setting.cs" />
+    <Compile Include="PluginSettingsCollection.cs" />
+    <Compile Include="PluginSettingElement.cs" />
+    <Compile Include="Plugins\Attributes.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Utilities\" />
+    <Folder Include="Plugins\" />
+    <Folder Include="Plugins\Core\" />
+    <Folder Include="Model\" />
+    <Folder Include="Plugins\Core\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
