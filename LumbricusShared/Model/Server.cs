@@ -11,30 +11,30 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         #region Database members
         [Key]
-        public long     Id              { get; protected set; }
+        public long     Id              { get; set; }
 
         [Required]
-        public string   Host            { get; protected set; }
+        public string   Host            { get; set; }
         [Required]
-        public int      Port            { get; protected set; }
+        public int      Port            { get; set; }
         [Required]
-        public string   BotNick         { get; protected set; }
+        public string   BotNick         { get; set; }
         [Required]
-        public string   BotUserName     { get; protected set; }
+        public string   BotNickPassword { get; set; }
         [Required]
-        public string   BotNickPassword { get; protected set; }
+        public string   BotUserName     { get; set; }
         [Required]
-        public string   BotRealName     { get; protected set; }
+        public string   BotRealName     { get; set; }
         [Required]
-        public string   NickServNick    { get; protected set; }
+        public string   NickServNick    { get; set; }
         [Required]
-        public string   NickServHost    { get; protected set; }
+        public string   NickServHost    { get; set; }
 
-        public bool     AutoConnect     { get; protected set; } = true;
-        public bool     IsActive        { get; protected set; } = true;
-        public bool     IsDeleted       { get; protected set; } = false;
-        public DateTime CreatedAt       { get; protected set; } = DateTime.Now;
-        public DateTime LastModifiedAt  { get; protected set; } = DateTime.Now;
+        public bool     AutoConnect     { get; set; } = true;
+        public bool     IsActive        { get; set; } = true;
+        public bool     IsDeleted       { get; set; } = false;
+        public DateTime CreatedAt       { get; set; } = DateTime.Now;
+        public DateTime LastModifiedAt  { get; set; } = DateTime.Now;
         #endregion Database members
 
         protected List<Channel> channels = new List<Channel>();

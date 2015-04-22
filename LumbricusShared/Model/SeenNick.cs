@@ -12,10 +12,10 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         #region Database members
         [Key]
         [Required]
-        [ForeignKey("Nick")]
         public long NickId { get; set; }
 
         [Required]
+        [ForeignKey("NickId")]
         public virtual Nick    Nick    { get; set; }
 
         [Required]

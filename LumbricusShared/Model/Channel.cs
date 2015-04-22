@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Model
@@ -11,19 +12,25 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         
         #region Database members
         [Key]
-        public long     Id                     { get; protected set; }
+        public long     Id                     { get; set; }
 
         [Required]
-        public string   Name                   { get; protected set; }
+        public long     ServerId               { get; set; }
 
-        public DateTime CreatedAt              { get; protected set; } = DateTime.Now;
-        public DateTime LastModifiedAt         { get; protected set; } = DateTime.Now;
-        public bool     IsActive               { get; protected set; } = true;
-        public bool     IsDeleted              { get; protected set; } = false;
-        public bool     AutoJoin               { get; protected set; } = true;
-        public bool     AllowCommandsInChannel { get; protected set; } = false;
+        [Required]
+        [ForeignKey("ServerId")]
+        public virtual  Server Server          { get; set; }
+        
+        [Required]
+        public string   Name                   { get; set; }
 
-        public virtual Server Server { get; protected set; }
+        public bool     AutoJoin               { get; set; } = true;
+        public bool     AllowCommandsInChannel { get; set; } = false;
+
+        public DateTime CreatedAt              { get; set; } = DateTime.Now;
+        public DateTime LastModifiedAt         { get; set; } = DateTime.Now;
+        public bool     IsActive               { get; set; } = true;
+        public bool     IsDeleted              { get; set; } = false;
         #endregion Database members
 
         public List<Nick> Nicks = new List<Nick>();
