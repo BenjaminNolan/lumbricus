@@ -9,8 +9,8 @@ directory.
 
 ## Quick start
 
-Create a database in your favourite rDBMS system and grant at least SELECT,
-INSERT, UPDATE and DELETE on it to a user and password of your choosing.
+Create a database in your favourite rDBMS system and grant at least `SELECT`,
+`INSERT`, `UPDATE` and `DELETE` on it to a user and password of your choosing.
 Import the appropriate schema file from `db/schemata/` into your new DB.
 
     cd /path/to/where/you/want/lumbricus/to/live
@@ -18,7 +18,7 @@ Import the appropriate schema file from `db/schemata/` into your new DB.
     cd lumbricus
     xbuild /p:Configuration=Release Lumbricus.sln
 
-Edit Lumbricus/bin/Release/Lumbricus.exe.config and configure the database
+Edit `Lumbricus/bin/Release/Lumbricus.exe.config` and configure the database
 connection strings to point at your database server, etc.
 
 Now run this command:
