@@ -1,9 +1,0 @@
-﻿<Properties StartupItem="Lumbricus/Lumbricus.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <AuthorInfo Name="Benjamin Nolan (TwoWholeWorms)" Email="ben@ben.mu" Copyright="2015 Benjamin Nolan" Company="" Trademark="" />
-</Properties>
