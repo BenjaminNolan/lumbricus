@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TwoWholeWorms.Lumbricus.Shared;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Model
@@ -11,10 +12,29 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 	{
         #region Database members
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long     Id             { get; set; }
 
         [Required]
+        [ForeignKey("Server")]
+        public long ServerId { get; set; }
+        public virtual  Server Server  { get; set; }
+        
+        [Required]
         public string   Name           { get; set; }
+        public string   UserName       { get; set; }
+        public string   Host           { get; set; }
+
+        [ForeignKey("PrimaryNick")]
+        public long PrimaryNickId { get; set; }
+        public virtual Nick   PrimaryNick { get; set; }
+        
+        public DateTime FirstSeenAt    { get; set; } = DateTime.Now;
+        public DateTime LastSeenAt     { get; set; } = DateTime.Now;
+        
+        [ForeignKey("ChannelLastSeenIn")]
+        public long ChannelLastSeenInId { get; set; }
+        public virtual Channel ChannelLastSeenIn { get; set; }
 
         public bool     IsActive       { get; set; } = true;
         public bool     IsDeleted      { get; set; } = false;
@@ -22,9 +42,6 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public DateTime LastModifiedAt { get; set; } = DateTime.Now;
         public bool     IsOp           { get; set; } = false;
         
-        public virtual Server Server      { get; set; }
-        public virtual Nick   PrimaryNick { get; set; }
-
         public virtual List<Nick> Nicks { get; set; }
         #endregion Database members
 
@@ -102,7 +119,14 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
             return account;
         }
 
-        public static Account Fetch(long accountId, Server server)
+        public static Account FetchByNickId(long nickId)
+        {
+            return (from a in LumbricusContext.db.Accounts
+                where a.PrimaryNick != null && a.PrimaryNick.Id == nickId
+                select a).FirstOrDefault();
+        }
+
+        public static Account Fetch(long accountId)
         {
             if (accountId < 1) return null;
 

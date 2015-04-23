@@ -36,7 +36,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                     c = conn.Server.Channels.FirstOrDefault(x => x.Name == line.Target);
                     if (c != null) {
                         c.AddNick(nick);
-                        nick.User = line.User;
+                        nick.UserName = line.User;
                         nick.Host = line.Host;
                         if (nick.Account != null) {
                             conn.Server.AddAccount(nick.Account);
@@ -67,7 +67,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                         foreach (Channel channel in nick.channels) {
                             newNick.AddChannel(channel);
                         }
-                        newNick.User = line.User;
+                        newNick.UserName = line.User;
                         newNick.Host = line.Host;
                         conn.Server.AddNick(newNick);
                         if (nick.Account != null && newNick.Account != null && nick.Account.Id != newNick.Account.Id) {

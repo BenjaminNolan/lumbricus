@@ -17,8 +17,6 @@ namespace TwoWholeWorms.Lumbricus.Shared
         public DbSet<Channel>     Channels     { get; set; }
         public DbSet<Log>         Logs         { get; set; }
         public DbSet<Nick>        Nicks        { get; set; }
-        public DbSet<SeenAccount> SeenAccounts { get; set; }
-        public DbSet<SeenNick>    SeenNicks    { get; set; }
         public DbSet<Server>      Servers      { get; set; }
         public DbSet<Setting>     Settings     { get; set; }
 

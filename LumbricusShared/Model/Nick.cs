@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
@@ -11,22 +12,37 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         #region Database members
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long     Id             { get; set; }
 
+        [Required]
+        [ForeignKey("Server")]
+        public long ServerId { get; set; }
+        public virtual  Server Server  { get; set; }
+        
         [Required]
         public string   Name           { get; set; }
         [Required]
         public string   DisplayNick    { get; set; }
 
+        public string   UserName       { get; set; }
+        public string   Host           { get; set; }
+
+        [ForeignKey("Account")]
+        public long AccountId { get; set; }
+        public virtual Account Account { get; set; }
+
+        public DateTime FirstSeenAt    { get; set; } = DateTime.Now;
+        public DateTime LastSeenAt     { get; set; } = DateTime.Now;
+
+        [ForeignKey("ChannelLastSeenIn")]
+        public long ChannelLastSeenInId { get; set; }
+        public virtual Channel ChannelLastSeenIn { get; set; }
+
         public bool     IsActive       { get; set; } = true;
         public bool     IsDeleted      { get; set; } = false;
         public DateTime CreatedAt      { get; set; } = DateTime.Now;
         public DateTime LastModifiedAt { get; set; } = DateTime.Now;
-        public string   User           { get; set; }
-        public string   Host           { get; set; }
-
-        public virtual Server Server { get; set; }
-        public virtual Account Account { get; set; }
         #endregion Database members
 
         public List<Channel> channels = new List<Channel>();
@@ -98,6 +114,13 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
             return (from n in LumbricusContext.db.Nicks
                 where n.Id == nickId
                 select n).FirstOrDefault();
+        }
+
+        public static IQueryable<Nick> FetchByAccountId(long accountId)
+        {
+            return (from n in LumbricusContext.db.Nicks
+                where n.Account != null && n.Account.Id == accountId
+                select n);
         }
 
         public static Nick Fetch(string nickName, Server server)

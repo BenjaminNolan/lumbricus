@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
@@ -11,6 +12,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         #region Database members
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long     Id              { get; set; }
 
         [Required]

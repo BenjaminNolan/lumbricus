@@ -39,7 +39,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
         public delegate void ProcessIrcLineDelegate(IrcConnection conn, IrcLine line);
         public ProcessIrcLineDelegate ProcessIrcLine;
 
-        public Dictionary<string, AbstractCommand> Commands;
+        public Dictionary<string, AbstractCommand> Commands = new Dictionary<string, AbstractCommand>();
 
         public LumbricusConfiguration Config;
 
@@ -312,7 +312,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 if (ircNick == null) {
                     throw new Exception(String.Format("Unable to fetch or create nick `{0}`", nick));
                 }
-                ircNick.User = user;
+                ircNick.UserName = user;
                 ircNick.Host = host;
                 if (ircAccount != null && ircNick.Account == null) {
                     ircNick.Account = ircAccount;
@@ -515,8 +515,8 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
         static bool CheckBans(Nick nick, Account account, string user, string host)
         {
-            if (string.IsNullOrEmpty(nick.User)) {
-                nick.User = user;
+            if (string.IsNullOrEmpty(nick.UserName)) {
+                nick.UserName = user;
             }
             if (string.IsNullOrEmpty(nick.Host)) {
                 nick.Host = host;

@@ -12,13 +12,12 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         
         #region Database members
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long     Id                     { get; set; }
 
         [Required]
-        public long     ServerId               { get; set; }
-
-        [Required]
-        [ForeignKey("ServerId")]
+        [ForeignKey("Server")]
+        public long ServerId { get; set; }
         public virtual  Server Server          { get; set; }
         
         [Required]

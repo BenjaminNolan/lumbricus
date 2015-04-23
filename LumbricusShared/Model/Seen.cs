@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
 
-    public class Seen : ISeen
+    // Slightly hacky pseudo-model to join together seen data from Account and Nick and save it back to both tables
+    public class Seen
 	{
 
-        public virtual Account Account { get; set; }
-        public virtual Channel Channel { get; set; }
-        public virtual Nick    Nick    { get; set; }
-        public virtual Server  Server  { get; set; }
+        public Account Account { get; set; }
+        public Channel Channel { get; set; }
+        public Nick    Nick    { get; set; }
+        public Server  Server  { get; set; }
 
         public DateTime FirstSeenAt { get; set; } = DateTime.Now;
         public DateTime LastSeenAt  { get; set; } = DateTime.Now;
@@ -18,102 +21,112 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         {
         }
 
-        public Seen(ISeen seenOne, ISeen seenTwo)
+        public Seen(Nick nick = null, Account account = null, Channel channel = null)
         {
-            if (seenOne != null && seenOne.Account != null) {
-                Account = seenOne.Account;
-            } else if (seenTwo != null && seenTwo.Account != null) {
-                Account = seenTwo.Account;
+            if (nick == null && account == null) {
+                return;
             }
-            if (seenOne != null && seenOne.Channel != null) {
-                Channel = seenOne.Channel;
-            } else if (seenTwo != null && seenTwo.Channel != null) {
-                Channel = seenTwo.Channel;
+
+            if (account == null && nick.Account != null) {
+                account = nick.Account;
             }
-            if (seenOne != null && seenOne.Nick != null) {
-                Nick = seenOne.Nick;
-            } else if (seenTwo != null && seenTwo.Nick != null) {
-                Nick = seenTwo.Nick;
+            if (nick == null && account.PrimaryNick != null) {
+                nick = account.PrimaryNick;
             }
-            if (seenOne != null && seenOne.Server != null) {
-                Server = seenOne.Server;
-            } else if (seenTwo != null && seenTwo.Server != null) {
-                Server = seenTwo.Server;
-            }
-            if (seenOne != null) {
-                FirstSeenAt = seenOne.FirstSeenAt;
-                if (seenTwo != null && seenTwo.FirstSeenAt < FirstSeenAt) {
-                    FirstSeenAt = seenTwo.FirstSeenAt;
+            if (channel == null) {
+                if (nick != null && nick.ChannelLastSeenIn != null) {
+                    channel = nick.ChannelLastSeenIn;
+                } else if (account != null && account.ChannelLastSeenIn != null) {
+                    channel = account.ChannelLastSeenIn;
                 }
-            } else if (seenTwo != null) {
-                FirstSeenAt = seenTwo.FirstSeenAt;
             }
-            if (seenOne != null) {
-                LastSeenAt = seenOne.LastSeenAt;
-                if (seenTwo != null && seenTwo.LastSeenAt < LastSeenAt) {
-                    LastSeenAt = seenTwo.LastSeenAt;
+
+            Account = account;
+            Nick = nick;
+            Channel = channel;
+
+            Server = nick?.Server ?? account?.Server ?? channel?.Server;
+
+            if (nick != null) {
+                FirstSeenAt = nick.FirstSeenAt;
+                if (account != null && account.FirstSeenAt < FirstSeenAt) {
+                    FirstSeenAt = account.FirstSeenAt;
                 }
-            } else if (seenTwo != null) {
-                LastSeenAt = seenTwo.LastSeenAt;
+            } else if (account != null) {
+                FirstSeenAt = account.FirstSeenAt;
+            }
+            if (nick != null) {
+                LastSeenAt = nick.LastSeenAt;
+                if (account != null && account.LastSeenAt < LastSeenAt) {
+                    LastSeenAt = account.LastSeenAt;
+                }
+            } else if (account != null) {
+                LastSeenAt = account.LastSeenAt;
             }
         }
 
         public static Seen FetchByAccountId(long accountId)
         {
-            SeenNick seenNick = SeenNick.FetchByAccountId(accountId);
-            SeenAccount seenAccount = SeenAccount.FetchByAccountId(accountId);
+            List<Nick> nicks = Nick.FetchByAccountId(accountId).ToList();
+            Account account = Account.Fetch(accountId);
 
-            return new Seen(seenNick, seenAccount);
+            Nick nick = nicks.FirstOrDefault();
+            return new Seen(nick, account);
         }
 
         public static Seen FetchByNickId(long nickId)
         {
-            SeenNick seenNick = SeenNick.FetchByNickId(nickId);
-            SeenAccount seenAccount = SeenAccount.FetchByNickId(nickId);
+            Nick nick = Nick.Fetch(nickId);
+            Account account = Account.FetchByNickId(nickId);
 
-            return new Seen(seenNick, seenAccount);
+            return new Seen(nick, account);
         }
 
         public static Seen Fetch(Nick nick)
         {
-            SeenNick seenNick = SeenNick.Fetch(nick);
-            SeenAccount seenAccount = SeenAccount.Fetch(nick);
+            if (nick == null) return null;
 
-            return new Seen(seenNick, seenAccount);
+            Account account = Account.FetchByNickId(nick.Id);
+
+            return new Seen(nick, account);
         }
 
         public static Seen Fetch(Account account)
         {
-            SeenNick seenNick = SeenNick.Fetch(account);
-            SeenAccount seenAccount = SeenAccount.Fetch(account);
+            if (account == null) return null;
 
-            return new Seen(seenNick, seenAccount);
+            List<Nick> nicks = Nick.FetchByAccountId(account.Id).ToList();
+            Nick nick = nicks.FirstOrDefault();
+
+            return new Seen(nick, account);
         }
 
         public void Save()
         {
             if (Account != null) {
-                SeenAccount seenAccount = LumbricusContext.db.SeenAccounts.Create();
-                seenAccount.Account     = Account;
-                seenAccount.Channel     = Channel;
-                seenAccount.FirstSeenAt = FirstSeenAt;
-                seenAccount.LastSeenAt  = LastSeenAt;
-                seenAccount.Nick        = Nick;
-                seenAccount.Server      = Server;
+                Account.ChannelLastSeenIn = Channel;
+                Account.FirstSeenAt       = FirstSeenAt;
+                Account.LastSeenAt        = LastSeenAt;
+                Account.PrimaryNick       = Nick;
 
-                LumbricusContext.db.SeenAccounts.Attach(seenAccount);
+                try {
+                    LumbricusContext.db.Accounts.Attach(Account);
+                } catch (Exception e) {
+                    // …
+                }
                 LumbricusContext.db.SaveChanges();
             }
             if (Nick != null) {
-                SeenNick seenNick = LumbricusContext.db.SeenNicks.Create();
-                seenNick.Nick        = Nick;
-                seenNick.Channel     = Channel;
-                seenNick.FirstSeenAt = FirstSeenAt;
-                seenNick.LastSeenAt  = LastSeenAt;
-                seenNick.Account     = Account;
-                seenNick.Server      = Server;
+                Nick.ChannelLastSeenIn = Channel;
+                Nick.FirstSeenAt = FirstSeenAt;
+                Nick.LastSeenAt  = LastSeenAt;
+                Nick.Account     = Account;
 
-                LumbricusContext.db.SeenNicks.Attach(seenNick);
+                try {
+                    LumbricusContext.db.Nicks.Attach(Nick);
+                } catch (Exception e) {
+                    // …
+                }
                 LumbricusContext.db.SaveChanges();
             }
         }

@@ -37,11 +37,12 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
             Channel ircChannel = conn.Server.Channels.FirstOrDefault(x => x.Name == line.Target.ToLower());
 
             Log log = Log.Create();
+            log.Server = conn.Server;
             log.Nick = nick;
+            log.Account = nick?.Account;
             log.Channel = ircChannel;
             log.IrcCommand = line.IrcCommand.ToEnum<IrcCommand>();
-            log.Server = conn.Server;
-            log.Trail =line.Trail;
+            log.Trail = line.Trail;
             log.Line = line.RawLine;
             log.Save();
         }

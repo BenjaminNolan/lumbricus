@@ -2,28 +2,46 @@
 using System.Linq;
 using TwoWholeWorms.Lumbricus.Shared;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
-    
+
+    /**
+     * @TODO Extend this to capture everything extracted in the regex in IrcConnection
+     */
     public class Log
     {
 
         #region Database members
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long       Id         { get; set; }
 
         [Required]
-        public IrcCommand IrcCommand { get; set; }
+        [ForeignKey("Server")]
+        public long ServerId { get; set; }
+        public virtual Server Server { get; set; }
+        
+        [ForeignKey("Nick")]
+        public long NickId { get; set; }
+        public virtual Nick Nick { get; set; }
 
-        public DateTime   LoggedAt   { get; set; } = DateTime.Now;
+        [ForeignKey("Account")]
+        public long AccountId { get; set; }
+        public virtual Account Account { get; set; }
+
+        [ForeignKey("Channel")]
+        public long ChannelId { get; set; }
+        public virtual Channel Channel { get; set; }
+
+        [Required]
+        public IrcCommand IrcCommand { get; set; }
+        
         public string     Trail      { get; set; }
         public string     Line       { get; set; }
-
-        public virtual Account Account { get; set; }
-        public virtual Channel Channel { get; set; }
-        public virtual Nick    Nick    { get; set; }
-        public virtual Server  Server  { get; set; }
+        
+        public DateTime   LoggedAt   { get; set; } = DateTime.Now;
         #endregion Database members
 
         public static Log Fetch(long id)
@@ -103,12 +121,14 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public static Log Create()
         {
             Log log = LumbricusContext.db.Logs.Create();
-            LumbricusContext.db.Logs.Attach(log);
             return log;
         }
 
         public void Save()
         {
+            if (!LumbricusContext.db.Logs.Contains(this)) {
+                LumbricusContext.db.Logs.Attach(this);
+            }
             LumbricusContext.db.SaveChanges();
         }
 
