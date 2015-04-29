@@ -30,8 +30,8 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
             if (account == null && nick.Account != null) {
                 account = nick.Account;
             }
-            if (nick == null && account.PrimaryNick != null) {
-                nick = account.PrimaryNick;
+            if (nick == null && account.MostRecentNick != null) {
+                nick = account.MostRecentNick;
             }
             if (channel == null) {
                 if (nick != null && nick.ChannelLastSeenIn != null) {
@@ -107,11 +107,11 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                 Account.ChannelLastSeenIn = Channel;
                 Account.FirstSeenAt       = FirstSeenAt;
                 Account.LastSeenAt        = LastSeenAt;
-                Account.PrimaryNick       = Nick;
+                Account.MostRecentNick       = Nick;
 
                 try {
                     LumbricusContext.db.Accounts.Attach(Account);
-                } catch (Exception e) {
+                    } catch (Exception e) {
                     // …
                 }
                 LumbricusContext.db.SaveChanges();
@@ -124,7 +124,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
                 try {
                     LumbricusContext.db.Nicks.Attach(Nick);
-                } catch (Exception e) {
+                    } catch (Exception e) {
                     // …
                 }
                 LumbricusContext.db.SaveChanges();

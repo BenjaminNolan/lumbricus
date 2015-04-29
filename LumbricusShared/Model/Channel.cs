@@ -15,12 +15,13 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long     Id                     { get; set; }
 
+        public long     ServerId              { get; set; }
         [Required]
-        [ForeignKey("Server")]
-        public long ServerId { get; set; }
-        public virtual  Server Server          { get; set; }
+        [ForeignKey("Id")]
+        public  Server  Server                 { get; set; }
         
         [Required]
+        [MaxLength(128)]
         public string   Name                   { get; set; }
 
         public bool     AutoJoin               { get; set; } = true;
@@ -96,9 +97,10 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static Channel Create(string channelName, Server server)
         {
-            Channel channel = LumbricusContext.db.Channels.Create();
-            channel.Name = channelName;
-            channel.Server = server;
+            Channel channel = new Channel() {
+                Name = channelName,
+                Server = server,
+            };
 
             LumbricusContext.db.Channels.Attach(channel);
             LumbricusContext.db.SaveChanges();

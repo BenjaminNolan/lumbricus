@@ -28,7 +28,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
         {
             try {
                 if (nick.Account == null || (!isOp(nick) && (nick.Account != null && !nick.Account.IsOp))) {
-                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but that command doesn't exist. Try !help.", nick.DisplayNick));
+                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but that command doesn't exist. Try !help.", nick.DisplayName));
                     return;
                 }
 
@@ -40,7 +40,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
                 Regex r = new Regex(@"^!searchlog ?");
                 line.Args = r.Replace(line.Args, "").Trim();
                 if (line.Args.Length <= 0) { // Whaaaat??
-                    conn.SendPrivmsg(target, String.Format("Usage(1): !searchlog <search> - search examples: id:1 nick:{0} $a:{1}, #lumbricus, \"Magnus Magnusson\"", nick.DisplayNick, nick.Account.Name));
+                    conn.SendPrivmsg(target, String.Format("Usage(1): !searchlog <search> - search examples: id:1 nick:{0} $a:{1}, #lumbricus, \"Magnus Magnusson\"", nick.DisplayName, nick.Account.Name));
                 } else {
                     string[] argBits;
                     string search = line.Args;
@@ -49,14 +49,14 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
 
                     if (line.Args.StartsWith("id:")) {
                         if (line.Args.Contains(" ")) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: ID searches cannot contain spaces.", nick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: ID searches cannot contain spaces.", nick.DisplayName));
                             return;
                         }
                         argBits = line.Args.Split(':');
                         search = argBits[1];
                         Int64.TryParse(search, out searchId);
                         if (searchId < 1) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: ID must be > 0.", nick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: ID must be > 0.", nick.DisplayName));
                             return;
                         }
                         searchType = "id";
@@ -64,7 +64,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
 
                     if (line.Args.StartsWith("nick:")) {
                         if (line.Args.Contains(" ")) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Nick searches cannot contain spaces.", nick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Nick searches cannot contain spaces.", nick.DisplayName));
                             return;
                         }
                         argBits = line.Args.Split(':');
@@ -74,7 +74,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
 
                     if (line.Args.StartsWith("$a:")) {
                         if (line.Args.Contains(" ")) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Account searches cannot contain spaces.", nick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Account searches cannot contain spaces.", nick.DisplayName));
                             return;
                         }
                         argBits = line.Args.Split(':');
@@ -84,7 +84,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
 
                     if (line.Args.StartsWith("#")) {
                         if (line.Args.Contains(" ")) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Channel searches cannot contain spaces.", nick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Channel searches cannot contain spaces.", nick.DisplayName));
                             return;
                         }
                         search = line.Args;
@@ -93,12 +93,12 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
 
                     if (searchType == "string") {
                         if (!line.Args.StartsWith("\"") || !line.Args.EndsWith("\"") || line.Args.Count(f => f == '\"') != 2) {
-                            conn.SendPrivmsg(target, String.Format("Usage(2): !searchlog <search> - search examples: id:1 nick:{0} $a:{1}, #lumbricus, \"Magnus Magnusson\"", nick.DisplayNick, nick.Account.Name));
+                            conn.SendPrivmsg(target, String.Format("Usage(2): !searchlog <search> - search examples: id:1 nick:{0} $a:{1}, #lumbricus, \"Magnus Magnusson\"", nick.DisplayName, nick.Account.Name));
                             return;
                         }
 
                         if (line.Args.Trim().Replace("%", "").Length < 7) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Text searches must be at least 5 characters long, not including wildcards.", nick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Text searches must be at least 5 characters long, not including wildcards.", nick.DisplayName));
                             return;
                         }
 
@@ -121,7 +121,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
                                     searchChannel = Channel.Fetch(logLine.Channel.Id);
                                 }
                             } else {
-                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Log entry id `{1}` does not exist.", nick.DisplayNick, searchId));
+                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: Log entry id `{1}` does not exist.", nick.DisplayName, searchId));
                                 return;
                             }
                             break;
@@ -135,7 +135,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
                                     searchChannel = Channel.Fetch(logLine.Channel.Id);
                                 }
                             } else {
-                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: No results for search `{1}`.", nick.DisplayNick, search));
+                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: No results for search `{1}`.", nick.DisplayName, search));
                                 return;
                             }
                             break;
@@ -143,11 +143,11 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
                         case "account":
                             searchAccount = Account.Fetch(search.ToLower(), conn.Server);
                             if (searchAccount == null) {
-                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: There is no account `{1}` in the database", nick.DisplayNick, search));
+                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: There is no account `{1}` in the database", nick.DisplayName, search));
                                 return;
                             }
-                            if (searchAccount.PrimaryNick != null) {
-                                searchNick = searchAccount.PrimaryNick;
+                            if (searchAccount.MostRecentNick != null) {
+                                searchNick = searchAccount.MostRecentNick;
                                 totalLines = Log.FetchTotal(searchNick);
                                 logLine = Log.Fetch(searchNick, ignoreLogLine, channel);
                             } else {
@@ -159,7 +159,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
                                     searchChannel = Channel.Fetch(logLine.Channel.Id);
                                 }
                             } else {
-                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: $a:{1} is not in the log (?!)", nick.DisplayNick, searchAccount.Name));
+                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: $a:{1} is not in the log (?!)", nick.DisplayName, searchAccount.Name));
                                 return;
                             }
                             break;
@@ -167,7 +167,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
                         case "nick":
                             searchNick = Nick.Fetch(search.ToLower(), conn.Server);
                             if (searchNick == null) {
-                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: There is no nick `{1}` in the database", nick.DisplayNick, search));
+                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: There is no nick `{1}` in the database", nick.DisplayName, search));
                                 return;
                             }
                             if (searchNick.Account != null) {
@@ -180,7 +180,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
                                     searchChannel = Channel.Fetch(logLine.Channel.Id);
                                 }
                             } else {
-                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: nick:{1} is not in the log (?!)", nick.DisplayNick, searchNick.DisplayNick));
+                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: nick:{1} is not in the log (?!)", nick.DisplayName, searchNick.DisplayName));
                                 return;
                             }
                             break;
@@ -188,20 +188,20 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
                         case "channel":
                             searchChannel = Channel.Fetch(search.ToLower(), conn.Server);
                             if (searchChannel == null) {
-                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: There is no channel `{1}` in the database", nick.DisplayNick, search));
+                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: There is no channel `{1}` in the database", nick.DisplayName, search));
                                 return;
                             }
                             totalLines = Log.FetchTotal(searchChannel);
                             logLine = Log.Fetch(searchChannel, ignoreLogLine);
                             if (logLine == null) {
-                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: {1} is not in the log (?!)", nick.DisplayNick, searchChannel.Name));
+                                conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: {1} is not in the log (?!)", nick.DisplayName, searchChannel.Name));
                                 return;
                             }
                             break;
                     }
 
                     if (logLine == null) {
-                        conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: This message should never appear, what the HELL did you DO to me?! D:", nick.DisplayNick));
+                        conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: This message should never appear, what the HELL did you DO to me?! D:", nick.DisplayName));
                         return;
                     }
 

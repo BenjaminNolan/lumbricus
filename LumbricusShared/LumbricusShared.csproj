@@ -84,6 +84,7 @@
     <Compile Include="PluginSettingsCollection.cs" />
     <Compile Include="PluginSettingElement.cs" />
     <Compile Include="Plugins\Attributes.cs" />
+    <Compile Include="Exceptions\FormattedDbEntityValidationException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -92,6 +93,7 @@
     <Folder Include="Plugins\Core\" />
     <Folder Include="Model\" />
     <Folder Include="Plugins\Core\Commands\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

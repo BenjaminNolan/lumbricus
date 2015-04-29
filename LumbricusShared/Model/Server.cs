@@ -16,20 +16,27 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public long     Id              { get; set; }
 
         [Required]
+        [MaxLength(128)]
         public string   Host            { get; set; }
         [Required]
         public int      Port            { get; set; }
         [Required]
+        [MaxLength(32)]
         public string   BotNick         { get; set; }
         [Required]
+        [MaxLength(64)]
         public string   BotNickPassword { get; set; }
         [Required]
+        [MaxLength(32)]
         public string   BotUserName     { get; set; }
         [Required]
+        [MaxLength(128)]
         public string   BotRealName     { get; set; }
         [Required]
+        [MaxLength(32)]
         public string   NickServNick    { get; set; }
         [Required]
+        [MaxLength(128)]
         public string   NickServHost    { get; set; }
 
         public bool     AutoConnect     { get; set; } = true;
@@ -39,16 +46,24 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public DateTime LastModifiedAt  { get; set; } = DateTime.Now;
         #endregion Database members
 
+        [NotMapped]
         protected List<Channel> channels = new List<Channel>();
+        [NotMapped]
         public List<Channel> Channels => channels;
 
+        [NotMapped]
         protected List<Nick> nicks = new List<Nick>();
+        [NotMapped]
         public List<Nick> Nicks => nicks;
 
+        [NotMapped]
         protected List<Account> accounts = new List<Account>();
+        [NotMapped]
         public List<Account> Accounts => accounts;
 
+        [NotMapped]
         bool disposed = false;
+        [NotMapped]
         public bool Disposed => disposed;
 
         public void SetChannels(List<Channel> channels)

@@ -27,7 +27,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin.Commands
         {
             try {
                 if (nick.Account == null || !isOp(nick)) {
-                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but that command doesn't exist. Try !help.", nick.DisplayNick));
+                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but that command doesn't exist. Try !help.", nick.DisplayName));
                     return;
                 }
 
@@ -97,7 +97,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin.Commands
                         case "nick":
                             ircNick = Nick.Fetch(search, conn.Server);
                             if (ircNick == null) {
-                                conn.SendPrivmsg(target, String.Format("{0}{2}{1}: Nick `{3}` does not exist in the database.", "\x02", "\x0f", nick.DisplayNick, search));
+                                conn.SendPrivmsg(target, String.Format("{0}{2}{1}: Nick `{3}` does not exist in the database.", "\x02", "\x0f", nick.DisplayName, search));
                                 return;
                             }
                             ircAccount = ircNick.Account;
@@ -107,10 +107,10 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin.Commands
                         case "account":
                             ircAccount = Account.Fetch(search, conn.Server);
                             if (ircAccount == null) {
-                                conn.SendPrivmsg(target, String.Format("{0}{2}{1}: Account `{3}` does not exist in the database.", "\x02", "\x0f", nick.DisplayNick, search));
+                                conn.SendPrivmsg(target, String.Format("{0}{2}{1}: Account `{3}` does not exist in the database.", "\x02", "\x0f", nick.DisplayName, search));
                                 return;
                             }
-                            ircNick = ircAccount.PrimaryNick;
+                            ircNick = ircAccount.MostRecentNick;
                             ircBan = Ban.Fetch(ircNick, ircAccount);
                             break;
 
@@ -131,22 +131,22 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin.Commands
 
                     if (ircBan == null) {
                         if (mode == "remove") {
-                            conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` is not currently banned.", "\x02", "\x0f", nick.DisplayNick, searchType.Capitalise(), search));
+                            conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` is not currently banned.", "\x02", "\x0f", nick.DisplayName, searchType.Capitalise(), search));
                             return;
                         }
                         ircBan = new Ban();
                     } else if (mode == "add" && ircBan.IsMugshotBan) {
                         Account banner = ircBan.BannerAccount;
                         if (banner != null) {
-                            conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` was already banned from accessing {8} by $a:{5} on {6}: {7}", "\x02", "\x0f", nick.DisplayNick, searchType.Capitalise(), search, banner.Name, ircBan.CreatedAt.ToString("u"), (ircBan.BanMessage ?? "No message"), conn.Server.BotNick));
+                            conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` was already banned from accessing {8} by $a:{5} on {6}: {7}", "\x02", "\x0f", nick.DisplayName, searchType.Capitalise(), search, banner.Name, ircBan.CreatedAt.ToString("u"), (ircBan.BanMessage ?? "No message"), conn.Server.BotNick));
                         } else {
-                            conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` was already banned from accessing {7} on {5}: {6}", "\x02", "\x0f", nick.DisplayNick, searchType.Capitalise(), search, ircBan.CreatedAt.ToString("u"), (ircBan.BanMessage ?? "No message"), conn.Server.BotNick));
+                            conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` was already banned from accessing {7} on {5}: {6}", "\x02", "\x0f", nick.DisplayName, searchType.Capitalise(), search, ircBan.CreatedAt.ToString("u"), (ircBan.BanMessage ?? "No message"), conn.Server.BotNick));
                         }
                         return;
                     }
 
-                    if (ircNick == null && ircAccount != null && ircAccount.PrimaryNick != null) {
-                        ircNick = ircAccount.PrimaryNick;
+                    if (ircNick == null && ircAccount != null && ircAccount.MostRecentNick != null) {
+                        ircNick = ircAccount.MostRecentNick;
                     }
                     if (ircAccount == null && ircNick != null && ircNick.Account != null) {
                         ircAccount = ircNick.Account;
@@ -174,9 +174,9 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin.Commands
                     ircBan.Save();
 
                     if (mode == "add") {
-                        conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` has been banned from accessing {5} features, and their existing mugshot has been hidden from the site.", "\x02", "\x0f", nick.DisplayNick, searchType.Capitalise(), search, conn.Server.BotNick));
+                        conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` has been banned from accessing {5} features, and their existing mugshot has been hidden from the site.", "\x02", "\x0f", nick.DisplayName, searchType.Capitalise(), search, conn.Server.BotNick));
                     } else {
-                        conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` ban on accessing {5} has been deactivated.", "\x02", "\x0f", nick.DisplayNick, searchType.Capitalise(), search, conn.Server.BotNick));
+                        conn.SendPrivmsg(target, String.Format("{0}{2}{1}: {3} `{4}` ban on accessing {5} has been deactivated.", "\x02", "\x0f", nick.DisplayName, searchType.Capitalise(), search, conn.Server.BotNick));
                     }
                     return;
                 }

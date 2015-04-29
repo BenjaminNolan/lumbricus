@@ -29,7 +29,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
         public void DoTrackKickPlugin(IrcConnection conn, IrcLine line)
         {
             Regex r = new Regex(@"^(?<channel>#[^ ]+) (?<twat>.*)$", RegexOptions.ExplicitCapture);
-            Match m = r.Match(line.Target);
+            Match m = r.Match(line.IrcCommandArgsRaw);
 
             if (m.Success) {
                 string channelName = m.Groups["channel"].Value;

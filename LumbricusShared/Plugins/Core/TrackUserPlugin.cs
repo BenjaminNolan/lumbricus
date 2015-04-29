@@ -33,7 +33,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
             switch (ircCommand) {
                 case IrcCommand.JOIN:
                     nick = conn.FetchOrCreateIrcNick(line.Nick);
-                    c = conn.Server.Channels.FirstOrDefault(x => x.Name == line.Target);
+                    c = conn.Server.Channels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw);
                     if (c != null) {
                         c.AddNick(nick);
                         nick.UserName = line.User;
@@ -48,7 +48,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                     break;
                 case IrcCommand.PART:
                     nick = conn.FetchIrcNick(line.Nick);
-                    c = conn.Server.Channels.FirstOrDefault(x => x.Name == line.Target);
+                    c = conn.Server.Channels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw);
                     if (c != null) {
                         c.RemoveNick(nick);
                     }

@@ -18,27 +18,29 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long       Id         { get; set; }
 
+        public long       ServerId   { get; set; }
         [Required]
-        [ForeignKey("Server")]
-        public long ServerId { get; set; }
-        public virtual Server Server { get; set; }
-        
-        [ForeignKey("Nick")]
-        public long NickId { get; set; }
-        public virtual Nick Nick { get; set; }
+        [ForeignKey("Id")]
+        public Server     Server     { get; set; }
 
-        [ForeignKey("Account")]
-        public long AccountId { get; set; }
-        public virtual Account Account { get; set; }
+        public long?      NickId     { get; set; } = null;
+        [ForeignKey("Id")]
+        public Nick       Nick       { get; set; } = null;
 
-        [ForeignKey("Channel")]
-        public long ChannelId { get; set; }
-        public virtual Channel Channel { get; set; }
+        public long?      AccountId  { get; set; } = null;
+        [ForeignKey("Id")]
+        public Account    Account    { get; set; } = null;
+
+        public long?      ChannelId  { get; set; } = null;
+        [ForeignKey("Id")]
+        public Channel    Channel    { get; set; } = null;
 
         [Required]
         public IrcCommand IrcCommand { get; set; }
-        
+
+        [MaxLength(512)]
         public string     Trail      { get; set; }
+        [MaxLength(512)]
         public string     Line       { get; set; }
         
         public DateTime   LoggedAt   { get; set; } = DateTime.Now;
@@ -54,7 +56,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public static long FetchTotal(Account account)
         {
             return (from l in LumbricusContext.db.Logs
-                where (account.PrimaryNick != null && l.Nick != null && l.Nick.Id == account.PrimaryNick.Id)
+                where (account.MostRecentNick != null && l.Nick != null && l.Nick.Id == account.MostRecentNick.Id)
                 || (l.Account != null && l.Account.Id == account.Id)
                 select l).Count();
         }
@@ -62,7 +64,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public static Log Fetch(Account account, Log ignoreLogLine = null, Channel excludeChannel = null)
         {
             return (from l in LumbricusContext.db.Logs
-                where ((account.PrimaryNick != null && l.Nick != null && l.Nick.Id == account.PrimaryNick.Id)
+                where ((account.MostRecentNick != null && l.Nick != null && l.Nick.Id == account.MostRecentNick.Id)
                     || (l.Account != null && l.Account.Id == account.Id))
                 && (ignoreLogLine == null || l.Id != ignoreLogLine.Id)
                 && (excludeChannel == null || (l.Channel != null && l.Channel.Id != excludeChannel.Id))
@@ -120,14 +122,14 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static Log Create()
         {
-            Log log = LumbricusContext.db.Logs.Create();
+            Log log = new Log();
             return log;
         }
 
         public void Save()
         {
             if (!LumbricusContext.db.Logs.Contains(this)) {
-                LumbricusContext.db.Logs.Attach(this);
+                LumbricusContext.db.Logs.Add(this);
             }
             LumbricusContext.db.SaveChanges();
         }

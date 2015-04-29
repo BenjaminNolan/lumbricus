@@ -92,7 +92,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
                 InitialiseBot();
                 HandleInput();
-            } catch (Exception e) {
+                } catch (Exception e) {
                 logger.Error(e);
             }
 
@@ -100,14 +100,14 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 if (ns != null) {
                     ns.Close();
                 }
-            } catch (Exception e) {
+                } catch (Exception e) {
                 logger.Error(e);
             }
             try {
                 if (socket != null) {
                     socket.Close();
                 }
-            } catch (Exception e) {
+                } catch (Exception e) {
                 logger.Error(e);
             }
 		}
@@ -253,24 +253,31 @@ namespace TwoWholeWorms.Lumbricus.Shared
                     IrcLine ircLine = new IrcLine();
 
                     // This /almost/ matches the entire spec. Will update it to properly track IRC Command arguments at some point, and probably change the names of variables a bit.
-                    Regex r = new Regex(@"^(:((?<fullhost>(?<nick>[^!]+)!(?<user>[^@]+)@(?<host>[^ ]+))|(?<server>([^ ]+))) )?(?<irccommand>[A-Z]+|[0-9]+)( (?<target>[^ ]+))?( :(?<fullcommand>(?<command>![^ ]+)( (?<args>.*))?)|(?<trail>.*))?$", (RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase));
+                    Regex r = new Regex(@"^(:((?<fullhost>(?<nick>[^!]+)!(?<user>[^@]+)@(?<host>[^ ]+))|(?<server>([^ ]+))) )?(?<irccommand>[A-Z]+|[0-9]+)( (?<irccommandargs>[^:]+))?( :[ ]*(?<fullcommand>(?<command>![^ ]+)( (?<args>.*))?)|(?<trail>.*))?$", (RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase));
                     Match m = r.Match(line);
                     if (m.Success) {
                         ircLine.RawLine     = line;
 
-                        ircLine.FullHost    = m.Groups["fullhost"].Value;
-                        ircLine.Nick        = m.Groups["nick"].Value;
-                        ircLine.User        = m.Groups["user"].Value;
-                        ircLine.Host        = m.Groups["host"].Value;
-                        ircLine.ServerHost  = m.Groups["server"].Value;
-                        ircLine.IrcCommand  = m.Groups["irccommand"].Value;
-                        ircLine.Target      = m.Groups["target"].Value;
-                        ircLine.FullCommand = m.Groups["fullcommand"].Value;
-                        ircLine.Command     = m.Groups["command"].Value;
-                        ircLine.Args        = m.Groups["args"].Value;
-                        ircLine.Trail       = m.Groups["trail"].Value;
+                        ircLine.FullHost          = m.Groups["fullhost"].Value;
+                        ircLine.Nick              = m.Groups["nick"].Value;
+                        ircLine.User              = m.Groups["user"].Value;
+                        ircLine.Host              = m.Groups["host"].Value;
+                        ircLine.ServerHost        = m.Groups["server"].Value;
+                        ircLine.IrcCommand        = m.Groups["irccommand"].Value;
+                        ircLine.IrcCommandArgs    = m.Groups["ircommandargs"].Value.Split(' ');
+                        ircLine.IrcCommandArgsRaw = m.Groups["ircommandargs"].Value;
+                        ircLine.FullCommand       = m.Groups["fullcommand"].Value;
+                        ircLine.Command           = m.Groups["command"].Value;
+                        ircLine.Args              = m.Groups["args"].Value;
+                        ircLine.Trail             = m.Groups["trail"].Value;
 
-                        ProcessIrcLine(this, ircLine);
+                        foreach (ProcessIrcLineDelegate ircLineProcessor in ProcessIrcLine.GetInvocationList()) {
+                            try {
+                                ircLineProcessor(this, ircLine);
+                            } catch (Exception e) {
+                                logger.Error(e);
+                            }
+                        }
                         if (!string.IsNullOrWhiteSpace(ircLine.Command)) {
                             Enqueue(ircLine);
                         }
@@ -284,7 +291,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
                 } catch (MySqlException e) {
                     logger.Error(e);
-                } catch (Exception e) {
+                    } catch (Exception e) {
                     logger.Error(e);
                 }
             }
@@ -347,7 +354,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                     queue.Remove(line.Nick);
                 }
             } else {
-                Channel channel = Server.Channels.FirstOrDefault(x => x.Name == line.Target);
+                Channel channel = Server.Channels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw);
                 Nick ircNick = FetchIrcNick(line.Nick);
                 if (ircNick == null) {
                     if (queue.ContainsKey(line.Nick)) {
@@ -453,7 +460,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
 //                                    Command.HandleUnwrittenAdminCommand(ircNick, args, this, c);
 //                                    break;
 //
-                        if (channel != null && !channel.AllowCommandsInChannel && queuedLine.Target != Server.BotNick) {
+                        if (channel != null && !channel.AllowCommandsInChannel && queuedLine.IrcCommandArgsRaw != Server.BotNick) {
                             SendPrivmsg(line.Nick, "Also, please try to only interact with me directly through this window. Bot commands in the channel are against channel policy, and some people get really annoyed about it. :(");
                         }
                     }

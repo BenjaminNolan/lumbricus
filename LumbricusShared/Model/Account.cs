@@ -13,36 +13,42 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         #region Database members
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long     Id             { get; set; }
+        public long       Id                  { get; set; }
 
+        public long       ServerId            { get; set; }
         [Required]
-        [ForeignKey("Server")]
-        public long ServerId { get; set; }
-        public virtual  Server Server  { get; set; }
+        [ForeignKey("Id")]
+        public Server     Server              { get; set; }
         
         [Required]
-        public string   Name           { get; set; }
-        public string   UserName       { get; set; }
-        public string   Host           { get; set; }
+        [MaxLength(32)]
+        public string     Name                { get; set; }
+        [Required]
+        [MaxLength(32)]
+        public string     DisplayName         { get; set; }
+        [MaxLength(32)]
+        public string     UserName            { get; set; }
+        [MaxLength(128)]
+        public string     Host                { get; set; }
 
-        [ForeignKey("PrimaryNick")]
-        public long PrimaryNickId { get; set; }
-        public virtual Nick   PrimaryNick { get; set; }
+        public long?      MostRecentNickId    { get; set; } = null;
+        [ForeignKey("Id")]
+        public Nick       MostRecentNick      { get; set; } = null;
         
-        public DateTime FirstSeenAt    { get; set; } = DateTime.Now;
-        public DateTime LastSeenAt     { get; set; } = DateTime.Now;
-        
-        [ForeignKey("ChannelLastSeenIn")]
-        public long ChannelLastSeenInId { get; set; }
-        public virtual Channel ChannelLastSeenIn { get; set; }
+        public DateTime   FirstSeenAt         { get; set; } = DateTime.Now;
+        public DateTime   LastSeenAt          { get; set; } = DateTime.Now;
 
-        public bool     IsActive       { get; set; } = true;
-        public bool     IsDeleted      { get; set; } = false;
-        public DateTime CreatedAt      { get; set; } = DateTime.Now;
-        public DateTime LastModifiedAt { get; set; } = DateTime.Now;
-        public bool     IsOp           { get; set; } = false;
+        public long?      ChannelLastSeenInId { get; set; } = null;
+        [ForeignKey("Id")]
+        public Channel    ChannelLastSeenIn   { get; set; } = null;
+
+        public bool       IsActive            { get; set; } = true;
+        public bool       IsDeleted           { get; set; } = false;
+        public DateTime   CreatedAt           { get; set; } = DateTime.Now;
+        public DateTime   LastModifiedAt      { get; set; } = DateTime.Now;
+        public bool       IsOp                { get; set; } = false;
         
-        public virtual List<Nick> Nicks { get; set; }
+        public ICollection<Nick> Nicks        { get; set; }
         #endregion Database members
 
         public List<Channel> JoinedChannels = new List<Channel>();
@@ -91,12 +97,12 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                 Server.RemoveAccount(this);
             }
 
-            if (PrimaryNick != null) {
-                Server.RemoveNick(PrimaryNick);
+            if (MostRecentNick != null) {
+                Server.RemoveNick(MostRecentNick);
                 foreach (Channel channel in JoinedChannels) {
-                    channel.RemoveNick(PrimaryNick);
+                    channel.RemoveNick(MostRecentNick);
                 }
-                if (!PrimaryNick.Disposed) PrimaryNick.Dispose();
+                if (!MostRecentNick.Disposed) MostRecentNick.Dispose();
             }
         }
         #endregion
@@ -109,9 +115,11 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static Account Create(string accountName, Server server)
         {
-            Account account = LumbricusContext.db.Accounts.Create();
-            account.Name = accountName;
-            account.Server = server;
+            Account account = new Account() {
+                Name = accountName.ToLower(),
+                DisplayName = accountName,
+                Server = server,
+            };
 
             LumbricusContext.db.Accounts.Attach(account);
             LumbricusContext.db.SaveChanges();
@@ -122,7 +130,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public static Account FetchByNickId(long nickId)
         {
             return (from a in LumbricusContext.db.Accounts
-                where a.PrimaryNick != null && a.PrimaryNick.Id == nickId
+                where a.MostRecentNick != null && a.MostRecentNick.Id == nickId
                 select a).FirstOrDefault();
         }
 

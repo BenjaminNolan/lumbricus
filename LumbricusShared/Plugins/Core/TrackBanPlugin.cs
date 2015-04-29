@@ -29,7 +29,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
         public void DoTrackBanPlugin(IrcConnection conn, IrcLine line)
         {
             Regex r = new Regex(@"^(?<banchannel>#[^ ]+) (?<bantype>[\+\-]b) (?<banmask>.*)$", RegexOptions.ExplicitCapture);
-            Match m = r.Match(line.Target);
+            Match m = r.Match(line.IrcCommandArgsRaw);
 
             if (m.Success) {
                 string banChannel = m.Groups["banchannel"].Value;
@@ -58,7 +58,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                     }
                     if (banType == "+b" && ban.UnbannerAccount != null) {
                         // Create a new ban if they've been unbanned
-                        ban = Ban.Create();
+                        ban = Ban.Create(conn.Server);
                     }
                 }
 

@@ -15,24 +15,29 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public long     Id             { get; set; }
 
         [Required]
+        [MaxLength(32)]
         public string   Section        { get; set; }
         [Required]
+        [MaxLength(32)]
         public string   Name           { get; set; }
         [Required]
+        [MaxLength(512)]
         public string   Value          { get; set; }
         [Required]
+        [MaxLength(512)]
         public string   DefaultValue   { get; set; }
         #endregion Database members
 
         public static Setting Create(string section, string name, string value)
         {
-            Setting setting = LumbricusContext.db.Settings.Create();
-            setting.Section = section;
-            setting.Name = name;
-            setting.Value = value;
-            setting.DefaultValue = value;
+            Setting setting = new Setting() {
+                Section = section,
+                Name = name,
+                Value = value,
+                DefaultValue = value,
+            };
 
-            LumbricusContext.db.Settings.Attach(setting);
+            LumbricusContext.db.Settings.Add(setting);
             LumbricusContext.db.SaveChanges();
 
             return setting;

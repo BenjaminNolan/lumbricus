@@ -1,23 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParser", "LogParser\LogParser.csproj", "{1AA965ED-EA01-4E91-9C3F-32F7C2D315B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParser", "Utilities\LogParser\LogParser.csproj", "{1AA965ED-EA01-4E91-9C3F-32F7C2D315B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LumbricusShared", "LumbricusShared\LumbricusShared.csproj", "{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumbricus", "Lumbricus\Lumbricus.csproj", "{704F5A66-783B-4F9F-BA8B-F0997D60F8FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrcLogPlugin", "IrcLogPlugin\IrcLogPlugin.csproj", "{CE8438DB-5052-4DC3-8447-140523E32208}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrcLogPlugin", "Plugins\IrcLogPlugin\IrcLogPlugin.csproj", "{CE8438DB-5052-4DC3-8447-140523E32208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MugshotsPlugin", "MugshotsPlugin\MugshotsPlugin.csproj", "{46DCB608-8208-4DE4-A036-7FF29A790358}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MugshotsPlugin", "Plugins\MugshotsPlugin\MugshotsPlugin.csproj", "{46DCB608-8208-4DE4-A036-7FF29A790358}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotBanPlugin", "BotBanPlugin\BotBanPlugin.csproj", "{8667DB89-3E73-4C9C-B097-3686B18E9002}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotBanPlugin", "Plugins\BotBanPlugin\BotBanPlugin.csproj", "{8667DB89-3E73-4C9C-B097-3686B18E9002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BanInfoPlugin", "BanInfoPlugin\BanInfoPlugin.csproj", "{D36C7443-BD1F-41B1-84D1-29749DCF9540}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BanInfoPlugin", "Plugins\BanInfoPlugin\BanInfoPlugin.csproj", "{D36C7443-BD1F-41B1-84D1-29749DCF9540}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchLogPlugin", "SearchLogPlugin\SearchLogPlugin.csproj", "{AE965869-93CB-46DC-B94B-7B2137903286}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchLogPlugin", "Plugins\SearchLogPlugin\SearchLogPlugin.csproj", "{AE965869-93CB-46DC-B94B-7B2137903286}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoPlugin", "InfoPlugin\InfoPlugin.csproj", "{314ED665-069A-4244-89B1-B61A3FA31B8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoPlugin", "Plugins\InfoPlugin\InfoPlugin.csproj", "{314ED665-069A-4244-89B1-B61A3FA31B8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

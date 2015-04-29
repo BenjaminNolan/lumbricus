@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Data;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace TwoWholeWorms.Lumbricus.Shared
 {

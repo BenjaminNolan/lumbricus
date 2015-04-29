@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 using System.Linq;
 using TwoWholeWorms.Lumbricus.Shared;
 using TwoWholeWorms.Lumbricus.Shared.Model;
@@ -34,7 +35,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
         public void DoLogPlugin(IrcConnection conn, IrcLine line)
         {
             Nick nick = conn.Server.Nicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
-            Channel ircChannel = conn.Server.Channels.FirstOrDefault(x => x.Name == line.Target.ToLower());
+            Channel ircChannel = conn.Server.Channels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw.ToLower());
 
             Log log = Log.Create();
             log.Server = conn.Server;

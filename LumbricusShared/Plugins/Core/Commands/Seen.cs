@@ -29,7 +29,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core.Commands
         {
             try {
                 if (nick.Account == null || !isOp(nick)) {
-                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but the !seen command doesn't exist. Try !help.", nick.DisplayNick));
+                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but the !seen command doesn't exist. Try !help.", nick.DisplayName));
                     return;
                 }
 
@@ -96,14 +96,14 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core.Commands
                     if (ircSeen == null) {
                         conn.SendPrivmsg(target, String.Format("There is no seen data in the database about {0} `{1}`.", searchType, search));
                     } else {
-                        string seenNick = (ircNick != null ? ircNick.DisplayNick : "Unknown Nick");
+                        string seenNick = (ircNick != null ? ircNick.DisplayName : "Unknown Nick");
                         string seenAccount = (ircAccount != null ? ircAccount.Name : "Unknown Account");
                         string seenChannel = (ircChannel != null ? ircChannel.Name : "a private query window");
 
                         conn.SendPrivmsg(target, String.Format("{1}{0}{2}{1} ($a:{0}{3}{1}): First seen {0}{4}{1}, last seen {0}{5}{1} in {1}{0}{6}{1}.", "\x02", "\x0f", seenNick, seenAccount, ircSeen.FirstSeenAt.ToString("u"), ircSeen.LastSeenAt.ToString("u"), seenChannel));
                     }
                 }
-            } catch (Exception e) {
+                } catch (Exception e) {
                 logger.Error(e);
                 conn.SendPrivmsg(nick.Name, "Oof… My spleen…! I can't do that right now. :(");
             }

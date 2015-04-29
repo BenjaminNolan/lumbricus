@@ -13,45 +13,49 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         #region Database members
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long      Id             { get; set; }
+        public long      Id                { get; set; }
 
         [Required]
-        public string    Mask           { get; set; }
+        [MaxLength(128)]
+        public string    Mask              { get; set; }
 
-        [ForeignKey("Server")]
-        public long ServerId { get; set; }
-        public virtual Server  Server  { get; set; }
-        
-        [ForeignKey("Nick")]
-        public long NickId { get; set; }
-        public virtual Nick    Nick    { get; set; }
-        
-        [ForeignKey("Account")]
-        public long AccountId { get; set; }
-        public virtual Account Account { get; set; }
-        
-        [ForeignKey("Channel")]
-        public long ChannelId { get; set; }
-        public virtual Channel Channel { get; set; }
-        
-        public bool      IsActive       { get; set; } = true;
-        public bool      IsMugshotBan   { get; set; } = true;
+        public long      ServerId          { get; set; }
+        [Required]
+        [ForeignKey("Id")]
+        public Server    Server            { get; set; } = null;
 
-        public DateTime  CreatedAt      { get; set; } = DateTime.Now;
-        public DateTime  LastModifiedAt { get; set; } = DateTime.Now;
+        public long?     NickId            { get; set; } = null;
+        [ForeignKey("Id")]
+        public Nick      Nick              { get; set; } = null;
 
-        [ForeignKey("BannerAccount")]
-        public long BannerAccountId { get; set; }
-        public virtual Account BannerAccount   { get; set; }
-        
-        public string    BanMessage     { get; set; } = null;
-        
-        [ForeignKey("UnbannerAccount")]
-        public long UnbannerAccountId { get; set; }
-        public virtual Account UnbannerAccount { get; set; }
+        public long?     AccountId         { get; set; } = null;
+        [ForeignKey("Id")]
+        public Account   Account           { get; set; } = null;
 
-        public DateTime? UnbannedAt     { get; set; } = null;
-        public string    UnbanMessage   { get; set; } = null;
+        public long?     ChannelId         { get; set; } = null;
+        [ForeignKey("Id")]
+        public Channel   Channel           { get; set; } = null;
+        
+        public bool      IsActive          { get; set; } = true;
+        public bool      IsMugshotBan      { get; set; } = true;
+
+        public DateTime  CreatedAt         { get; set; } = DateTime.Now;
+        public DateTime  LastModifiedAt    { get; set; } = DateTime.Now;
+
+        public long?     BannerAccountId   { get; set; } = null;
+        [ForeignKey("Id")]
+        public Account   BannerAccount     { get; set; } = null;
+
+        [MaxLength(512)]
+        public string    BanMessage        { get; set; } = null;
+
+        public long?     UnbannerAccountId { get; set; } = null;
+        [ForeignKey("Id")]
+        public Account   UnbannerAccount   { get; set; } = null;
+
+        public DateTime? UnbannedAt        { get; set; } = null;
+        [MaxLength(512)]
+        public string    UnbanMessage      { get; set; } = null;
         #endregion Database members
 
         public override string ToString()
@@ -73,10 +77,12 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                  + UnbannerAccount.Id;
         }
 
-        public static Ban Create()
+        public static Ban Create(Server server)
         {
-            Ban ban = LumbricusContext.db.Bans.Create();
-            LumbricusContext.db.Bans.Attach(ban);
+            Ban ban = new Ban() {
+                Server = server,
+            };
+            LumbricusContext.db.Bans.Add(ban);
 
             return ban;
         }
@@ -95,7 +101,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static Ban Fetch(Nick nick, Account account)
         {
-            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayNick + "!" + nick.UserName + "@" + nick.Host : null);
+            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
             string accountBan = (account != null ? "$a:" + account.Name : null);
 
             return (from b in LumbricusContext.db.Bans
@@ -124,7 +130,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static IQueryable<Ban> Fetch(Nick nick)
         {
-            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayNick + "!" + nick.UserName + "@" + nick.Host : null);
+            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
             string accountBan = (nick.Account != null ? "$a:" + nick.Account.Name : null);
 
             return (from b in LumbricusContext.db.Bans
@@ -137,7 +143,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static Ban Fetch(Channel channel, Nick nick)
         {
-            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayNick + "!" + nick.UserName + "@" + nick.Host : null);
+            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
             string accountBan = (nick.Account != null ? "$a:" + nick.Account.Name : null);
 
             return (from b in LumbricusContext.db.Bans

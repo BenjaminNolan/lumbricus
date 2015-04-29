@@ -5,9 +5,9 @@ CREATE TABLE `servers` (
     `BotNick` VARCHAR(32) NOT NULL,
     `BotNickPassword` VARCHAR(64) NOT NULL,
     `BotUserName` VARCHAR(32) NOT NULL,
-    `BotRealName` VARCHAR(128) NOT NULL DEFAULT 'Lumbricus IRC Bot (github.com/TwoWholeWorms/lumbricus)',
+    `BotRealName` VARCHAR(128) NOT NULL DEFAULT 'Lumbricus IRC Bot (https://github.com/TwoWholeWorms/lumbricus)',
     `NickServNick` VARCHAR(32) NOT NULL DEFAULT 'NickServ',
-    `NickServHost` VARCHAR(32) NOT NULL DEFAULT 'NickServ!NickServ@services.',
+    `NickServHost` VARCHAR(128) NOT NULL DEFAULT 'NickServ!NickServ@services.',
     `AutoConnect` TINYINT(1) NOT NULL DEFAULT 1,
     `IsActive` TINYINT(1) NOT NULL DEFAULT 1,
     `IsDeleted` TINYINT(1) NOT NULL DEFAULT 0,
@@ -19,7 +19,7 @@ CREATE TABLE `servers` (
 
 CREATE TABLE `channels` (
     `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `ServerId` BIGINT(20) UNSIGNED NOT NULL,
+    `Server_Id` BIGINT(20) UNSIGNED NOT NULL,
     `Name` VARCHAR(32) NOT NULL,
     `AutoJoin` TINYINT(1) NOT NULL DEFAULT 1,
     `AllowCommandsInChannel` TINYINT(1) NOT NULL DEFAULT 0,
@@ -32,14 +32,15 @@ CREATE TABLE `channels` (
 
 CREATE TABLE `accounts` (
     `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `ServerId` BIGINT(20) UNSIGNED NOT NULL,
+    `Server_Id` BIGINT(20) UNSIGNED NOT NULL,
     `Name` VARCHAR(32) NOT NULL,
+    `DisplayName` VARCHAR(32) NOT NULL,
     `UserName` VARCHAR(32) NOT NULL,
     `Host` VARCHAR(128) NOT NULL,
-    `PrimaryNickId` BIGINT(20) UNSIGNED,
+    `PrimaryNick_Id` BIGINT(20) UNSIGNED,
     `FirstSeenAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `LastSeenAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `ChannelLastSeenInId` BIGINT(20) UNSIGNED,
+    `ChannelLastSeenIn_Id` BIGINT(20) UNSIGNED,
     `IsActive` TINYINT(1) NOT NULL DEFAULT 1,
     `IsDeleted` TINYINT(1) NOT NULL DEFAULT 0,
     `CreatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -50,15 +51,15 @@ CREATE TABLE `accounts` (
 
 CREATE TABLE `nicks` (
     `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `ServerId` BIGINT(20) UNSIGNED NOT NULL,
+    `Server_Id` BIGINT(20) UNSIGNED NOT NULL,
     `Name` VARCHAR(32) NOT NULL,
     `DisplayName` VARCHAR(32) NOT NULL,
-    `UserName` VARCHAR(32) NOT NULL,
-    `Host` VARCHAR(128) NOT NULL,
-    `AccountId` BIGINT(20) UNSIGNED,
+    `UserName` VARCHAR(32),
+    `Host` VARCHAR(128),
+    `Account_Id` BIGINT(20) UNSIGNED,
     `FirstSeenAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `LastSeenAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `ChannelLastSeenInId` BIGINT(20) UNSIGNED,
+    `ChannelLastSeenIn_Id` BIGINT(20) UNSIGNED,
     `IsActive` TINYINT(1) NOT NULL DEFAULT 1,
     `IsDeleted` TINYINT(1) NOT NULL DEFAULT 0,
     `CreatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -68,10 +69,10 @@ CREATE TABLE `nicks` (
 
 CREATE TABLE `logs` (
     `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `ServerId` BIGINT(20) UNSIGNED,
+    `Server_Id` BIGINT(20) UNSIGNED,
     `NickId` BIGINT(20) UNSIGNED,
-    `AccountId` BIGINT(20) UNSIGNED,
-    `ChannelId` BIGINT(20) UNSIGNED,
+    `Account_Id` BIGINT(20) UNSIGNED,
+    `Channel_Id` BIGINT(20) UNSIGNED,
     `IrcCommand` INTEGER(11) UNSIGNED NOT NULL,
     `Trail` VARCHAR(512),
     `Line` VARCHAR(512) NOT NULL,
@@ -82,18 +83,18 @@ CREATE TABLE `logs` (
 CREATE TABLE `bans` (
     `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `Mask` VARCHAR(128) NOT NULL,
-    `ServerId` BIGINT(20) UNSIGNED,
+    `Server_Id` BIGINT(20) UNSIGNED,
     `NickId` BIGINT(20) UNSIGNED,
-    `AccountId` BIGINT(20) UNSIGNED,
-    `ChannelId` BIGINT(20) UNSIGNED,
+    `Account_Id` BIGINT(20) UNSIGNED,
+    `Channel_Id` BIGINT(20) UNSIGNED,
     `IsActive` TINYINT(1) NOT NULL DEFAULT 1,
     `IsMugshotBan` TINYINT(1) NOT NULL DEFAULT 1,
     `CreatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `LastModifiedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `BannerAccountId` BIGINT(20) UNSIGNED,
+    `BannerAccount_Id` BIGINT(20) UNSIGNED,
     `BanMessage` VARCHAR(512),
     `UnbannedAt` TIMESTAMP,
-    `UnbannerAccountId` BIGINT(20) UNSIGNED,
+    `UnbannerAccount_Id` BIGINT(20) UNSIGNED,
     `UnbanMessage` VARCHAR(512),
     PRIMARY KEY (`Id`)
 ) Engine=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -108,28 +109,28 @@ CREATE TABLE `settings` (
 ) Engine=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ALTER TABLE `channels`
-    ADD FOREIGN KEY `FK_channels_ServerId` (`ServerId`) REFERENCES `servers` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD FOREIGN KEY `FK_channels_ServerId` (`Server_Id`) REFERENCES `servers` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `accounts`
-    ADD FOREIGN KEY `FK_accounts_ServerId` (`ServerId`) REFERENCES `servers` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_accounts_PrimaryNickId` (`PrimaryNickId`) REFERENCES `nicks` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_accounts_ChannelLastSeenInId` (`ChannelLastSeenInId`) REFERENCES `channels` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;
+    ADD FOREIGN KEY `FK_accounts_ServerId` (`Server_Id`) REFERENCES `servers` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_accounts_PrimaryNickId` (`PrimaryNick_Id`) REFERENCES `nicks` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_accounts_ChannelLastSeenInId` (`ChannelLastSeenIn_Id`) REFERENCES `channels` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 ALTER TABLE `nicks`
-    ADD FOREIGN KEY `FK_nicks_ServerId` (`ServerId`) REFERENCES `servers` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_nicks_AccountId` (`AccountId`) REFERENCES `accounts` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_nicks_ChannelLastSeenInId` (`ChannelLastSeenInId`) REFERENCES `channels` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;
+    ADD FOREIGN KEY `FK_nicks_ServerId` (`Server_Id`) REFERENCES `servers` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_nicks_AccountId` (`Account_Id`) REFERENCES `accounts` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_nicks_ChannelLastSeenInId` (`ChannelLastSeenIn_Id`) REFERENCES `channels` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 ALTER TABLE `logs`
-    ADD FOREIGN KEY `FK_logs_ServerId` (`ServerId`) REFERENCES `servers` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_logs_ChannelId` (`ChannelId`) REFERENCES `channels` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_logs_AccountId` (`AccountId`) REFERENCES `accounts` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_logs_ServerId` (`Server_Id`) REFERENCES `servers` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_logs_ChannelId` (`Channel_Id`) REFERENCES `channels` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_logs_AccountId` (`Account_Id`) REFERENCES `accounts` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
     ADD FOREIGN KEY `FK_logs_NickId` (`NickId`) REFERENCES `nicks` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 ALTER TABLE `bans`
-    ADD FOREIGN KEY `FK_logs_ServerId` (`ServerId`) REFERENCES `servers` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_logs_ChannelId` (`ChannelId`) REFERENCES `channels` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_logs_AccountId` (`AccountId`) REFERENCES `accounts` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_logs_ServerId` (`Server_Id`) REFERENCES `servers` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_logs_ChannelId` (`Channel_Id`) REFERENCES `channels` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_logs_AccountId` (`Account_Id`) REFERENCES `accounts` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
     ADD FOREIGN KEY `FK_logs_NickId` (`NickId`) REFERENCES `nicks` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_logs_BannerAccountId` (`BannerAccountId`) REFERENCES `accounts` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    ADD FOREIGN KEY `FK_logs_UnbannerAccountId` (`UnbannerAccountId`) REFERENCES `accounts` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;
+    ADD FOREIGN KEY `FK_logs_BannerAccountId` (`BannerAccount_Id`) REFERENCES `accounts` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    ADD FOREIGN KEY `FK_logs_UnbannerAccountId` (`UnbannerAccount_Id`) REFERENCES `accounts` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;

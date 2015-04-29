@@ -30,7 +30,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
         {
             try {
                 if (nick.Account == null || (!isOp(nick) && (nick.Account != null && !nick.Account.IsOp))) {
-                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but that command doesn't exist. Try !help.", nick.DisplayNick));
+                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but that command doesn't exist. Try !help.", nick.DisplayName));
                     return;
                 }
 
@@ -80,7 +80,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
                                 conn.SendPrivmsg(target, String.Format("There is no account `{0}` in the database", search));
                                 return;
                             }
-                            bannedNick = bannedAccount.PrimaryNick;
+                            bannedNick = bannedAccount.MostRecentNick;
                             bannedNick.Account = bannedAccount;
                             ircBans = Ban.Fetch(bannedNick).ToList();
                             break;
@@ -104,8 +104,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
                             if (ircBan.Account != null) bannedAccount = ircBan.Account;
                             if (ircBan.Nick != null) bannedNick = ircBan.Nick;
 
-                            if (bannedAccount != null && bannedNick == null && bannedAccount.PrimaryNick != null) {
-                                bannedNick = bannedAccount.PrimaryNick;
+                            if (bannedAccount != null && bannedNick == null && bannedAccount.MostRecentNick != null) {
+                                bannedNick = bannedAccount.MostRecentNick;
                             }
                             if (bannedNick != null && bannedAccount == null && bannedNick.Account != null) {
                                 bannedAccount = bannedNick.Account;
@@ -119,27 +119,27 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
 
                     if (ircBans.Count < 1) {
                         if (bannedNick != null && bannedAccount != null) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: {2} ($a:{1}) is not banned.", nick.DisplayNick, bannedAccount.Name, bannedNick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: {2} ($a:{1}) is not banned.", nick.DisplayName, bannedAccount.Name, bannedNick.DisplayName));
                         } else if (bannedAccount != null) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: $a:{1} is not banned.", nick.DisplayNick, bannedAccount.Name));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: $a:{1} is not banned.", nick.DisplayName, bannedAccount.Name));
                         } else if (bannedNick != null) {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: `{1}` is not banned.", nick.DisplayNick, bannedNick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: `{1}` is not banned.", nick.DisplayName, bannedNick.DisplayName));
                         } else {
-                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: This message should never appear, what the HELL did you DO to me?! D:", nick.DisplayNick));
+                            conn.SendPrivmsg(target, String.Format("\x02{0}\x0f: This message should never appear, what the HELL did you DO to me?! D:", nick.DisplayName));
                         }
                         return;
                     }
 
                     int i = 0;
                     foreach (Ban ircBan in ircBans) {
-                        string response = String.Format("\x02{0}\x0f: #{1}", nick.DisplayNick, ircBan.Id);
+                        string response = String.Format("\x02{0}\x0f: #{1}", nick.DisplayName, ircBan.Id);
                         if (searchType == "account") {
                             response += " $a:" + bannedAccount.Name;
                             if (bannedNick != null) {
-                                response += " (" + bannedNick.DisplayNick + ")";
+                                response += " (" + bannedNick.DisplayName + ")";
                             }
                         } else {
-                            response += " " + bannedNick.DisplayNick;
+                            response += " " + bannedNick.DisplayName;
                             if (bannedAccount != null) {
                                 response += " ($a:" + bannedAccount.Name + ")";
                             }
@@ -158,8 +158,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
 
                         Account cantankerousOp = ircBan.BannerAccount;
                         if (cantankerousOp != null) {
-                            if (cantankerousOp.PrimaryNick != null) {
-                                response += " op:" + cantankerousOp.PrimaryNick.DisplayNick;
+                            if (cantankerousOp.MostRecentNick != null) {
+                                response += " op:" + cantankerousOp.MostRecentNick.DisplayName;
                             } else {
                                 response += " op:$a:" + cantankerousOp.Name;
                             }
@@ -174,8 +174,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
 
                             response += " unban:[" + ircBan.UnbannedAt.Value.ToString("u");
                             if (unbanner != null) {
-                                if (unbanner.PrimaryNick != null) {
-                                    response += " op:" + unbanner.PrimaryNick.DisplayNick;
+                                if (unbanner.MostRecentNick != null) {
+                                    response += " op:" + unbanner.MostRecentNick.DisplayName;
                                 } else {
                                     response += " op:$a:" + unbanner.Name;
                                 }

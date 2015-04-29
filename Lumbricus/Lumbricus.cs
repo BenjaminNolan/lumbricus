@@ -113,10 +113,10 @@ namespace TwoWholeWorms.Lumbricus
             // Remove the plugin initialiser as it's no longer needed
             AppDomain.CurrentDomain.AssemblyLoad -= PluginInitializer;
 
-            LumbricusConfiguration.AddPlugin(new HelpPlugin());
-            LumbricusConfiguration.AddPlugin(new SeenPlugin());
-            LumbricusConfiguration.AddPlugin(new TrackBanPlugin());
-            LumbricusConfiguration.AddPlugin(new TrackKickPlugin());
+//            LumbricusConfiguration.AddPlugin(new HelpPlugin());
+//            LumbricusConfiguration.AddPlugin(new SeenPlugin());
+//            LumbricusConfiguration.AddPlugin(new TrackBanPlugin());
+//            LumbricusConfiguration.AddPlugin(new TrackKickPlugin());
             LumbricusConfiguration.AddPlugin(new TrackUserPlugin());
 
             logger.Debug("{0} plugins enabled", LumbricusConfiguration.Plugins.Count);

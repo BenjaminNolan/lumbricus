@@ -40,8 +40,8 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                 case IrcCommand.JOIN:
                 case IrcCommand.PART:
                 case IrcCommand.PRIVMSG:
-                    if (line.Target.StartsWith("#")) {
-                        channel = conn.GetChannel(line.Target);
+                    if (line.IrcCommandArgsRaw.StartsWith("#")) {
+                        channel = conn.GetChannel(line.IrcCommandArgsRaw);
                     }
                     goto case IrcCommand.NICK;
 

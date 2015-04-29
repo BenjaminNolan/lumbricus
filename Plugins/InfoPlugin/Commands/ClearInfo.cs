@@ -30,7 +30,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Commands
                 DateTime checkTime = DateTime.Now;
                 checkTime.AddDays(-7);
                 if (seen.FirstSeenAt == DateTime.MinValue || seen.FirstSeenAt > checkTime) {
-                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but you aren't allowed to use the mugshots functions yet. :(", nick.DisplayNick));
+                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but you aren't allowed to use the mugshots functions yet. :(", nick.DisplayName));
                     return;
                 }
 
@@ -40,7 +40,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Commands
                     return;
                 }
 
-                nick.Account.PrimaryNick = nick;
+                nick.Account.MostRecentNick = nick;
 
                 info.IsDeleted = true;
                 info.Save();
