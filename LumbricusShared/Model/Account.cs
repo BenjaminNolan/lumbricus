@@ -8,47 +8,40 @@ using TwoWholeWorms.Lumbricus.Shared;
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
 
+    [Table("Account")]
     public class Account : IDisposable
 	{
         #region Database members
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long       Id                  { get; set; }
+        public long              Id                  { get; set; }
 
-        public long       ServerId            { get; set; }
-        [Required]
-        [ForeignKey("Id")]
-        public Server     Server              { get; set; }
+        public long              ServerId            { get; set; }
+        public Server            Server              { get; set; }
         
-        [Required]
-        [MaxLength(32)]
-        public string     Name                { get; set; }
-        [Required]
-        [MaxLength(32)]
-        public string     DisplayName         { get; set; }
-        [MaxLength(32)]
-        public string     UserName            { get; set; }
-        [MaxLength(128)]
-        public string     Host                { get; set; }
+        public string            Name                { get; set; }
+        public string            DisplayName         { get; set; }
 
-        public long?      MostRecentNickId    { get; set; } = null;
-        [ForeignKey("Id")]
-        public Nick       MostRecentNick      { get; set; } = null;
+        public string            UserName            { get; set; } = null;
+        public string            Host                { get; set; } = null;
+
+        public long?             MostRecentNickId    { get; set; } = null;
+        public Nick              MostRecentNick      { get; set; } = null;
         
-        public DateTime   FirstSeenAt         { get; set; } = DateTime.Now;
-        public DateTime   LastSeenAt          { get; set; } = DateTime.Now;
+        public DateTime          FirstSeenAt         { get; set; } = DateTime.Now;
+        public DateTime          LastSeenAt          { get; set; } = DateTime.Now;
 
-        public long?      ChannelLastSeenInId { get; set; } = null;
-        [ForeignKey("Id")]
-        public Channel    ChannelLastSeenIn   { get; set; } = null;
+        public long?             ChannelLastSeenInId { get; set; } = null;
+        public Channel           ChannelLastSeenIn   { get; set; } = null;
 
-        public bool       IsActive            { get; set; } = true;
-        public bool       IsDeleted           { get; set; } = false;
-        public DateTime   CreatedAt           { get; set; } = DateTime.Now;
-        public DateTime   LastModifiedAt      { get; set; } = DateTime.Now;
-        public bool       IsOp                { get; set; } = false;
-        
-        public ICollection<Nick> Nicks        { get; set; }
+        public bool              IsActive            { get; set; } = true;
+        public bool              IsDeleted           { get; set; } = false;
+        public DateTime          CreatedAt           { get; set; } = DateTime.Now;
+        public DateTime          LastModifiedAt      { get; set; } = DateTime.Now;
+        public bool              IsOp                { get; set; } = false;
+
+        public ICollection<Ban>  Bans                { get; set; }
+        public ICollection<Nick> Nicks               { get; set; }
         #endregion Database members
 
         public List<Channel> JoinedChannels = new List<Channel>();

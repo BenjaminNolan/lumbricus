@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
 
+    [Table("Ban")]
     public class Ban
 	{
 
@@ -15,25 +16,18 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long      Id                { get; set; }
 
-        [Required]
-        [MaxLength(128)]
         public string    Mask              { get; set; }
 
         public long      ServerId          { get; set; }
-        [Required]
-        [ForeignKey("Id")]
         public Server    Server            { get; set; } = null;
 
         public long?     NickId            { get; set; } = null;
-        [ForeignKey("Id")]
         public Nick      Nick              { get; set; } = null;
 
         public long?     AccountId         { get; set; } = null;
-        [ForeignKey("Id")]
         public Account   Account           { get; set; } = null;
 
         public long?     ChannelId         { get; set; } = null;
-        [ForeignKey("Id")]
         public Channel   Channel           { get; set; } = null;
         
         public bool      IsActive          { get; set; } = true;
@@ -43,18 +37,14 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public DateTime  LastModifiedAt    { get; set; } = DateTime.Now;
 
         public long?     BannerAccountId   { get; set; } = null;
-        [ForeignKey("Id")]
         public Account   BannerAccount     { get; set; } = null;
 
-        [MaxLength(512)]
         public string    BanMessage        { get; set; } = null;
 
         public long?     UnbannerAccountId { get; set; } = null;
-        [ForeignKey("Id")]
         public Account   UnbannerAccount   { get; set; } = null;
 
         public DateTime? UnbannedAt        { get; set; } = null;
-        [MaxLength(512)]
         public string    UnbanMessage      { get; set; } = null;
         #endregion Database members
 

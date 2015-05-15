@@ -6,60 +6,51 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
-    
+
+    [Table("Server")]
     public class Server : IDisposable
 	{
 
         #region Database members
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long     Id              { get; set; }
+        public long                 Id              { get; set; }
 
-        [Required]
-        [MaxLength(128)]
-        public string   Host            { get; set; }
-        [Required]
-        public int      Port            { get; set; }
-        [Required]
-        [MaxLength(32)]
-        public string   BotNick         { get; set; }
-        [Required]
-        [MaxLength(64)]
-        public string   BotNickPassword { get; set; }
-        [Required]
-        [MaxLength(32)]
-        public string   BotUserName     { get; set; }
-        [Required]
-        [MaxLength(128)]
-        public string   BotRealName     { get; set; }
-        [Required]
-        [MaxLength(32)]
-        public string   NickServNick    { get; set; }
-        [Required]
-        [MaxLength(128)]
-        public string   NickServHost    { get; set; }
+        public string               Host            { get; set; }
+        public int                  Port            { get; set; }
+        public string               BotNick         { get; set; }
+        public string               BotNickPassword { get; set; }
+        public string               BotUserName     { get; set; }
+        public string               BotRealName     { get; set; }
+        public string               NickServNick    { get; set; }
+        public string               NickServHost    { get; set; }
 
-        public bool     AutoConnect     { get; set; } = true;
-        public bool     IsActive        { get; set; } = true;
-        public bool     IsDeleted       { get; set; } = false;
-        public DateTime CreatedAt       { get; set; } = DateTime.Now;
-        public DateTime LastModifiedAt  { get; set; } = DateTime.Now;
+        public bool                 AutoConnect     { get; set; } = true;
+        public bool                 IsActive        { get; set; } = true;
+        public bool                 IsDeleted       { get; set; } = false;
+        public DateTime             CreatedAt       { get; set; } = DateTime.Now;
+        public DateTime             LastModifiedAt  { get; set; } = DateTime.Now;
+
+        public ICollection<Account> ServerAccounts  { get; set; }
+        public ICollection<Channel> ServerChannels  { get; set; }
+        public ICollection<Nick>    ServerNicks     { get; set; }
+        public ICollection<Ban>     Bans            { get; set; }
         #endregion Database members
 
         [NotMapped]
-        protected List<Channel> channels = new List<Channel>();
+        protected List<Channel> connectedChannels = new List<Channel>();
         [NotMapped]
-        public List<Channel> Channels => channels;
+        public List<Channel> ConnectedChannels => connectedChannels;
 
         [NotMapped]
-        protected List<Nick> nicks = new List<Nick>();
+        protected List<Account> connectedAccounts = new List<Account>();
         [NotMapped]
-        public List<Nick> Nicks => nicks;
+        public List<Account> ConnectedAccounts => connectedAccounts;
 
         [NotMapped]
-        protected List<Account> accounts = new List<Account>();
+        protected List<Nick> connectedNicks = new List<Nick>();
         [NotMapped]
-        public List<Account> Accounts => accounts;
+        public List<Nick> ConnectedNicks => connectedNicks;
 
         [NotMapped]
         bool disposed = false;
@@ -68,46 +59,46 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public void SetChannels(List<Channel> channels)
         {
-            if (channels != null) {
-                this.channels = channels;
+            if (connectedChannels != null) {
+                this.connectedChannels = channels;
             }
         }
 
         public void AddChannel(Channel channel)
         {
-            if (!channels.Contains(channel)) {
-                channels.Add(channel);
+            if (!connectedChannels.Contains(channel)) {
+                connectedChannels.Add(channel);
             }
         }
 
         public void RemoveChannel(Channel channel)
         {
-            if (channels.Contains(channel)) {
-                channels.Remove(channel);
+            if (connectedChannels.Contains(channel)) {
+                connectedChannels.Remove(channel);
             }
         }
 
         public void SetNicks(List<Nick> nicks)
         {
             if (nicks != null) {
-                this.nicks = nicks;
+                connectedNicks = nicks;
             }
         }
 
         public void AddNick(Nick nick)
         {
-            if (!nicks.Contains(nick)) {
-                nicks.Add(nick);
+            if (!connectedNicks.Contains(nick)) {
+                connectedNicks.Add(nick);
             }
         }
 
         public void RemoveNick(Nick nick, bool recurse = true)
         {
-            if (nicks.Contains(nick)) {
-                nicks.Remove(nick);
+            if (connectedNicks.Contains(nick)) {
+                connectedNicks.Remove(nick);
             }
             if (recurse) {
-                foreach (Channel channel in channels) {
+                foreach (Channel channel in connectedChannels) {
                     channel.RemoveNick(nick);
                 }
             }
@@ -115,15 +106,15 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public void AddAccount(Account account)
         {
-            if (!accounts.Contains(account)) {
-                accounts.Add(account);
+            if (!connectedAccounts.Contains(account)) {
+                connectedAccounts.Add(account);
             }
         }
 
         public void RemoveAccount(Account account)
         {
-            if (accounts.Contains(account)) {
-                accounts.Remove(account);
+            if (connectedAccounts.Contains(account)) {
+                connectedAccounts.Remove(account);
                 account.Dispose();
             }
         }
@@ -131,7 +122,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public void SetAccounts(List<Account> accounts)
         {
             if (accounts != null) {
-                this.accounts = accounts;
+                connectedAccounts = accounts;
             }
         }
 
@@ -154,15 +145,15 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
             // Unlink me from ALL THE THINGS!
 
-            foreach (Nick n in nicks) {
+            foreach (Nick n in connectedNicks) {
                 if (!n.Disposed) n.Dispose();
             }
 
-            foreach (Channel channel in channels) {
+            foreach (Channel channel in connectedChannels) {
                 if (!channel.Disposed) channel.Dispose();
             }
 
-            foreach (Account account in accounts) {
+            foreach (Account account in connectedAccounts) {
                 if (!account.Disposed) account.Dispose();
             }
         }

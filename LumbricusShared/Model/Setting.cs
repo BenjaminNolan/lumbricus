@@ -7,6 +7,7 @@ using TwoWholeWorms.Lumbricus.Shared;
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
 
+    [Table("Setting")]
     public class Setting
 	{
         #region Database members
@@ -14,17 +15,9 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long     Id             { get; set; }
 
-        [Required]
-        [MaxLength(32)]
         public string   Section        { get; set; }
-        [Required]
-        [MaxLength(32)]
         public string   Name           { get; set; }
-        [Required]
-        [MaxLength(512)]
         public string   Value          { get; set; }
-        [Required]
-        [MaxLength(512)]
         public string   DefaultValue   { get; set; }
         #endregion Database members
 

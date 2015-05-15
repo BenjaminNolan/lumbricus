@@ -23,12 +23,12 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins
                 return false;
             }
 
-            Channel opsChannel = conn.Server.Channels.FirstOrDefault(x => x.Name == opsChannelSetting.Value);
+            Channel opsChannel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == opsChannelSetting.Value);
             if (opsChannel == null) {
                 throw new Exception("Unable to find ops channel in conn.Server.Channels");
             }
 
-            return opsChannel.Nicks.Contains(nick);
+            return opsChannel.ConnectedNicks.Contains(nick);
         }
 
     }

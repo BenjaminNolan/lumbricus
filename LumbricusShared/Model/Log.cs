@@ -10,6 +10,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
     /**
      * @TODO Extend this to capture everything extracted in the regex in IrcConnection
      */
+    [Table("Log")]
     public class Log
     {
 
@@ -19,28 +20,20 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public long       Id         { get; set; }
 
         public long       ServerId   { get; set; }
-        [Required]
-        [ForeignKey("Id")]
         public Server     Server     { get; set; }
 
         public long?      NickId     { get; set; } = null;
-        [ForeignKey("Id")]
         public Nick       Nick       { get; set; } = null;
 
         public long?      AccountId  { get; set; } = null;
-        [ForeignKey("Id")]
         public Account    Account    { get; set; } = null;
 
         public long?      ChannelId  { get; set; } = null;
-        [ForeignKey("Id")]
         public Channel    Channel    { get; set; } = null;
 
-        [Required]
         public IrcCommand IrcCommand { get; set; }
 
-        [MaxLength(512)]
         public string     Trail      { get; set; }
-        [MaxLength(512)]
         public string     Line       { get; set; }
         
         public DateTime   LoggedAt   { get; set; } = DateTime.Now;

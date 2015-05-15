@@ -36,8 +36,8 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                 string banMask    = m.Groups["banmask"].Value;
                 string banType    = m.Groups["bantype"].Value;
 
-                Nick banner = conn.Server.Nicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
-                Channel channel = conn.Server.Channels.FirstOrDefault(x => x.Name == banChannel.ToLower());
+                Nick banner = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
+                Channel channel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == banChannel.ToLower());
                 Ban ban = Ban.Fetch(channel, line.FullHost);
                 if (ban == null) {
                     if (banType == "-b") {

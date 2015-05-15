@@ -111,7 +111,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
                 try {
                     LumbricusContext.db.Accounts.Attach(Account);
-                    } catch (Exception e) {
+                } catch (Exception e) {
                     // …
                 }
                 LumbricusContext.db.SaveChanges();
@@ -124,7 +124,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
                 try {
                     LumbricusContext.db.Nicks.Attach(Nick);
-                    } catch (Exception e) {
+                } catch (Exception e) {
                     // …
                 }
                 LumbricusContext.db.SaveChanges();

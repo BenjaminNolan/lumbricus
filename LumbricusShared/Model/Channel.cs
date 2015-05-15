@@ -7,41 +7,40 @@ using System.Linq;
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
 
+    [Table("Channel")]
     public class Channel : IDisposable
 	{
         
         #region Database members
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long     Id                     { get; set; }
+        public long             Id                     { get; set; }
 
-        public long     ServerId              { get; set; }
-        [Required]
-        [ForeignKey("Id")]
-        public  Server  Server                 { get; set; }
+        public long             ServerId               { get; set; }
+        public  Server          Server                 { get; set; }
         
-        [Required]
-        [MaxLength(128)]
-        public string   Name                   { get; set; }
+        public string           Name                   { get; set; }
 
-        public bool     AutoJoin               { get; set; } = true;
-        public bool     AllowCommandsInChannel { get; set; } = false;
+        public bool             AutoJoin               { get; set; } = true;
+        public bool             AllowCommandsInChannel { get; set; } = false;
 
-        public DateTime CreatedAt              { get; set; } = DateTime.Now;
-        public DateTime LastModifiedAt         { get; set; } = DateTime.Now;
-        public bool     IsActive               { get; set; } = true;
-        public bool     IsDeleted              { get; set; } = false;
+        public DateTime         CreatedAt              { get; set; } = DateTime.Now;
+        public DateTime         LastModifiedAt         { get; set; } = DateTime.Now;
+        public bool             IsActive               { get; set; } = true;
+        public bool             IsDeleted              { get; set; } = false;
+
+        public ICollection<Ban> Bans                   { get; set; }
         #endregion Database members
 
-        public List<Nick> Nicks = new List<Nick>();
+        public List<Nick> ConnectedNicks = new List<Nick>();
 
         bool disposed = false;
         public bool Disposed => disposed;
 
         public void AddNick(Nick nick, bool recurse = true)
         {
-            if (!Nicks.Contains(nick)) {
-                Nicks.Add(nick);
+            if (!ConnectedNicks.Contains(nick)) {
+                ConnectedNicks.Add(nick);
             }
             if (recurse) {
                 nick.AddChannel(this, false);
@@ -50,8 +49,8 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public void RemoveNick(Nick nick, bool recurse = true)
         {
-            if (Nicks.Contains(nick)) {
-                Nicks.Remove(nick);
+            if (ConnectedNicks.Contains(nick)) {
+                ConnectedNicks.Remove(nick);
             }
             if (recurse) {
                 nick.RemoveChannel(this, false);
@@ -81,9 +80,9 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                 Server.RemoveChannel(this);
             }
 
-            foreach (Nick nick in Nicks) {
+            foreach (Nick nick in ConnectedNicks) {
                 nick.RemoveChannel(this);
-                if (nick.channels.Count <= 0) {
+                if (nick.ConnectedChannels.Count <= 0) {
                     if (!nick.Disposed) nick.Dispose();
                 }
             }

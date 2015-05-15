@@ -163,7 +163,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
         public Nick FetchIrcNick(string nick)
         {
-            Nick ircNick = Server.Nicks.FirstOrDefault(x => x.Name == nick.ToLower());
+            Nick ircNick = Server.ServerNicks.FirstOrDefault(x => x.Name == nick.ToLower());
             if (ircNick != null) {
                 Server.AddNick(ircNick);
             }
@@ -173,7 +173,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
         public Nick FetchOrCreateIrcNick(string nick)
         {
             Nick ircNick =
-                Server.Nicks.FirstOrDefault(x => x.Name == nick.ToLower())
+                Server.ConnectedNicks.FirstOrDefault(x => x.Name == nick.ToLower())
                 ?? Nick.FetchOrCreate(nick, Server);
             if (ircNick != null) {
                 Server.AddNick(ircNick);
@@ -212,7 +212,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 }
                 if (line.StartsWith(String.Format(@":{0} NOTICE {1} :You are now identified", Server.NickServHost, Server.BotNick))) {
                     logger.Debug("Identified with NickServ, joining channels");
-                    foreach (Channel channel in Server.Channels) {
+                    foreach (Channel channel in Server.ConnectedChannels) {
                         if (channel.AutoJoin) {
                             logger.Debug("Joining " + channel.Name);
                             Send("JOIN " + channel.Name);
@@ -301,7 +301,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
         {
             Account ircAccount = null;
             if (account != "0") {
-                ircAccount = Server.Accounts.FirstOrDefault(x => x.Name == account);
+                ircAccount = Server.ServerAccounts.FirstOrDefault(x => x.Name == account);
                 if (ircAccount == null) {
                     ircAccount = Account.FetchOrCreate(account, Server);
                     if (ircAccount == null) {
@@ -313,7 +313,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 }
             }
 
-            Nick ircNick = Server.Nicks.FirstOrDefault(x => x.Name == nick);
+            Nick ircNick = Server.ServerNicks.FirstOrDefault(x => x.Name == nick);
             if (ircNick == null) {
                 ircNick = Nick.FetchOrCreate(nick, Server);
                 if (ircNick == null) {
@@ -334,7 +334,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 Server.AddNick(ircNick);
             }
 
-            Channel ircChannel = Server.Channels.FirstOrDefault(x => x.Name == channel);
+            Channel ircChannel = Server.ConnectedChannels.FirstOrDefault(x => x.Name == channel);
             if (ircChannel == null) {
                 ircChannel = Channel.FetchOrCreate(channel, Server);
                 if (ircChannel == null) {
@@ -354,7 +354,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                     queue.Remove(line.Nick);
                 }
             } else {
-                Channel channel = Server.Channels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw);
+                Channel channel = Server.ConnectedChannels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw);
                 Nick ircNick = FetchIrcNick(line.Nick);
                 if (ircNick == null) {
                     if (queue.ContainsKey(line.Nick)) {
@@ -364,15 +364,15 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 }
 
                 bool found = false;
-                foreach (Channel c in Server.Channels) {
-                    if (c.Nicks.Contains(ircNick) || ircNick.channels.Contains(c)) {
+                foreach (Channel c in Server.ConnectedChannels) {
+                    if (c.ConnectedNicks.Contains(ircNick) || ircNick.ConnectedChannels.Contains(c)) {
                         found = true;
                         break;
                     }
                 }
                 if (!found) {
                     List<string> channels = new List<string>();
-                    foreach (Channel c in Server.Channels) {
+                    foreach (Channel c in Server.ConnectedChannels) {
                         channels.Add(c.Name);
                     }
                     if (queue.ContainsKey(line.Nick)) {

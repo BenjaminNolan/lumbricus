@@ -29,10 +29,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="NLog">
+      <HintPath>..\..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -41,7 +41,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\LumbricusShared\LumbricusShared.csproj">
+    <ProjectReference Include="..\..\LumbricusShared\LumbricusShared.csproj">
       <Project>{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}</Project>
       <Name>LumbricusShared</Name>
     </ProjectReference>

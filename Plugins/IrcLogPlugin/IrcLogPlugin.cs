@@ -34,8 +34,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
 
         public void DoLogPlugin(IrcConnection conn, IrcLine line)
         {
-            Nick nick = conn.Server.Nicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
-            Channel ircChannel = conn.Server.Channels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw.ToLower());
+            Nick nick = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
+            Channel ircChannel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw.ToLower());
 
             Log log = Log.Create();
             log.Server = conn.Server;

@@ -35,9 +35,9 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                 string channelName = m.Groups["channel"].Value;
                 string twat        = m.Groups["twat"].Value;
 
-                Nick banner = conn.Server.Nicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
-                Nick twatNick = conn.Server.Nicks.FirstOrDefault(x => x.Name == twat.ToLower());
-                Channel channel = conn.Server.Channels.FirstOrDefault(x => x.Name == channelName.ToLower());
+                Nick banner = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
+                Nick twatNick = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == twat.ToLower());
+                Channel channel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == channelName.ToLower());
 
                 Ban ban = Ban.Fetch(channel, twatNick);
                 if (ban != null) {
