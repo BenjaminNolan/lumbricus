@@ -91,15 +91,23 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static Ban Fetch(Nick nick, Account account)
         {
-            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
+//            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
             string accountBan = (account != null ? "$a:" + account.Name : null);
 
-            return (from b in LumbricusContext.db.Bans
-                    where (b.Mask != null && SqlMethods.Like(host, b.Mask))
-                       || (b.Mask != null && b.Mask == accountBan)
-                       || (b.Nick != null && b.Nick.Id == nick.Id)
-                       || (b.Account != null && account != null && b.Account.Id == account.Id)
+            if (account != null) {
+                return (from b in LumbricusContext.db.Bans
+                    where (/*(b.Mask != null && SqlMethods.Like(host, b.Mask))
+                        || */(b.Mask != null && b.Mask == accountBan)
+                        || (b.Nick != null && b.Nick.Id == nick.Id)
+                        || (b.Account != null && b.Account.Id == account.Id))
                     select b).FirstOrDefault();
+            } else {
+                return (from b in LumbricusContext.db.Bans
+                    where (/*(b.Mask != null && SqlMethods.Like(host, b.Mask))
+                        || */(b.Mask != null && b.Mask == accountBan)
+                        || (b.Nick != null && b.Nick.Id == nick.Id))
+                    select b).FirstOrDefault();
+            }
         }
 
         public static Ban Fetch(Channel channel, string mask)
@@ -120,27 +128,27 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static IQueryable<Ban> Fetch(Nick nick)
         {
-            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
+//            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
             string accountBan = (nick.Account != null ? "$a:" + nick.Account.Name : null);
 
             return (from b in LumbricusContext.db.Bans
-                    where (b.Mask != null && SqlMethods.Like(host, b.Mask))
-                       || (b.Mask != null && b.Mask == accountBan)
+                    where (/*(b.Mask != null && SqlMethods.Like(host, b.Mask))
+                       || */(b.Mask != null && b.Mask == accountBan)
                        || (b.Nick != null && b.Nick.Id == nick.Id)
-                       || (b.Account != null && nick.Account != null && b.Account.Id == nick.Account.Id)
+                       || (b.Account != null && nick.Account != null && b.Account.Id == nick.Account.Id))
                     select b);
         }
 
         public static Ban Fetch(Channel channel, Nick nick)
         {
-            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
+//            string host = (nick != null && nick.UserName != null && nick.Host != null ? nick.DisplayName + "!" + nick.UserName + "@" + nick.Host : null);
             string accountBan = (nick.Account != null ? "$a:" + nick.Account.Name : null);
 
             return (from b in LumbricusContext.db.Bans
                     where b.Channel != null && b.Channel.Id == channel.Id
                         && (
-                            (b.Mask != null && SqlMethods.Like(host, b.Mask))
-                         || (b.Mask != null && b.Mask == accountBan)
+                            /*(b.Mask != null && SqlMethods.Like(host, b.Mask))
+                         || */(b.Mask != null && b.Mask == accountBan)
                          || (b.Nick != null && b.Nick.Id == nick.Id)
                          || (b.Account != null && nick.Account != null && b.Account.Id == nick.Account.Id)
                         )

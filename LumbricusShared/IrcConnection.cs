@@ -158,6 +158,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
         public void RegisterCommand(string command, AbstractCommand handler)
         {
+            logger.Trace("Registering command `{0}`", command);
             Commands.Add(command, handler);
         }
 
@@ -253,7 +254,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                     IrcLine ircLine = new IrcLine();
 
                     // This /almost/ matches the entire spec. Will update it to properly track IRC Command arguments at some point, and probably change the names of variables a bit.
-                    Regex r = new Regex(@"^(:((?<fullhost>(?<nick>[^!]+)!(?<user>[^@]+)@(?<host>[^ ]+))|(?<server>([^ ]+))) )?(?<irccommand>[A-Z]+|[0-9]+)( (?<irccommandargs>[^:]+))?( :[ ]*(?<fullcommand>(?<command>![^ ]+)( (?<args>.*))?)|(?<trail>.*))?$", (RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase));
+                    Regex r = new Regex(@"^(:((?<fullhost>(?<nick>[^!]+)!(?<user>[^@]+)@(?<host>[^ ]+))|(?<server>([^ ]+))) )?(?<irccommand>[A-Z]+|[0-9]+)( (?<irccommandargs>[^:]+))?( :(?<trail>.*))?$", (RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase));
                     Match m = r.Match(line);
                     if (m.Success) {
                         ircLine.RawLine     = line;
@@ -266,10 +267,17 @@ namespace TwoWholeWorms.Lumbricus.Shared
                         ircLine.IrcCommand        = m.Groups["irccommand"].Value;
                         ircLine.IrcCommandArgs    = m.Groups["ircommandargs"].Value.Split(' ');
                         ircLine.IrcCommandArgsRaw = m.Groups["ircommandargs"].Value;
-                        ircLine.FullCommand       = m.Groups["fullcommand"].Value;
-                        ircLine.Command           = m.Groups["command"].Value;
-                        ircLine.Args              = m.Groups["args"].Value;
                         ircLine.Trail             = m.Groups["trail"].Value;
+
+                        if (!string.IsNullOrWhiteSpace(ircLine.Trail)) {
+                            r = new Regex(@"^[ ]*(?<fullcommand>(?<command>![^ ]+)( (?<args>.*))?)$", (RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase));
+                            m = r.Match(ircLine.Trail);
+                            if (m.Success) {
+                                ircLine.FullCommand = m.Groups["fullcommand"].Value;
+                                ircLine.Command     = m.Groups["command"].Value;
+                                ircLine.Args        = m.Groups["args"].Value;
+                            }
+                        }
 
                         foreach (ProcessIrcLineDelegate ircLineProcessor in ProcessIrcLine.GetInvocationList()) {
                             try {
@@ -280,6 +288,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                         }
                         if (!string.IsNullOrWhiteSpace(ircLine.Command)) {
                             Enqueue(ircLine);
+                            continue;
                         }
 
                         // Handles responses to WHO <nick> %na requests
@@ -418,9 +427,15 @@ namespace TwoWholeWorms.Lumbricus.Shared
                     foreach (IrcLine queuedLine in queue.Single(x => x.Key == line.Nick).Value) {
                         if (!string.IsNullOrWhiteSpace(queuedLine.Command)) {
                             if (Commands.ContainsKey(queuedLine.Command)) {
-                                Commands.Single(x => x.Key == line.Command).Value.HandleCommand(queuedLine, ircNick, channel);
+                                AbstractCommand command = Commands.Single(x => x.Key == queuedLine.Command).Value;
+                                if (command == null) {
+                                    SendPrivmsg(queuedLine.Nick, String.Format("Sorry, {0}, but I'm unable to do that at this time. Poke TwoWholeWorms to fix me. :(", queuedLine.Nick));
+                                    logger.Error("Command `{0}` is registered with a null handler!", queuedLine.Command);
+                                } else {
+                                    command.HandleCommand(queuedLine, ircNick, channel);
+                                }
                             } else {
-                                SendPrivmsg(line.Nick, String.Format("Sorry, {0}, but that command does not exist. Try !help.", line.Nick));
+                                SendPrivmsg(queuedLine.Nick, String.Format("Sorry, {0}, but that command does not exist. Try !help.", queuedLine.Nick));
                             }
                         }
 

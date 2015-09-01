@@ -134,3 +134,5 @@ ALTER TABLE `Ban`
     ADD FOREIGN KEY `FK_logs_NickId` (`NickId`) REFERENCES `Nick` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
     ADD FOREIGN KEY `FK_logs_BannerAccountId` (`BannerAccountId`) REFERENCES `Account` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE,
     ADD FOREIGN KEY `FK_logs_UnbannerAccountId` (`UnbannerAccountId`) REFERENCES `Account` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+INSERT INTO `Setting` (`Section`, `Name`, `Value`, `DefaultValue`) VALUE ('help', 'uri', 'http://twowholeworms.com/lumbricus/help', 'http://twowholeworms.com/lumbricus/help');

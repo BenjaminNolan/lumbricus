@@ -88,6 +88,53 @@ namespace TwoWholeWorms.Lumbricus
             AppDomain.CurrentDomain.AssemblyLoad += PluginInitializer;
 
             PluginConfigurationElement plugin = null;
+
+            // TODO: This bit needs DRYing up.
+            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "HelpPlugin");
+            if (plugin == null) {
+                logger.Trace("Skipping core plugin `HelpPlugin` as it is not mentioned in the configuration");
+            } else if(!plugin.Enabled) {
+                logger.Trace("Skipping core plugin `HelpPlugin` as it's disabled in the configuration");
+            } else {
+                LumbricusConfiguration.AddPlugin(new HelpPlugin());
+            }
+            
+            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "SeenPlugin");
+            if (plugin == null) {
+                logger.Trace("Skipping core plugin `SeenPlugin` as it is not mentioned in the configuration");
+            } else if(!plugin.Enabled) {
+                logger.Trace("Skipping core plugin `SeenPlugin` as it's disabled in the configuration");
+            } else {
+                LumbricusConfiguration.AddPlugin(new SeenPlugin());
+            }
+            
+            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackBanPlugin");
+            if (plugin == null) {
+                logger.Trace("Skipping core plugin `TrackBanPlugin` as it is not mentioned in the configuration");
+            } else if(!plugin.Enabled) {
+                logger.Trace("Skipping core plugin `TrackBanPlugin` as it's disabled in the configuration");
+            } else {
+                LumbricusConfiguration.AddPlugin(new TrackBanPlugin());
+            }
+            
+            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackKickPlugin");
+            if (plugin == null) {
+                logger.Trace("Skipping core plugin `TrackKickPlugin` as it is not mentioned in the configuration");
+            } else if(!plugin.Enabled) {
+                logger.Trace("Skipping core plugin `TrackKickPlugin` as it's disabled in the configuration");
+            } else {
+                LumbricusConfiguration.AddPlugin(new TrackKickPlugin());
+            }
+            
+            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackUserPlugin");
+            if (plugin == null) {
+                logger.Trace("Skipping core plugin `TrackUserPlugin` as it is not mentioned in the configuration");
+            } else if(!plugin.Enabled) {
+                logger.Trace("Skipping core plugin `TrackUserPlugin` as it's disabled in the configuration");
+            } else {
+                LumbricusConfiguration.AddPlugin(new TrackUserPlugin());
+            }
+            
             foreach (string dll in Directory.GetFiles(pluginsPath, "*.dll", SearchOption.TopDirectoryOnly)) {
                 try {
                     string pluginFileName = Path.GetFileNameWithoutExtension(dll);
@@ -114,42 +161,7 @@ namespace TwoWholeWorms.Lumbricus
             // Remove the plugin initialiser as it's no longer needed
             AppDomain.CurrentDomain.AssemblyLoad -= PluginInitializer;
 
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "HelpPlugin");
-            if (plugin != null && plugin.Enabled) {
-                LumbricusConfiguration.AddPlugin(new HelpPlugin());
-            } else {
-                logger.Trace("Skipping core plugin `HelpPlugin`");
-            }
-
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "SeenPlugin");
-            if (plugin != null && plugin.Enabled) {
-                LumbricusConfiguration.AddPlugin(new SeenPlugin());
-            } else {
-                logger.Trace("Skipping core plugin `SeenPlugin`");
-            }
-
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackBanPlugin");
-            if (plugin != null && plugin.Enabled) {
-                LumbricusConfiguration.AddPlugin(new TrackBanPlugin());
-            } else {
-                logger.Trace("Skipping core plugin `TrackBanPlugin`");
-            }
-
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackKickPlugin");
-            if (plugin != null && plugin.Enabled) {
-                LumbricusConfiguration.AddPlugin(new TrackKickPlugin());
-            } else {
-                logger.Trace("Skipping core plugin `TrackKickPlugin`");
-            }
-
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackUserPlugin");
-            if (plugin != null && plugin.Enabled) {
-                LumbricusConfiguration.AddPlugin(new TrackUserPlugin());
-            } else {
-                logger.Trace("Skipping core plugin `TrackUserPlugin`");
-            }
-
-            logger.Debug("{0} plugins enabled", LumbricusConfiguration.Plugins.Count);
+            logger.Info("{0} plugins enabled", LumbricusConfiguration.Plugins.Count);
         }
 
         static void PluginInitializer(object sender, AssemblyLoadEventArgs args)
