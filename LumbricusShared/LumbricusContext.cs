@@ -47,6 +47,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                     saveFailed = false;
 
                     try {
+                        logger.Debug("Saving changes.");
                         return base.SaveChanges();
                     } catch (DbUpdateConcurrencyException ex) {
                         saveFailed = true;

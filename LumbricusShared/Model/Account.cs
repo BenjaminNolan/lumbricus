@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using NLog;
 using TwoWholeWorms.Lumbricus.Shared;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Model
@@ -11,37 +12,39 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
     [Table("Account")]
     public class Account : IDisposable
 	{
+        readonly static Logger logger = LogManager.GetCurrentClassLogger();
+
         #region Database members
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long              Id                  { get; set; }
+        public         long              Id                  { get; set; }
 
-        public long              ServerId            { get; set; }
-        public Server            Server              { get; set; }
+        public         long              ServerId            { get; set; }
+        public         Server            Server              { get; set; }
         
-        public string            Name                { get; set; }
-        public string            DisplayName         { get; set; }
+        public         string            Name                { get; set; }
+        public         string            DisplayName         { get; set; }
 
-        public string            UserName            { get; set; } = null;
-        public string            Host                { get; set; } = null;
+        public         string            UserName            { get; set; } = null;
+        public         string            Host                { get; set; } = null;
 
-        public long?             MostRecentNickId    { get; set; } = null;
-        public Nick              MostRecentNick      { get; set; } = null;
+        public         long?             MostRecentNickId    { get; set; } = null;
+        public         Nick              MostRecentNick      { get; set; } = null;
         
-        public DateTime          FirstSeenAt         { get; set; } = DateTime.Now;
-        public DateTime          LastSeenAt          { get; set; } = DateTime.Now;
+        public         DateTime          FirstSeenAt         { get; set; } = DateTime.Now;
+        public         DateTime          LastSeenAt          { get; set; } = DateTime.Now;
 
-        public long?             ChannelLastSeenInId { get; set; } = null;
-        public Channel           ChannelLastSeenIn   { get; set; } = null;
+        public         long?             ChannelLastSeenInId { get; set; } = null;
+        public         Channel           ChannelLastSeenIn   { get; set; } = null;
 
-        public bool              IsActive            { get; set; } = true;
-        public bool              IsDeleted           { get; set; } = false;
-        public DateTime          CreatedAt           { get; set; } = DateTime.Now;
-        public DateTime          LastModifiedAt      { get; set; } = DateTime.Now;
-        public bool              IsOp                { get; set; } = false;
+        public         bool              IsActive            { get; set; } = true;
+        public         bool              IsDeleted           { get; set; } = false;
+        public         DateTime          CreatedAt           { get; set; } = DateTime.Now;
+        public         DateTime          LastModifiedAt      { get; set; } = DateTime.Now;
+        public         bool              IsOp                { get; set; } = false;
 
-        public ICollection<Ban>  Bans                { get; set; }
-        public ICollection<Nick> Nicks               { get; set; }
+        public virtual ICollection<Ban>  Bans                { get; set; }
+        public virtual ICollection<Nick> Nicks               { get; set; }
         #endregion Database members
 
         public List<Channel> JoinedChannels = new List<Channel>();
@@ -108,14 +111,19 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public static Account Create(string accountName, Server server)
         {
+            logger.Debug("Creating new account `" + accountName + "` to server id `" + server.Id + "`");
+
             Account account = new Account() {
                 Name = accountName.ToLower(),
                 DisplayName = accountName,
                 Server = server,
+                ServerId = server.Id,
             };
 
-            LumbricusContext.db.Accounts.Attach(account);
+            LumbricusContext.db.Accounts.Add(account);
             LumbricusContext.db.SaveChanges();
+
+            logger.Debug("Account `" + accountName + "` created with id `" + account.Id + "`");
 
             return account;
         }

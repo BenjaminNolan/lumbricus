@@ -14,53 +14,62 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         #region Database members
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long                 Id              { get; set; }
+        public         long                 Id              { get; set; }
 
-        public string               Host            { get; set; }
-        public int                  Port            { get; set; }
-        public string               BotNick         { get; set; }
-        public string               BotNickPassword { get; set; }
-        public string               BotUserName     { get; set; }
-        public string               BotRealName     { get; set; }
-        public string               NickServNick    { get; set; }
-        public string               NickServHost    { get; set; }
+        public         string               Host            { get; set; }
+        public         int                  Port            { get; set; }
+        public         string               BotNick         { get; set; }
+        public         string               BotNickPassword { get; set; }
+        public         string               BotUserName     { get; set; }
+        public         string               BotRealName     { get; set; }
+        public         string               NickServNick    { get; set; }
+        public         string               NickServHost    { get; set; }
 
-        public bool                 AutoConnect     { get; set; } = true;
-        public bool                 IsActive        { get; set; } = true;
-        public bool                 IsDeleted       { get; set; } = false;
-        public DateTime             CreatedAt       { get; set; } = DateTime.Now;
-        public DateTime             LastModifiedAt  { get; set; } = DateTime.Now;
+        public         bool                 AutoConnect     { get; set; } = true;
+        public         bool                 IsActive        { get; set; } = true;
+        public         bool                 IsDeleted       { get; set; } = false;
+        public         DateTime             CreatedAt       { get; set; } = DateTime.Now;
+        public         DateTime             LastModifiedAt  { get; set; } = DateTime.Now;
 
-        public ICollection<Account> ServerAccounts  { get; set; }
-        public ICollection<Channel> ServerChannels  { get; set; }
-        public ICollection<Nick>    ServerNicks     { get; set; }
-        public ICollection<Ban>     Bans            { get; set; }
+        public virtual ICollection<Account> ServerAccounts  { get; set; }
+        public virtual ICollection<Channel> ServerChannels  { get; set; }
+        public virtual ICollection<Nick>    ServerNicks     { get; set; }
+        public virtual ICollection<Ban>     Bans            { get; set; }
         #endregion Database members
 
         [NotMapped]
-        protected List<Channel> connectedChannels = new List<Channel>();
-        [NotMapped]
-        public List<Channel> ConnectedChannels => connectedChannels;
-
-        [NotMapped]
-        protected List<Account> connectedAccounts = new List<Account>();
+        protected List<Account> connectedAccounts;
         [NotMapped]
         public List<Account> ConnectedAccounts => connectedAccounts;
 
         [NotMapped]
-        protected List<Nick> connectedNicks = new List<Nick>();
+        protected List<Channel> connectedChannels;
+        [NotMapped]
+        public List<Channel> ConnectedChannels => connectedChannels;
+        
+        [NotMapped]
+        protected List<Nick> connectedNicks;
         [NotMapped]
         public List<Nick> ConnectedNicks => connectedNicks;
 
         [NotMapped]
-        bool disposed = false;
+        bool disposed;
         [NotMapped]
         public bool Disposed => disposed;
+
+        public Server()
+        {
+            connectedAccounts = new List<Account>();
+            connectedChannels = new List<Channel>();
+            connectedNicks = new List<Nick>();
+
+            disposed = false;
+        }
 
         public void SetChannels(List<Channel> channels)
         {
             if (connectedChannels != null) {
-                this.connectedChannels = channels;
+                connectedChannels = channels;
             }
         }
 

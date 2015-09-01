@@ -322,7 +322,11 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 ircNick.UserName = user;
                 ircNick.Host = host;
                 if (ircAccount != null && ircNick.Account == null) {
+                    logger.Debug("Setting AccountId for nick `" + ircNick.Name + "` to `" + ircAccount.Id + "`");
+
                     ircNick.Account = ircAccount;
+                    ircNick.AccountId = ircAccount.Id;
+
                     LumbricusContext.db.SaveChanges();
                 } else {
                     if (ircNick.Account.Id != ircAccount.Id) {
@@ -392,6 +396,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
                 if (ircNick.Account == null) {
                     ircNick.Account = ircAccount;
+                    ircNick.AccountId = ircAccount.Id;
                     LumbricusContext.db.SaveChanges();
                 } else if (ircNick.Account.Id != ircAccount.Id && queue.ContainsKey(line.Nick)) {
                     SendPrivmsg(line.Nick, "Sorry, but nick `{0}` is not registered to your services account. Please log in on that account and try again.");

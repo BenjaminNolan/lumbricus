@@ -101,8 +101,9 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                 Server = server,
             };
 
-            LumbricusContext.db.Channels.Attach(channel);
+            LumbricusContext.db.Channels.Add(channel);
             LumbricusContext.db.SaveChanges();
+
             return channel;
         }
 
