@@ -34,8 +34,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin.Model
 
         public IrcCommand IrcCommand { get; set; }
 
-        public string     Trail      { get; set; }
-        public string     Line       { get; set; }
+        public string     Trail      { get; set; } = null;
+        public string     Line       { get; set; } = null;
 
         public DateTime   LoggedAt   { get; set; } = DateTime.Now;
         #endregion Database members
@@ -114,9 +114,16 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin.Model
                 select l).FirstOrDefault();
         }
 
-        public static Log Create()
+        public static Log Create(Server server)
         {
-            Log log = IrcLogContext.db.Logs.Create();
+            Log log = new Log() {
+                ServerId = server.Id,
+                IrcCommand = IrcCommand.UNKNOWN,
+            };
+
+            IrcLogContext.db.Logs.Add(log);
+            IrcLogContext.db.SaveChanges();
+
             return log;
         }
 

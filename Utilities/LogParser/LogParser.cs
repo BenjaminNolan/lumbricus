@@ -262,12 +262,11 @@ namespace TwoWholeWorms.Lumbricus.Utilities
 
             seen.Save();
 
-            Log log = Log.Create();
+            Log log = Log.Create(server);
             log.Nick = nick;
             log.Account = account;
             log.Channel = channel;
             log.IrcCommand = ircCommand;
-            log.Server = server;
             log.LoggedAt = logDateTime;
             log.Trail = message;
             log.Line = line;

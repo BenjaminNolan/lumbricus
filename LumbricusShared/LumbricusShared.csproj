@@ -69,7 +69,6 @@
     <Compile Include="Model\Seen.cs" />
     <Compile Include="Model\Server.cs" />
     <Compile Include="IrcCommand.cs" />
-    <Compile Include="IrcLine.cs" />
     <Compile Include="AbstractCommand.cs" />
     <Compile Include="Plugins\Core\HelpPlugin.cs" />
     <Compile Include="Plugins\Core\Commands\Help.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="PluginSettingElement.cs" />
     <Compile Include="Plugins\Attributes.cs" />
     <Compile Include="Exceptions\FormattedDbEntityValidationException.cs" />
+    <Compile Include="Model\IrcLine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

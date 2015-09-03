@@ -32,19 +32,30 @@ do my best to help you out.
 
 ## TODO list
 
+### General
+
+* Split IrcConnection into several parts so it's more efficient and much less monolithic
+* Consolidate the .isOp() methods from AbstractPlugin and AbstractCommand into one
+* DRY up the plugin initialisation code for the core plugins
+
 ### Modules
 
-BotBanPlugin
-BanInfoPlugin
-HelpPlugin <span class="octicon octicon-check" style="color:#900"></span>
-InfoPlugin <span class="octicon octicon-check" style="color:#900"></span>
-IrcLogPlugin
-MugshotsPlugin
-SearchLogPlugin
-SeenPlugin <span class="octicon octicon-check" style="color:#900"></span>
-TrackBanPlugin
-TrackKickPlugin
-TrackUserPlugin <span class="octicon octicon-check" style="color:#900"></span>
+#### Working
+
+* HelpPlugin <span style="color:#090">&#x2611;</span>
+* InfoPlugin <span style="color:#090">&#x2611;</span>
+* SeenPlugin <span style="color:#090">&#x2611;</span>
+* TrackUserPlugin <span style="color:#090">&#x2611;</span>
+
+#### In progress
+
+* BotBanPlugin
+* BanInfoPlugin
+* IrcLogPlugin
+* MugshotsPlugin
+* SearchLogPlugin
+* TrackBanPlugin
+* TrackKickPlugin
 
 ## License
 

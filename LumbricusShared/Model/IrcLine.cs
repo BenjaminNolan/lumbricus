@@ -1,4 +1,4 @@
-﻿namespace TwoWholeWorms.Lumbricus.Shared
+﻿namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
 
     public struct IrcLine

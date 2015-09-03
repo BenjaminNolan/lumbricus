@@ -40,11 +40,16 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
             Nick nick = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
             Channel ircChannel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw.ToLower());
 
-            Log log = Log.Create();
-            log.Server = conn.Server;
-            log.Nick = nick;
-            log.Account = nick?.Account;
-            log.Channel = ircChannel;
+            Log log = Log.Create(conn.Server);
+            if (nick != null) {
+                log.Nick.Id = nick.Id;
+            }
+            if (nick?.Account != null) {
+                log.AccountId = nick?.Account.Id;
+            }
+            if (ircChannel != null) {
+                log.Channel.Id = ircChannel.Id;
+            }
             log.IrcCommand = line.IrcCommand.ToEnum<IrcCommand>();
             log.Trail = line.Trail;
             log.Line = line.RawLine;
