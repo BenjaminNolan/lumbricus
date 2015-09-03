@@ -18,7 +18,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin
         public static void Initialise(LumbricusConfiguration config)
         {
             if (db == null) {
-                logger.Debug("Connecting to MySQL server");
+                logger.Debug("Initialising InfoContext");
                 db = new InfoContext();
             } else {
                 logger.Debug("Skipping database initialisation; already connected");
@@ -28,6 +28,17 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin
         public static void Obliterate()
         {
             db.Dispose();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Info>()
+                .HasKey<long>(i => i.Id);
+
+            modelBuilder.Entity<Info>()
+                .HasRequired(i => i.Account);
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }

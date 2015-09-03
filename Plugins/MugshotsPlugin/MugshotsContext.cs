@@ -18,7 +18,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin
         public static void Initialise(LumbricusConfiguration config)
         {
             if (db == null) {
-                logger.Debug("Connecting to MySQL server");
+                logger.Debug("Initialising MugshotsContext");
                 db = new MugshotsContext();
             } else {
                 logger.Debug("Skipping database initialisation; already connected");
@@ -28,6 +28,17 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin
         public static void Obliterate()
         {
             db.Dispose();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Mugshot>()
+                .HasKey<long>(m => m.Id);
+
+            modelBuilder.Entity<Mugshot>()
+                .HasRequired(m => m.Account);
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }

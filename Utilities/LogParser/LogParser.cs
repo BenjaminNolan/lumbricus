@@ -4,6 +4,7 @@ using TwoWholeWorms.Lumbricus.Shared;
 using System.IO;
 using System.Text.RegularExpressions;
 using TwoWholeWorms.Lumbricus.Shared.Model;
+using TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin.Model;
 
 namespace TwoWholeWorms.Lumbricus.Utilities
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using TwoWholeWorms.Lumbricus.Shared;
 using TwoWholeWorms.Lumbricus.Shared.Model;
 using TwoWholeWorms.Lumbricus.Shared.Plugins;
+using TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin.Model;
 
 namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
 {
@@ -23,6 +24,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
         public override void RegisterPlugin(IrcConnection conn)
         {
             conn.ProcessIrcLine += DoLogPlugin;
+
+            IrcLogContext.Initialise(conn.Config);
         }
 
         public override string Name {

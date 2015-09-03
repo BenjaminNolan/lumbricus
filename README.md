@@ -30,6 +30,22 @@ and at least one channel for that server into `channels` and now run it again.
 If you're still getting errors, join `#lumbricus` on `irc.freenode.net` and I'll
 do my best to help you out.
 
+## TODO list
+
+### Modules
+
+BotBanPlugin
+BanInfoPlugin
+HelpPlugin <span class="octicon octicon-check" style="color:#900"></span>
+InfoPlugin <span class="octicon octicon-check" style="color:#900"></span>
+IrcLogPlugin
+MugshotsPlugin
+SearchLogPlugin
+SeenPlugin <span class="octicon octicon-check" style="color:#900"></span>
+TrackBanPlugin
+TrackKickPlugin
+TrackUserPlugin <span class="octicon octicon-check" style="color:#900"></span>
+
 ## License
 
 Lumbricus is licensed under the MIT License, the full terms of which are

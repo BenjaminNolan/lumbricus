@@ -31,6 +31,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public Channel   Channel           { get; set; } = null;
         
         public bool      IsActive          { get; set; } = true;
+        public bool      IsDeleted         { get; set; } = false;
         public bool      IsMugshotBan      { get; set; } = true;
 
         public DateTime  CreatedAt         { get; set; } = DateTime.Now;

@@ -24,7 +24,6 @@ namespace TwoWholeWorms.Lumbricus.Shared
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Ban>     Bans     { get; set; }
         public DbSet<Channel> Channels { get; set; }
-        public DbSet<Log>     Logs     { get; set; }
         public DbSet<Nick>    Nicks    { get; set; }
         public DbSet<Server>  Servers  { get; set; }
         public DbSet<Setting> Settings { get; set; }
@@ -75,9 +74,6 @@ namespace TwoWholeWorms.Lumbricus.Shared
             
             modelBuilder.Entity<Channel>()
                 .HasKey<long>(c => c.Id);
-
-            modelBuilder.Entity<Log>()
-                .HasKey<long>(l => l.Id);
 
             modelBuilder.Entity<Account>()
                 .HasKey<long>(a => a.Id);
@@ -130,20 +126,6 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 .IsRequired()
                 .HasMaxLength(128);
             
-            modelBuilder.Entity<Log>()
-                .Property(l => l.Trail)
-                .IsOptional()
-                .HasMaxLength(512);
-
-            modelBuilder.Entity<Log>()
-                .Property(l => l.Line)
-                .IsOptional()
-                .HasMaxLength(512);
-
-            modelBuilder.Entity<Log>()
-                .Property(l => l.IrcCommand)
-                .IsRequired();
-
             modelBuilder.Entity<Account>()
                 .Property(a => a.Name)
                 .IsRequired()
@@ -258,26 +240,6 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 .HasMany<Ban>(c => c.Bans)
                 .WithRequired(b => b.Channel)
                 .HasForeignKey(b => b.ChannelId);
-
-            modelBuilder.Entity<Log>()
-                .HasRequired<Server>(l => l.Server)
-                .WithMany()
-                .HasForeignKey(l => l.ServerId);
-            
-            modelBuilder.Entity<Log>()
-                .HasOptional<Account>(l => l.Account)
-                .WithMany()
-                .HasForeignKey(l => l.AccountId);
-
-            modelBuilder.Entity<Log>()
-                .HasOptional<Channel>(l => l.Channel)
-                .WithMany()
-                .HasForeignKey(l => l.ChannelId);
-
-            modelBuilder.Entity<Log>()
-                .HasOptional<Nick>(l => l.Nick)
-                .WithMany()
-                .HasForeignKey(l => l.NickId);
 
 //            modelBuilder.Entity<Nick>()
 //                .HasOptional<Account>(n => n.Account)

@@ -25,7 +25,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core.Commands
         public override void HandleCommand(IrcLine line, Nick nick, Channel channel)
         {
             try {
-                Setting helpUriSetting = Setting.Fetch("help", "uri");
+                Setting helpUriSetting = Setting.Fetch("Help", "Uri");
                 if (helpUriSetting == null) {
                     conn.SendPrivmsg(nick.Name, String.Format("Oh dear… I'm afraid I don't seem to be able to answer that right now, {0}!", nick.DisplayName));
                     return;

@@ -45,6 +45,10 @@
       <Project>{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}</Project>
       <Name>LumbricusShared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IrcLogPlugin\IrcLogPlugin.csproj">
+      <Project>{CE8438DB-5052-4DC3-8447-140523E32208}</Project>
+      <Name>IrcLogPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />

@@ -44,7 +44,11 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Commands
 
                     Info info = Info.FetchOrCreate(nick.Account);
                     info.InfoTxt = line.Args;
+                    info.IsActive = true;
+                    info.IsDeleted = false;
                     info.Save();
+
+                    conn.SendPrivmsg(nick.Name, "Your info has been saved! :D");
                 }
             } catch (Exception e) {
                 logger.Error(e);

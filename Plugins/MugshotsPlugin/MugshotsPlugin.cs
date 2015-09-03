@@ -21,6 +21,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin
         {
             conn.RegisterCommand("!setmugshot", new Commands.SetMugshot(conn));
             conn.RegisterCommand("!clearmugshot", new Commands.ClearMugshot(conn));
+
+            MugshotsContext.Initialise(conn.Config);
         }
 
         public override string Name {

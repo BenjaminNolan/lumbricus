@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using TwoWholeWorms.Lumbricus.Shared;
 using TwoWholeWorms.Lumbricus.Shared.Plugins;
 using TwoWholeWorms.Lumbricus.Shared.Model;
@@ -8,6 +9,8 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
     public class SeenPlugin : AbstractPlugin
     {
+
+//        readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region AbstractPlugin implementation
 
@@ -53,22 +56,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                         throw new Exception(String.Format("Unable to fetch or create nick `{0}`", nick));
                     }
 
-                    Seen seen = Seen.Fetch(nick);
-                    if (seen == null) {
-                        seen = new Seen();
-                        seen.FirstSeenAt = DateTime.Now;
-                    }
-                    seen.Channel = channel;
-                    seen.Server = conn.Server;
-                    seen.Account = nick.Account;
-                    seen.Nick = nick;
-                    seen.LastSeenAt = DateTime.Now;
-                    if (seen.Account != null && nick.Account == null) {
-                        conn.Server.AddAccount(seen.Account);
-                        nick.Account = seen.Account;
-                        seen.Account.AddNick(nick);
-                    }
-                    seen.Save();
+                    Seen.Update(conn.Server, nick, nick.Account, channel);
 
                     break;
             }

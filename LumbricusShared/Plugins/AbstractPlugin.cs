@@ -1,4 +1,4 @@
-﻿using NLog;
+﻿//using NLog;
 using System;
 using System.Linq;
 using TwoWholeWorms.Lumbricus.Shared;
@@ -18,17 +18,36 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins
 
         protected bool isOp(IrcConnection conn, Nick nick)
         {
-            Setting opsChannelSetting = Setting.Fetch("ops", "channel");
-            if (opsChannelSetting == null) {
-                return false;
+            if (nick.Account != null && nick.Account.IsOp) {
+                return true;
             }
 
-            Channel opsChannel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == opsChannelSetting.Value);
-            if (opsChannel == null) {
-                throw new Exception("Unable to find ops channel in conn.Server.Channels");
+            Setting opsSetting = Setting.Fetch("Ops", "Nicks");
+            if (opsSetting != null) {
+                string[] nicks = opsSetting.Value.Split(" ".ToArray());
+                foreach (string n in nicks) {
+                    if (n.ToLower() == nick.Name.ToLower()) {
+                        return true;
+                    }
+                }
             }
 
-            return opsChannel.ConnectedNicks.Contains(nick);
+            Setting opsChannelSetting = Setting.Fetch("Ops", "Channels");
+            if (opsChannelSetting != null) {
+                string[] channels = opsChannelSetting.Value.Split(" ".ToArray());
+                foreach (string c in channels) {
+                    Channel opsChannel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == c);
+                    if (opsChannel == null) {
+                        throw new Exception(string.Format("Unable to find ops channel `{0}` in conn.Server.Channels", c));
+                    }
+
+                    if (opsChannel.ConnectedNicks.Contains(nick)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
     }

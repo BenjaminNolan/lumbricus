@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
-using TwoWholeWorms.Lumbricus.Shared;
 using TwoWholeWorms.Lumbricus.Shared.Model;
 using TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model
 {
@@ -13,17 +13,22 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model
         
         #region Database members
         [Key]
-        public virtual Account Account { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long     Id               { get; set; }
 
-        public string OriginalImageUri { get; set; }
-        public string LargeUri         { get; set; }
-        public string ThumbnailUri     { get; set; }
+        public long     AccountId        { get; set; }
+        [ForeignKey("AccountId")]
+        public Account  Account          { get; set; }
 
-        public DateTime CreatedAt      { get; set; }
-        public DateTime LastModifiedAt { get; set; }
+        public string   OriginalImageUri { get; set; }
+        public string   LargeUri         { get; set; }
+        public string   ThumbnailUri     { get; set; }
 
-        public bool IsActive  { get; set; }
-        public bool IsDeleted { get; set; }
+        public DateTime CreatedAt        { get; set; }
+        public DateTime LastModifiedAt   { get; set; }
+
+        public bool     IsActive         { get; set; }
+        public bool     IsDeleted        { get; set; }
         #endregion Database members
 
         public static Mugshot FetchOrCreate(Account account)
@@ -51,14 +56,16 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model
 
         public static Mugshot Create(Account account = null)
         {
-            Mugshot mugshot = MugshotsContext.db.Mugshots.Create();
-            MugshotsContext.db.Mugshots.Attach(mugshot);
             if (account != null) {
-                mugshot.Account = account;
+                Mugshot mugshot = MugshotsContext.db.Mugshots.Create();
+                MugshotsContext.db.Mugshots.Add(mugshot);
+                mugshot.AccountId = account.Id;
                 mugshot.Save();
+
+                return mugshot;
             }
 
-            return mugshot;
+            return null;
         }
 
         public void Save()

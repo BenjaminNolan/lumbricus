@@ -26,6 +26,11 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Commands
         public override void HandleCommand(IrcLine line, Nick nick, Channel channel)
         {
             try {
+                if (nick.Account == null) {
+                    conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but you need to be identified with services to clear your info.", nick.DisplayName));
+                    return;
+                }
+
                 Seen seen = Seen.Fetch(nick);
                 DateTime checkTime = DateTime.Now;
                 checkTime.AddDays(-7);

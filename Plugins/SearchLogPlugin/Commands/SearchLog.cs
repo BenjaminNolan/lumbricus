@@ -4,6 +4,7 @@ using System.Linq;
 using TwoWholeWorms.Lumbricus.Shared;
 using System.Text.RegularExpressions;
 using TwoWholeWorms.Lumbricus.Shared.Model;
+using TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin.Model;
 
 namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
 {

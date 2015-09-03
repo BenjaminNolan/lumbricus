@@ -26,6 +26,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #endregion
 
+        // This needs to be updated to properly parse mode lines.
         public void DoTrackBanPlugin(IrcConnection conn, IrcLine line)
         {
             Regex r = new Regex(@"^(?<banchannel>#[^ ]+) (?<bantype>[\+\-]b) (?<banmask>.*)$", RegexOptions.ExplicitCapture);

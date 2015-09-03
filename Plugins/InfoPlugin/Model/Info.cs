@@ -1,27 +1,33 @@
 ﻿using System;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
-using TwoWholeWorms.Lumbricus.Shared;
 using TwoWholeWorms.Lumbricus.Shared.Model;
 using TwoWholeWorms.Lumbricus.Plugins.InfoPlugin;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Model
 {
 
+    [Table("Info")] 
     public class Info
     {
 
         #region Database members
         [Key]
-        public virtual Account Account { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long      Id              { get; set; }
 
-        public string InfoTxt { get; set; }
+        public long      AccountId       { get; set; }
+        [ForeignKey("AccountId")]
+        public Account   Account         { get; set; }
 
-        public DateTime CreatedAt      { get; set; }
-        public DateTime LastModifiedAt { get; set; }
+        public string    InfoTxt         { get; set; }
 
-        public bool IsActive  { get; set; }
-        public bool IsDeleted { get; set; }
+        public DateTime  CreatedAt       { get; set; } = DateTime.Now;
+        public DateTime  LastModifiedAt  { get; set; } = DateTime.Now;
+
+        public bool      IsActive        { get; set; } = true;
+        public bool      IsDeleted       { get; set; } = false;
         #endregion Database members
 
         public static Info FetchOrCreate(Account account)
@@ -49,14 +55,15 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Model
 
         public static Info Create(Account account = null)
         {
-            Info mugshot = InfoContext.db.Infos.Create();
-            InfoContext.db.Infos.Attach(mugshot);
             if (account != null) {
-                mugshot.Account = account;
-                mugshot.Save();
+                Info info = InfoContext.db.Infos.Create();
+                InfoContext.db.Infos.Add(info);
+                info.AccountId = account.Id;
+                info.Save();
+                return info;
             }
 
-            return mugshot;
+            return null;
         }
 
         public void Save()

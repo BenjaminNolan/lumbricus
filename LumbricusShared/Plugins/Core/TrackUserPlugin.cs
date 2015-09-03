@@ -70,10 +70,13 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                         newNick.UserName = line.User;
                         newNick.Host = line.Host;
                         conn.Server.AddNick(newNick);
-                        if (nick.Account != null && newNick.Account != null && nick.Account.Id != newNick.Account.Id) {
-                            Setting opsChannelSetting = Setting.Fetch("ops", "channel");
-                            if (opsChannelSetting != null) {
-                                conn.SendPrivmsg(opsChannelSetting.Value, String.Format("\x02`{0}`\x0f ($a:\x02{1}\x0f) changed their nick to \x02`{2}`\x0f ($a:\x02{3}\x0f).", nick.Name, nick.Account.Name, newNick.Name, newNick.Account.Name));
+                        Setting notifyOfAccountChangesSetting = Setting.Fetch("ops", "notify_account_changes");
+                        if (notifyOfAccountChangesSetting != null && notifyOfAccountChangesSetting.Value == "true") {
+                            if (nick.Account != null && newNick.Account != null && nick.Account.Id != newNick.Account.Id) {
+                                Setting notifyTargetSetting = Setting.Fetch("ops", "notify_account_changes_target");
+                                if (notifyTargetSetting != null && notifyTargetSetting.Value.Length > 0) {
+                                    conn.SendPrivmsg(notifyTargetSetting.Value, String.Format("\x02`{0}`\x0f ($a:\x02{1}\x0f) changed their nick to \x02`{2}`\x0f ($a:\x02{3}\x0f).", nick.Name, nick.Account.Name, newNick.Name, newNick.Account.Name));
+                                }
                             }
                         }
                         if (newNick.Account != null) {

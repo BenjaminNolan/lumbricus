@@ -107,7 +107,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                 Account.ChannelLastSeenIn = Channel;
                 Account.FirstSeenAt       = FirstSeenAt;
                 Account.LastSeenAt        = LastSeenAt;
-                Account.MostRecentNick       = Nick;
+                Account.MostRecentNick    = Nick;
 
                 try {
                     LumbricusContext.db.Accounts.Attach(Account);
@@ -118,9 +118,9 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
             }
             if (Nick != null) {
                 Nick.ChannelLastSeenIn = Channel;
-                Nick.FirstSeenAt = FirstSeenAt;
-                Nick.LastSeenAt  = LastSeenAt;
-                Nick.Account     = Account;
+                Nick.FirstSeenAt       = FirstSeenAt;
+                Nick.LastSeenAt        = LastSeenAt;
+                Nick.Account           = Account;
 
                 try {
                     LumbricusContext.db.Nicks.Attach(Nick);
@@ -129,6 +129,39 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                 }
                 LumbricusContext.db.SaveChanges();
             }
+        }
+
+        public static Seen Update(Server ircServer, Nick ircNick)
+        {
+            return Update(ircServer, ircNick, null, null);
+        }
+
+        public static Seen Update(Server ircServer, Nick ircNick, Account ircAccount)
+        {
+            return Update(ircServer, ircNick, ircAccount, null);
+        }
+
+        public static Seen Update(Server ircServer, Nick ircNick, Account ircAccount, Channel ircChannel)
+        {
+            Seen seen = Seen.Fetch(ircNick);
+            if (seen == null) {
+                seen = new Seen();
+                seen.FirstSeenAt = DateTime.Now;
+            }
+            seen.Channel = ircChannel;
+            seen.Server = ircServer;
+            seen.Account = ircAccount;
+            seen.Nick = ircNick;
+            seen.LastSeenAt = DateTime.Now;
+            seen.Save();
+
+            if (seen.Account != null && ircNick.Account == null) {
+                ircServer.AddAccount(seen.Account);
+                ircNick.Account = seen.Account;
+                seen.Account.AddNick(ircNick);
+            }
+
+            return seen;
         }
 
 	}

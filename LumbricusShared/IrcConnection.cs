@@ -357,6 +357,8 @@ namespace TwoWholeWorms.Lumbricus.Shared
             if (ircChannel != null) {
                 ircChannel.AddNick(ircNick);
             }
+
+            Seen.Update(Server, ircNick, ircAccount, ircChannel);
         }
 
         void Handle354(IrcLine line)
@@ -415,6 +417,8 @@ namespace TwoWholeWorms.Lumbricus.Shared
                     }
                     return;
                 }
+
+                Seen.Update(Server, ircNick, ircAccount, channel);
 
                 if (queue.ContainsKey(line.Nick)) {
                     if (CheckBans(ircNick, ircAccount, line.User, line.Host)) {

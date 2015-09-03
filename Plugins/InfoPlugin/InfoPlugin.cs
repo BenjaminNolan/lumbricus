@@ -21,6 +21,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin
         {
             conn.RegisterCommand("!setinfo", new Commands.SetInfo(conn));
             conn.RegisterCommand("!clearinfo", new Commands.ClearInfo(conn));
+
+            InfoContext.Initialise(conn.Config);
         }
 
         public override string Name {

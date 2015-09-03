@@ -28,24 +28,24 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         public void DoTrackKickPlugin(IrcConnection conn, IrcLine line)
         {
-            Regex r = new Regex(@"^(?<channel>#[^ ]+) (?<twat>.*)$", RegexOptions.ExplicitCapture);
+            Regex r = new Regex(@"^(?<channel>#[^ ]+) (?<idiot>.*)$", RegexOptions.ExplicitCapture);
             Match m = r.Match(line.IrcCommandArgsRaw);
 
             if (m.Success) {
                 string channelName = m.Groups["channel"].Value;
-                string twat        = m.Groups["twat"].Value;
+                string idiot       = m.Groups["idiot"].Value;
 
                 Nick banner = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
-                Nick twatNick = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == twat.ToLower());
+                Nick idiotNick = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == idiot.ToLower());
                 Channel channel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == channelName.ToLower());
 
-                Ban ban = Ban.Fetch(channel, twatNick);
+                Ban ban = Ban.Fetch(channel, idiotNick);
                 if (ban != null) {
                     if (ban.BannerAccount == null && banner.Account != null) {
                         ban.BannerAccount = banner.Account;
                     }
-                    ban.Nick = twatNick;
-                    if (twatNick.Account != null) ban.Account = twatNick.Account;
+                    ban.Nick = idiotNick;
+                    if (idiotNick.Account != null) ban.Account = idiotNick.Account;
                     ban.Channel = channel;
                     ban.BanMessage = line.Trail;
 
