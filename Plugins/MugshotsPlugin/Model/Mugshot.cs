@@ -24,11 +24,11 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model
         public string   LargeUri         { get; set; }
         public string   ThumbnailUri     { get; set; }
 
-        public DateTime CreatedAt        { get; set; }
-        public DateTime LastModifiedAt   { get; set; }
+        public DateTime CreatedAt        { get; set; } = DateTime.Now;
+        public DateTime LastModifiedAt   { get; set; } = DateTime.Now;
 
-        public bool     IsActive         { get; set; }
-        public bool     IsDeleted        { get; set; }
+        public bool     IsActive         { get; set; } = true;
+        public bool     IsDeleted        { get; set; } = false;
         #endregion Database members
 
         public static Mugshot FetchOrCreate(Account account)
