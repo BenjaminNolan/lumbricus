@@ -186,6 +186,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                 mugshot.IsActive = true;
                 mugshot.IsDeleted = false;
                 mugshot.Save();
+
+                conn.SendPrivmsg(nick.Name, "Your mugshot has been set! :D");
             } catch (Exception e) {
                 logger.Error(e);
                 conn.SendPrivmsg(nick.Name, "Oof… I shouldn't have eaten that pie, I can't do that right now. :(");
