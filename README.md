@@ -37,6 +37,8 @@ do my best to help you out.
 * Split IrcConnection into several parts so it's more efficient and much less monolithic
 * Consolidate the .isOp() methods from AbstractPlugin and AbstractCommand into one
 * DRY up the plugin initialisation code for the core plugins
+* Internationalisation
+* Many, many, many other things I haven't thought of yet o.o
 
 ### Modules
 
