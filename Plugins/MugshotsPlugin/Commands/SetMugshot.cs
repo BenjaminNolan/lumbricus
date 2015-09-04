@@ -159,7 +159,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                     using (var wrapMode = new ImageAttributes())
                     {
                         wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                        graphics.DrawImage(original, rect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                        graphics.DrawImage(original, rect, 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, wrapMode);
                     }
                 }
 
