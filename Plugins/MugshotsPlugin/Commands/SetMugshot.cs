@@ -133,11 +133,11 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                     throw new Exception(String.Format("Unable to get image from URI `{0}`", imageUri));
                 }
 
-                float fileRatio = original.Width / original.Height;
+                float fileRatio = ((float)original.Width) / ((float)original.Height);
                 float maxRatio = thumbWidth / thumbHeight;
                 int width = 0;
                 int height = 0;
-                if (fileRatio > maxRatio) {
+                if (fileRatio < maxRatio) {
                     height = maxLargeHeight;
                     width = (int)Math.Ceiling(height * fileRatio);
                 } else {
@@ -169,8 +169,10 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
 
                 ImageCodecInfo info = GetEncoderInfo("image/png");
                 Encoder encoder = Encoder.Quality;
+
                 EncoderParameters encoderParams = new EncoderParameters(1);
                 encoderParams.Param[0] = new EncoderParameter(encoder, 100);
+
                 thumb.Save(Path.Combine(thumbnailBasePath.Value, newFileName), info, encoderParams);
                 image.Save(Path.Combine(largeImageBasePath.Value, newFileName), info, encoderParams);
                 original.Save(Path.Combine(originalBasePath.Value, newFileName), info, encoderParams);

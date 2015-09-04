@@ -60,7 +60,6 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model
                 Mugshot mugshot = MugshotsContext.db.Mugshots.Create();
                 MugshotsContext.db.Mugshots.Add(mugshot);
                 mugshot.AccountId = account.Id;
-                mugshot.Save();
 
                 return mugshot;
             }

@@ -50,7 +50,7 @@ do my best to help you out.
 - [x] **[HelpPlugin](LumbricusShared/Plugins/Core/HelpPlugin.cs)** — Responds to !help with a URL (as spam is horrible, but I suppose I can add text help later on)
 - [x] **[InfoPlugin](Plugins/InfoPlugin)** — Allows users to set, modify, and clear an info line about themselves in a database table
 - [x] **[IrcLogPlugin](Plugins/IrcLogPlugin)** — Logs all lines to a database table
-- [ ] **[MugshotsPlugin](Plugins/MugshotsPlugin)** — Allows users to set, modify, and clear a mugshot photo of themselves in a database table
+- [x] **[MugshotsPlugin](Plugins/MugshotsPlugin)** — Allows users to set, modify, and clear a mugshot photo of themselves in a database table
 - [ ] **[SearchLogPlugin](Plugins/SearchLogPlugin)** — Adds a !searchlog command which searches the logs table created by IrcLogPlugin
 - [x] **[SeenPlugin](LumbricusShared/Plugins/Core/SeenPlugin.cs)** — Tracks users' first and last seen dates and times, and provides a command to extract that data (currently OPs only)
 - [ ] **[TrackBanPlugin](LumbricusShared/Plugins/Core/TrackBanPlugin.cs)** — Tracks bans and unbans in a database table
