@@ -44,20 +44,25 @@ do my best to help you out.
 
 #### Working
 
-* HelpPlugin <span style="color:#090">&#x2611;</span>
-* InfoPlugin <span style="color:#090">&#x2611;</span>
-* IrcLogPlugin <span style="color:#090">&#x2611;</span>
-* SeenPlugin <span style="color:#090">&#x2611;</span>
-* TrackUserPlugin <span style="color:#090">&#x2611;</span>
+* HelpPlugin — Responds to !help with a URL (as spam is horrible, but I suppose I can add text help later on)
+* InfoPlugin — Allows users to set, modify, and clear an info line about themselves in a database table
+* IrcLogPlugin — Logs all lines to a database table
+* SeenPlugin — Tracks users' first and last seen dates and times, and provides a command to extract that data (currently OPs only)
+* TrackUserPlugin — Tracks user movements (eg, JOIN, PART, QUIT, NICK, etc)
 
 #### In progress
 
-* BotBanPlugin
-* BanInfoPlugin
-* MugshotsPlugin
-* SearchLogPlugin
-* TrackBanPlugin
-* TrackKickPlugin
+* BotBanPlugin — Provides commands and mechanisms to ban users from using the bot at all
+* BanInfoPlugin — Adds a !baninfo command which can be used to get info about a user's bans (which can be multitudinous)
+* MugshotsPlugin — Allows users to set, modify, and clear a mugshot photo of themselves in a database table
+* SearchLogPlugin — Adds a !searchlog command which searches the logs table created by IrcLogPlugin
+* TrackBanPlugin — Tracks bans and unbans in a database table
+* TrackKickPlugin — Tracks kicks in a DB table, adding the message to a ban if a user was just banned
+
+#### Planned
+
+* AlizePlugin — Fartificial Intelligence plugin which turns the bot into something you can have a fake conversation with
+* TellPlugin — Provides a way to tell a user or channel a message at a specific time or when they're next seen by the bot
 
 ## License
 
