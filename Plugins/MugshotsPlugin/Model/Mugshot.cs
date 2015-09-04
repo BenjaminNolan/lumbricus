@@ -22,8 +22,6 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model
 
         public string   FileName         { get; set; }
         public string   OriginalImageUri { get; set; }
-        public string   LargeUri         { get; set; }
-        public string   ThumbnailUri     { get; set; }
 
         public DateTime CreatedAt        { get; set; } = DateTime.Now;
         public DateTime LastModifiedAt   { get; set; } = DateTime.Now;
