@@ -10,7 +10,8 @@
         QUIT,
         NICK,
         MODE,
-        NOTICE
+        KICK,
+        NOTICE,
     }
 
 }
