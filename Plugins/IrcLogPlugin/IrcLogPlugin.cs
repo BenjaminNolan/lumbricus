@@ -42,7 +42,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
 
             Log log = Log.Create(conn.Server);
             if (nick != null) {
-                log.Nick.Id = nick.Id;
+                log.NickId = nick.Id;
             }
             if (nick?.Account != null) {
                 log.AccountId = nick?.Account.Id;

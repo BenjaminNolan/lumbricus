@@ -64,7 +64,6 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Ban.cs" />
     <Compile Include="Model\Channel.cs" />
-    <Compile Include="Model\Log.cs" />
     <Compile Include="Model\Nick.cs" />
     <Compile Include="Model\Seen.cs" />
     <Compile Include="Model\Server.cs" />

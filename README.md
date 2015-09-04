@@ -44,6 +44,7 @@ do my best to help you out.
 
 * HelpPlugin <span style="color:#090">&#x2611;</span>
 * InfoPlugin <span style="color:#090">&#x2611;</span>
+* IrcLogPlugin <span style="color:#090">&#x2611;</span>
 * SeenPlugin <span style="color:#090">&#x2611;</span>
 * TrackUserPlugin <span style="color:#090">&#x2611;</span>
 
@@ -51,7 +52,6 @@ do my best to help you out.
 
 * BotBanPlugin
 * BanInfoPlugin
-* IrcLogPlugin
 * MugshotsPlugin
 * SearchLogPlugin
 * TrackBanPlugin
