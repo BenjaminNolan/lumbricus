@@ -185,6 +185,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                 mugshot.LargeUri = largeImageBaseUri.Value + "/" + newFileName;
                 mugshot.IsActive = true;
                 mugshot.IsDeleted = false;
+                mugshot.LastModifiedAt = DateTime.Now;
                 mugshot.Save();
 
                 conn.SendPrivmsg(nick.Name, "Your mugshot has been set! :D");
