@@ -44,20 +44,20 @@ do my best to help you out.
 
 #### Working
 
-* **[HelpPlugin](plugins/HelpPlugin)** — Responds to !help with a URL (as spam is horrible, but I suppose I can add text help later on)
-* **[InfoPlugin](plugins/InfoPlugin)** — Allows users to set, modify, and clear an info line about themselves in a database table
-* **[IrcLogPlugin](plugins/IrcLogPlugin)** — Logs all lines to a database table
-* **[SeenPlugin](plugins/SeenPlugin)** — Tracks users' first and last seen dates and times, and provides a command to extract that data (currently OPs only)
-* **[TrackUserPlugin](plugins/TrackUserPlugin)** — Tracks user movements (eg, JOIN, PART, QUIT, NICK, etc)
+* **[HelpPlugin](Plugins/HelpPlugin)** — Responds to !help with a URL (as spam is horrible, but I suppose I can add text help later on)
+* **[InfoPlugin](Plugins/InfoPlugin)** — Allows users to set, modify, and clear an info line about themselves in a database table
+* **[IrcLogPlugin](Plugins/IrcLogPlugin)** — Logs all lines to a database table
+* **[SeenPlugin](Plugins/SeenPlugin)** — Tracks users' first and last seen dates and times, and provides a command to extract that data (currently OPs only)
+* **[TrackUserPlugin](Plugins/TrackUserPlugin)** — Tracks user movements (eg, JOIN, PART, QUIT, NICK, etc)
 
 #### In progress
 
-* **[BotBanPlugin](plugins/BotBanPlugin)** — Provides commands and mechanisms to ban users from using the bot at all
-* **[BanInfoPlugin](plugins/BanInfoPlugin)** — Adds a !baninfo command which can be used to get info about a user's bans (which can be multitudinous)
-* **[MugshotsPlugin](plugins/MugshotsPlugin)** — Allows users to set, modify, and clear a mugshot photo of themselves in a database table
-* **[SearchLogPlugin](plugins/SearchLogPlugin)** — Adds a !searchlog command which searches the logs table created by IrcLogPlugin
-* **[TrackBanPlugin](plugins/TrackBanPlugin)** — Tracks bans and unbans in a database table
-* **[TrackKickPlugin](plugins/TrackKickPlugin)** — Tracks kicks in a DB table, adding the message to a ban if a user was just banned
+* **[BotBanPlugin](Plugins/BotBanPlugin)** — Provides commands and mechanisms to ban users from using the bot at all
+* **[BanInfoPlugin](Plugins/BanInfoPlugin)** — Adds a !baninfo command which can be used to get info about a user's bans (which can be multitudinous)
+* **[MugshotsPlugin](Plugins/MugshotsPlugin)** — Allows users to set, modify, and clear a mugshot photo of themselves in a database table
+* **[SearchLogPlugin](Plugins/SearchLogPlugin)** — Adds a !searchlog command which searches the logs table created by IrcLogPlugin
+* **[TrackBanPlugin](Plugins/TrackBanPlugin)** — Tracks bans and unbans in a database table
+* **[TrackKickPlugin](Plugins/TrackKickPlugin)** — Tracks kicks in a DB table, adding the message to a ban if a user was just banned
 
 #### Planned
 
