@@ -33,10 +33,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
         {
             try {
                 Setting largeImageBasePath    = Setting.Fetch("Mugshots", "LargeImageBasePath");
-                Setting largeImageBaseUri     = Setting.Fetch("Mugshots", "LargeImageBaseUri");
                 Setting originalBasePath      = Setting.Fetch("Mugshots", "OriginalBasePath");
                 Setting thumbnailBasePath     = Setting.Fetch("Mugshots", "ThumbnailBasePath");
-                Setting thumbnailBaseUri      = Setting.Fetch("Mugshots", "ThumbnailBaseUri");
 
                 Setting maxLargeHeightSetting = Setting.Fetch("Mugshots", "MaxLargeHeight");
                 Setting maxLargeWidthSetting  = Setting.Fetch("Mugshots", "MaxLargeWidth");
@@ -46,17 +44,11 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                 if (largeImageBasePath == null) {
                     throw new Exception("Mugshots/LargeImageBasePath is missing from Settings table");
                 }
-                if (largeImageBaseUri == null) {
-                    throw new Exception("Mugshots/LargeImageBaseUri is missing from Settings table");
-                }
                 if (originalBasePath == null) {
                     throw new Exception("Mugshots/OriginalBasePath is missing from Settings table");
                 }
                 if (thumbnailBasePath == null) {
                     throw new Exception("Mugshots/ThumbnailBasePath is missing from Settings table");
-                }
-                if (thumbnailBaseUri == null) {
-                    throw new Exception("Mugshots/ThumbnailBaseUri is missing from Settings table");
                 }
 
                 if (maxLargeHeightSetting == null) {
@@ -180,9 +172,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                 nick.Account.MostRecentNick = nick;
 
                 Mugshot mugshot = Mugshot.FetchOrCreate(nick.Account);
+                mugshot.FileName = newFileName;
                 mugshot.OriginalImageUri = imageUri;
-                mugshot.ThumbnailUri = thumbnailBaseUri.Value + "/" + newFileName;
-                mugshot.LargeUri = largeImageBaseUri.Value + "/" + newFileName;
                 mugshot.IsActive = true;
                 mugshot.IsDeleted = false;
                 mugshot.LastModifiedAt = DateTime.Now;

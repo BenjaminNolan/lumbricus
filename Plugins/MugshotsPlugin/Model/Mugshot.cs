@@ -20,6 +20,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model
         [ForeignKey("AccountId")]
         public Account  Account          { get; set; }
 
+        public string   FileName         { get; set; }
         public string   OriginalImageUri { get; set; }
         public string   LargeUri         { get; set; }
         public string   ThumbnailUri     { get; set; }
