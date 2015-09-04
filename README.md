@@ -40,6 +40,8 @@ do my best to help you out.
 * DRY up the plugin initialisation code for the core plugins
 * Internationalisation
 * Many, many, many other things I haven't thought of yet o.o
+* Speed up DB interactions
+* Reduce number of calls to LumbricusContext.db.SaveChanges();
 
 ### Modules
 
