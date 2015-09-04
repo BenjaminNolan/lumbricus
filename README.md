@@ -16,6 +16,7 @@ Import the appropriate schema file from `db/schemata/` into your new DB.
     cd /path/to/where/you/want/lumbricus/to/live
     git clone https://github.com/TwoWholeWorms/lumbricus ./
     cd lumbricus
+    nuget restore
     xbuild /p:Configuration=Release Lumbricus.sln
 
 Edit `Lumbricus/bin/Release/Lumbricus.exe.config` and configure the database
