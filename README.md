@@ -42,29 +42,26 @@ do my best to help you out.
 
 ### Modules
 
-#### Working
+#### Current
 
-* **[HelpPlugin](LumbricusShared/Plugins/Core/HelpPlugin.cs)** — Responds to !help with a URL (as spam is horrible, but I suppose I can add text help later on)
-* **[InfoPlugin](Plugins/InfoPlugin)** — Allows users to set, modify, and clear an info line about themselves in a database table
-* **[IrcLogPlugin](Plugins/IrcLogPlugin)** — Logs all lines to a database table
-* **[SeenPlugin](LumbricusShared/Plugins/Core/SeenPlugin.cs)** — Tracks users' first and last seen dates and times, and provides a command to extract that data (currently OPs only)
-* **[TrackUserPlugin](LumbricusShared/Plugins/Core/TrackUserPlugin.cs)** — Tracks user movements (eg, JOIN, PART, QUIT, NICK, etc)
-
-#### In progress
-
-* **[BotBanPlugin](Plugins/BotBanPlugin)** — Provides commands and mechanisms to ban users from using the bot at all
-* **[BanInfoPlugin](Plugins/BanInfoPlugin)** — Adds a !baninfo command which can be used to get info about a user's bans (which can be multitudinous)
-* **[MugshotsPlugin](Plugins/MugshotsPlugin)** — Allows users to set, modify, and clear a mugshot photo of themselves in a database table
-* **[SearchLogPlugin](Plugins/SearchLogPlugin)** — Adds a !searchlog command which searches the logs table created by IrcLogPlugin
-* **[TrackBanPlugin](LumbricusShared/Plugins/Core/TrackBanPlugin.cs)** — Tracks bans and unbans in a database table
-* **[TrackKickPlugin](LumbricusShared/Plugins/Core/TrackKickPlugin.cs)** — Tracks kicks in a DB table, adding the message to a ban if a user was just banned
+- [ ] **[BotBanPlugin](Plugins/BotBanPlugin)** — Provides commands and mechanisms to ban users from using the bot at all
+- [ ] **[BanInfoPlugin](Plugins/BanInfoPlugin)** — Adds a !baninfo command which can be used to get info about a user's bans (which can be multitudinous)
+- [x] **[HelpPlugin](LumbricusShared/Plugins/Core/HelpPlugin.cs)** — Responds to !help with a URL (as spam is horrible, but I suppose I can add text help later on)
+- [x] **[InfoPlugin](Plugins/InfoPlugin)** — Allows users to set, modify, and clear an info line about themselves in a database table
+- [x] **[IrcLogPlugin](Plugins/IrcLogPlugin)** — Logs all lines to a database table
+- [ ] **[MugshotsPlugin](Plugins/MugshotsPlugin)** — Allows users to set, modify, and clear a mugshot photo of themselves in a database table
+- [ ] **[SearchLogPlugin](Plugins/SearchLogPlugin)** — Adds a !searchlog command which searches the logs table created by IrcLogPlugin
+- [x] **[SeenPlugin](LumbricusShared/Plugins/Core/SeenPlugin.cs)** — Tracks users' first and last seen dates and times, and provides a command to extract that data (currently OPs only)
+- [ ] **[TrackBanPlugin](LumbricusShared/Plugins/Core/TrackBanPlugin.cs)** — Tracks bans and unbans in a database table
+- [ ] **[TrackKickPlugin](LumbricusShared/Plugins/Core/TrackKickPlugin.cs)** — Tracks kicks in a DB table, adding the message to a ban if a user was just banned
+- [x] **[TrackUserPlugin](LumbricusShared/Plugins/Core/TrackUserPlugin.cs)** — Tracks user movements (eg, JOIN, PART, QUIT, NICK, etc)
 
 #### Planned
 
-* **AlizePlugin** — Fartificial Intelligence plugin which turns the bot into something you can have a fake conversation with
-* **TellPlugin** — Provides a way to tell a user or channel a message at a specific time or when they're next seen by the bot
-* **GuardianPlugin** — Ensures that no-one gets ops who shouldn't have ops
-* **SnailKillerPlugin** — Removes ops from users who haven't used their ops abilities after a certain timeframe has elapsed
+- [ ] **AlizePlugin** — Fartificial Intelligence plugin which turns the bot into something you can have a fake conversation with
+- [ ] **TellPlugin** — Provides a way to tell a user or channel a message at a specific time or when they're next seen by the bot
+- [ ] **GuardianPlugin** — Ensures that no-one gets ops who shouldn't have ops
+- [ ] **SnailKillerPlugin** — Removes ops from users who haven't used their ops abilities after a certain timeframe has elapsed
 
 ## License
 
