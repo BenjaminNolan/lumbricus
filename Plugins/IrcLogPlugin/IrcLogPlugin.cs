@@ -48,7 +48,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
                 log.AccountId = nick?.Account.Id;
             }
             if (ircChannel != null) {
-                log.Channel.Id = ircChannel.Id;
+                log.ChannelId = ircChannel.Id;
             }
             log.IrcCommand = line.IrcCommand.ToEnum<IrcCommand>();
             log.Trail = line.Trail;
