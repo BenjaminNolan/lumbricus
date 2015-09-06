@@ -7,12 +7,12 @@ using TwoWholeWorms.Lumbricus.Shared.Model;
 namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin.Commands
 {
 
-    public class BotBan : AbstractCommand
+    public class BotBanCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public BotBan(IrcConnection conn) : base(conn)
+        public BotBanCommand(IrcConnection conn) : base(conn)
         {
             // …
         }

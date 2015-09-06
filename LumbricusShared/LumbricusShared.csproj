@@ -70,8 +70,6 @@
     <Compile Include="IrcCommand.cs" />
     <Compile Include="AbstractCommand.cs" />
     <Compile Include="Plugins\Core\HelpPlugin.cs" />
-    <Compile Include="Plugins\Core\Commands\Help.cs" />
-    <Compile Include="Plugins\Core\Commands\Seen.cs" />
     <Compile Include="Plugins\Core\SeenPlugin.cs" />
     <Compile Include="Plugins\AbstractPlugin.cs" />
     <Compile Include="LumbricusContext.cs" />
@@ -84,6 +82,10 @@
     <Compile Include="Plugins\Attributes.cs" />
     <Compile Include="Exceptions\FormattedDbEntityValidationException.cs" />
     <Compile Include="Model\IrcLine.cs" />
+    <Compile Include="Plugins\Core\AutoRejoinPlugin.cs" />
+    <Compile Include="Exceptions\LumbricusException.cs" />
+    <Compile Include="Plugins\Core\Commands\SeenCommand.cs" />
+    <Compile Include="Plugins\Core\Commands\HelpCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

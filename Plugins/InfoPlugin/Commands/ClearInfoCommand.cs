@@ -7,12 +7,12 @@ using TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Model;
 namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Commands
 {
 
-    public class ClearInfo : AbstractCommand
+    public class ClearInfoCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public ClearInfo(IrcConnection conn) : base(conn)
+        public ClearInfoCommand(IrcConnection conn) : base(conn)
         {
             // …
         }

@@ -10,12 +10,12 @@ using TwoWholeWorms.Lumbricus.Shared.Model;
 namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
 {
 
-    public class BanInfo : AbstractCommand
+    public class BanInfoCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public BanInfo(IrcConnection conn) : base(conn)
+        public BanInfoCommand(IrcConnection conn) : base(conn)
         {
             // …
         }

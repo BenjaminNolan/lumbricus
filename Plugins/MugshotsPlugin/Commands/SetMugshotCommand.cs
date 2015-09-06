@@ -1,24 +1,25 @@
 ﻿using NLog;
 using System;
-using System.Text.RegularExpressions;
-using TwoWholeWorms.Lumbricus.Shared;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
-using TwoWholeWorms.Lumbricus.Shared.Model;
+using System.Text.RegularExpressions;
+using TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Exceptions;
 using TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model;
-using System.Drawing.Drawing2D;
+using TwoWholeWorms.Lumbricus.Shared;
+using TwoWholeWorms.Lumbricus.Shared.Model;
 
 namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
 {
 
-    public class SetMugshot : AbstractCommand
+    public class SetMugshotCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public SetMugshot(IrcConnection conn) : base(conn)
+        public SetMugshotCommand(IrcConnection conn) : base(conn)
         {
             // …
         }
@@ -126,6 +127,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                 }
 
                 float fileRatio = ((float)original.Width) / ((float)original.Height);
+                logger.Trace("Got image! {0}x{1}, {2}", original.Width, original.Height, fileRatio);
+
                 float maxRatio = thumbWidth / thumbHeight;
                 int width = 0;
                 int height = 0;
@@ -136,10 +139,16 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                     width = maxLargeWidth;
                     height = (int)Math.Ceiling(width / fileRatio);
                 }
+                logger.Trace("Calculate resize dimensions: {0}x{1}", width, height);
 
                 var rect = new Rectangle(0, 0, width, height);
                 var image = new Bitmap(width, height);
-                image.SetResolution(original.HorizontalResolution, original.VerticalResolution);
+                try {
+                    image.SetResolution(original.HorizontalResolution, original.VerticalResolution);
+                } catch (Exception e) {
+                    logger.Debug("image.SetResolution failed.");
+                    logger.Trace(e);
+                }
                 using (var graphics = Graphics.FromImage(image))
                 {
                     graphics.CompositingMode = CompositingMode.SourceCopy;
@@ -180,6 +189,9 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
                 mugshot.Save();
 
                 conn.SendPrivmsg(nick.Name, "Your mugshot has been set! :D");
+            } catch (SetMugshotException e) {
+                logger.Error(e);
+                conn.SendPrivmsg(nick.Name, "Sorry, but I was unable to download your mugshot photo from the URL you provided. Please try another URL, or poke TwoWholeWorms if this error continues.");
             } catch (Exception e) {
                 logger.Error(e);
                 conn.SendPrivmsg(nick.Name, "Oof… I shouldn't have eaten that pie, I can't do that right now. :(");
@@ -195,8 +207,12 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
 
         public static Image GetImageFromUrl(string url)
         {
-            using (var webClient = new WebClient()) {
-                return ByteArrayToImage(webClient.DownloadData(url));
+            try {
+                using (var webClient = new WebClient()) {
+                    return ByteArrayToImage(webClient.DownloadData(url));
+                }
+            } catch (Exception e) {
+                throw new SetMugshotException(string.Format("Unable to download image from URL `{0}`", url), e);
             }
         }
 

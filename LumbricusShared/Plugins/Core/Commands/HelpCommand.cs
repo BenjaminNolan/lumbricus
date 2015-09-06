@@ -6,12 +6,12 @@ using TwoWholeWorms.Lumbricus.Shared.Model;
 namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core.Commands
 {
 
-    public class Help : AbstractCommand
+    public class HelpCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public Help(IrcConnection conn) : base(conn)
+        public HelpCommand(IrcConnection conn) : base(conn)
         {
             // …
         }

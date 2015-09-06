@@ -19,7 +19,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin
 
         public override void RegisterPlugin(IrcConnection conn)
         {
-            conn.RegisterCommand("!searchlog", new Commands.SearchLog(conn));
+            conn.RegisterCommand("!searchlog", new Commands.SearchLogCommand(conn));
         }
 
         public override string Name {

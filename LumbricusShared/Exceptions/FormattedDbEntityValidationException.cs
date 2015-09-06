@@ -4,11 +4,11 @@ using System.Text;
 
 namespace TwoWholeWorms.Lumbricus.Shared.Exceptions
 {
-    public class FormattedDbEntityValidationException : Exception
+    public class FormattedDbEntityValidationException : LumbricusException
     {
-        public FormattedDbEntityValidationException(DbEntityValidationException innerException) :
-        base(null, innerException)
+        public FormattedDbEntityValidationException(DbEntityValidationException innerException) : base(null, innerException)
         {
+            // …
         }
 
         public override string Message

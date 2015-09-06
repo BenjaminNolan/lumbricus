@@ -2,4 +2,4 @@ packages
 *.userprefs
 */*.userprefs
 logs/*
-
+ignore/*

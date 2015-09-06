@@ -109,11 +109,6 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                 Account.LastSeenAt        = LastSeenAt;
                 Account.MostRecentNick    = Nick;
 
-                try {
-                    LumbricusContext.db.Accounts.Attach(Account);
-                } catch (Exception e) {
-                    // …
-                }
                 LumbricusContext.db.SaveChanges();
             }
             if (Nick != null) {
@@ -122,11 +117,6 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
                 Nick.LastSeenAt        = LastSeenAt;
                 Nick.Account           = Account;
 
-                try {
-                    LumbricusContext.db.Nicks.Attach(Nick);
-                } catch (Exception e) {
-                    // …
-                }
                 LumbricusContext.db.SaveChanges();
             }
         }

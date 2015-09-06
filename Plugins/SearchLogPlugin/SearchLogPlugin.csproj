@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchLogPlugin.cs" />
-    <Compile Include="Commands\SearchLog.cs" />
+    <Compile Include="Commands\SearchLogCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

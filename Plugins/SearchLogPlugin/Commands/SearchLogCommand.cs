@@ -9,12 +9,12 @@ using TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin.Model;
 namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
 {
 
-    public class SearchLog : AbstractCommand
+    public class SearchLogCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public SearchLog(IrcConnection conn) : base(conn)
+        public SearchLogCommand(IrcConnection conn) : base(conn)
         {
             // …
         }

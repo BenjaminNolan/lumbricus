@@ -90,6 +90,16 @@ namespace TwoWholeWorms.Lumbricus
             PluginConfigurationElement plugin = null;
 
             // TODO: This bit needs DRYing up.
+            // TODO: TODO: And probably moving to somewhere in LumbricusShared?
+            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "AutoRejoinPlugin");
+            if (plugin == null) {
+                logger.Trace("Skipping core plugin `AutoRejoinPlugin` as it is not mentioned in the configuration");
+            } else if(!plugin.Enabled) {
+                logger.Trace("Skipping core plugin `AutoRejoinPlugin` as it's disabled in the configuration");
+            } else {
+                LumbricusConfiguration.AddPlugin(new AutoRejoinPlugin());
+            }
+
             plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "HelpPlugin");
             if (plugin == null) {
                 logger.Trace("Skipping core plugin `HelpPlugin` as it is not mentioned in the configuration");

@@ -12,6 +12,7 @@
         MODE,
         KICK,
         NOTICE,
+        ERROR,
     }
 
 }

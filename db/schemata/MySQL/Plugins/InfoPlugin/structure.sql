@@ -10,3 +10,6 @@ CREATE TABLE `Info` (
     UNIQUE KEY (`AccountId`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 /* Why the funny collation? Unicode emoji. */
+
+ALTER TABLE `Info`
+    ADD FOREIGN KEY `FK_nicks_AccountId` (`AccountId`) REFERENCES `Account` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;

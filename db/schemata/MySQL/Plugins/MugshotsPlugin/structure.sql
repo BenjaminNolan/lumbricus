@@ -10,3 +10,6 @@ CREATE TABLE `Mugshots` (
     PRIMARY KEY (`Id`),
     UNIQUE KEY (`AccountId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `Mugshots`
+    ADD FOREIGN KEY `FK_nicks_AccountId` (`AccountId`) REFERENCES `Account` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;

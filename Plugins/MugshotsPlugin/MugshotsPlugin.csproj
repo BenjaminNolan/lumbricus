@@ -47,10 +47,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MugshotsPlugin.cs" />
-    <Compile Include="Commands\SetMugshot.cs" />
-    <Compile Include="Commands\ClearMugshot.cs" />
     <Compile Include="Model\Mugshot.cs" />
     <Compile Include="MugshotsContext.cs" />
+    <Compile Include="Exceptions\SetMugshotException.cs" />
+    <Compile Include="Commands\SetMugshotCommand.cs" />
+    <Compile Include="Commands\ClearMugshotCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -62,6 +63,7 @@
   <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="Model\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

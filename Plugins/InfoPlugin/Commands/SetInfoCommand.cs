@@ -8,12 +8,12 @@ using TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Model;
 namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Commands
 {
 
-    public class SetInfo : AbstractCommand
+    public class SetInfoCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public SetInfo(IrcConnection conn) : base(conn)
+        public SetInfoCommand(IrcConnection conn) : base(conn)
         {
             // …
         }

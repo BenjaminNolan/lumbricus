@@ -17,7 +17,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
         public override void RegisterPlugin(IrcConnection conn)
         {
             conn.ProcessIrcLine += DoSeenPlugin;
-            conn.RegisterCommand("!seen", new Commands.Seen(conn));
+            conn.RegisterCommand("!seen", new Commands.SeenCommand(conn));
         }
 
         public override string Name {

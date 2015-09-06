@@ -7,12 +7,12 @@ using TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Model;
 namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
 {
 
-    public class ClearMugshot : AbstractCommand
+    public class ClearMugshotCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public ClearMugshot(IrcConnection conn) : base(conn)
+        public ClearMugshotCommand(IrcConnection conn) : base(conn)
         {
             // …
         }

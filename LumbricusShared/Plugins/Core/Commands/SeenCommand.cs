@@ -9,12 +9,12 @@ using SeenModel = TwoWholeWorms.Lumbricus.Shared.Model.Seen;
 namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core.Commands
 {
 
-    public class Seen : AbstractCommand
+    public class SeenCommand : AbstractCommand
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public Seen(IrcConnection conn) : base(conn)
+        public SeenCommand(IrcConnection conn) : base(conn)
         {
             // …
         }
@@ -103,7 +103,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core.Commands
                         conn.SendPrivmsg(target, String.Format("{1}{0}{2}{1} ($a:{0}{3}{1}): First seen {0}{4}{1}, last seen {0}{5}{1} in {1}{0}{6}{1}.", "\x02", "\x0f", seenNick, seenAccount, ircSeen.FirstSeenAt.ToString("u"), ircSeen.LastSeenAt.ToString("u"), seenChannel));
                     }
                 }
-                } catch (Exception e) {
+            } catch (Exception e) {
                 logger.Error(e);
                 conn.SendPrivmsg(nick.Name, "Oof… My spleen…! I can't do that right now. :(");
             }

@@ -19,7 +19,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin
         #region AbstractPlugin implementation
         public override void RegisterPlugin(IrcConnection conn)
         {
-            conn.RegisterCommand("!baninfo", new Commands.BanInfo(conn));
+            conn.RegisterCommand("!baninfo", new Commands.BanInfoCommand(conn));
         }
 
         public override string Name {

@@ -19,8 +19,8 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin
 
         public override void RegisterPlugin(IrcConnection conn)
         {
-            conn.RegisterCommand("!setinfo", new Commands.SetInfo(conn));
-            conn.RegisterCommand("!clearinfo", new Commands.ClearInfo(conn));
+            conn.RegisterCommand("!setinfo", new Commands.SetInfoCommand(conn));
+            conn.RegisterCommand("!clearinfo", new Commands.ClearInfoCommand(conn));
 
             InfoContext.Initialise(conn.Config);
         }

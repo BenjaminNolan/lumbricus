@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BotBanPlugin.cs" />
-    <Compile Include="Commands\BotBan.cs" />
+    <Compile Include="Commands\BotBanCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

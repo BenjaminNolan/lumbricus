@@ -42,6 +42,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
         public Dictionary<string, AbstractCommand> Commands = new Dictionary<string, AbstractCommand>();
 
         public LumbricusConfiguration Config;
+        public IrcLine lastLine;
 
         public IrcConnection(Server server, LumbricusConfiguration config)
 		{
@@ -83,6 +84,9 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 foreach (AbstractPlugin plugin in LumbricusConfiguration.Plugins) {
                     plugin.RegisterPlugin(this);
                 }
+
+                // TODO: Make this reconnection HAQUE less HAQUI. o.o
+                INITIALISE_BOT:
                 logger.Info("Connecting to {0}:{1}", Server.Host, Server.Port);
 
                 socket = ConnectToNetwork();
@@ -92,7 +96,12 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
                 InitialiseBot();
                 HandleInput();
-                } catch (Exception e) {
+
+                if (lastLine.IrcCommand == "ERROR") {
+                    logger.Error("Disconnected by server, so reconnecting.");
+                    goto INITIALISE_BOT;
+                }
+            } catch (Exception e) {
                 logger.Error(e);
             }
 
@@ -286,6 +295,8 @@ namespace TwoWholeWorms.Lumbricus.Shared
                                 logger.Error(e);
                             }
                         }
+
+                        lastLine = ircLine;
                         if (!string.IsNullOrWhiteSpace(ircLine.Command)) {
                             Enqueue(ircLine);
                             continue;
@@ -300,7 +311,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
                 } catch (MySqlException e) {
                     logger.Error(e);
-                    } catch (Exception e) {
+                } catch (Exception e) {
                     logger.Error(e);
                 }
             }
