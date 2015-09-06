@@ -47,6 +47,7 @@ do my best to help you out.
 
 #### Current
 
+- [x] **[AutoRejoinPlugin](Plugins/AutoRejoinPlugin)** — Attempts to rejoin a channel when kicked or parted from it
 - [ ] **[BotBanPlugin](Plugins/BotBanPlugin)** — Provides commands and mechanisms to ban users from using the bot at all
 - [ ] **[BanInfoPlugin](Plugins/BanInfoPlugin)** — Adds a !baninfo command which can be used to get info about a user's bans (which can be multitudinous)
 - [x] **[HelpPlugin](LumbricusShared/Plugins/Core/HelpPlugin.cs)** — Responds to !help with a URL (as spam is horrible, but I suppose I can add text help later on)
