@@ -26,7 +26,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin.Commands
         public override void HandleCommand(IrcLine line, Nick nick, Channel channel)
         {
             try {
-                if (nick.Account == null || !isOp(nick)) {
+                if (!isOp(nick)) {
                     conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but that command doesn't exist. Try !help.", nick.DisplayName));
                     return;
                 }

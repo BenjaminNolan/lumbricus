@@ -236,13 +236,13 @@ namespace TwoWholeWorms.Lumbricus.Shared
             LoadUserDataForJoinedChannels(channels);
         }
 
-        void LoadUserDataForJoinedChannels(List<Channel> channels)
+        public void LoadUserDataForJoinedChannels(List<Channel> channels)
         {
             if (socket.Connected) {
                 int i = 0;
                 foreach (Channel channel in channels) {
                     if (i > 0) Thread.Sleep(2000); // Wait 2 secs between sending commands, in case we're in loads of channels
-                    Send(String.Format("WHO {0} %cuhnfa", channel.Name)); // 1542, Channel, Nick, User, Host, Status, Account
+                    Send(string.Format("WHO {0} %cuhnfa", channel.Name)); // 1542, Channel, Nick, User, Host, Status, Account
                     i++;
                 }
             }

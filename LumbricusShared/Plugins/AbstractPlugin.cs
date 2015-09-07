@@ -18,7 +18,9 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins
 
         protected bool isOp(IrcConnection conn, Nick nick)
         {
-            if (nick.Account != null && nick.Account.IsOp) {
+            if (nick.Account == null) {
+                return false;
+            } else if (nick.Account.IsOp) {
                 return true;
             }
 

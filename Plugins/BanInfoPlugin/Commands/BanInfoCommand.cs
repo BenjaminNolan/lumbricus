@@ -29,7 +29,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
         public override void HandleCommand(IrcLine line, Nick nick, Channel channel)
         {
             try {
-                if (nick.Account == null || (!isOp(nick) && (nick.Account != null && !nick.Account.IsOp))) {
+                if (!isOp(nick)) {
                     conn.SendPrivmsg(nick.Name, String.Format("Sorry, {0}, but that command doesn't exist. Try !help.", nick.DisplayName));
                     return;
                 }

@@ -42,6 +42,8 @@ do my best to help you out.
 * Many, many, many other things I haven't thought of yet o.o
 * Speed up DB interactions
 * Reduce number of calls to LumbricusContext.db.SaveChanges();
+* Move the plugin configuration elements out of App.config into the DB
+* Add ability to disable commands to the Setting table as well
 
 ### Modules
 
