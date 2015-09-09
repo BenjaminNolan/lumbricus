@@ -68,6 +68,7 @@ do my best to help you out.
 - [ ] **TellPlugin** — Provides a way to tell a user or channel a message at a specific time or when they're next seen by the bot
 - [ ] **GuardianPlugin** — Ensures that no-one gets ops who shouldn't have ops
 - [ ] **SnailKillerPlugin** — Removes ops from users who haven't used their ops abilities after a certain timeframe has elapsed
+- [ ] **WebAdminPlugin** — Adds a basic HTML5 web interface through which the bot can be controlled
 
 ## License
 
