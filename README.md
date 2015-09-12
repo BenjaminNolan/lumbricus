@@ -56,6 +56,7 @@ do my best to help you out.
 - [x] **[InfoPlugin](Plugins/InfoPlugin)** — Allows users to set, modify, and clear an info line about themselves in a database table
 - [x] **[IrcLogPlugin](Plugins/IrcLogPlugin)** — Logs all lines to a database table
 - [x] **[MugshotsPlugin](Plugins/MugshotsPlugin)** — Allows users to set, modify, and clear a mugshot photo of themselves in a database table
+- [x] **[OpsPlugin](Plugins/OpsPlugin)** — Sends a message to all users in designated op channels, and all users in the op nicks when a user in a connected channel sends !ops to that channel
 - [ ] **[SearchLogPlugin](Plugins/SearchLogPlugin)** — Adds a !searchlog command which searches the logs table created by IrcLogPlugin
 - [x] **[SeenPlugin](LumbricusShared/Plugins/Core/SeenPlugin.cs)** — Tracks users' first and last seen dates and times, and provides a command to extract that data (currently OPs only)
 - [ ] **[TrackBanPlugin](LumbricusShared/Plugins/Core/TrackBanPlugin.cs)** — Tracks bans and unbans in a database table
