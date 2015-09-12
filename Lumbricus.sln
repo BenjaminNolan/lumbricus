@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoPlugin", "Plugins\InfoP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlPlugin", "Plugins\ControlPlugin\ControlPlugin.csproj", "{314ED665-069A-4244-89B1-B61A3FA31B8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpsPlugin", "Plugins\OpsPlugin\OpsPlugin.csproj", "{314ED665-069A-4244-89B1-B61A3FA31B9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -39,6 +41,10 @@ Global
 		{314ED665-069A-4244-89B1-B61A3FA31B8B}.Debug|x86.Build.0 = Debug|Any CPU
 		{314ED665-069A-4244-89B1-B61A3FA31B8B}.Release|x86.ActiveCfg = Release|Any CPU
 		{314ED665-069A-4244-89B1-B61A3FA31B8B}.Release|x86.Build.0 = Release|Any CPU
+		{314ED665-069A-4244-89B1-B61A3FA31B9B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{314ED665-069A-4244-89B1-B61A3FA31B9B}.Debug|x86.Build.0 = Debug|Any CPU
+		{314ED665-069A-4244-89B1-B61A3FA31B9B}.Release|x86.ActiveCfg = Release|Any CPU
+		{314ED665-069A-4244-89B1-B61A3FA31B9B}.Release|x86.Build.0 = Release|Any CPU
 		{46DCB608-8208-4DE4-A036-7FF29A790358}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{46DCB608-8208-4DE4-A036-7FF29A790358}.Debug|x86.Build.0 = Debug|Any CPU
 		{46DCB608-8208-4DE4-A036-7FF29A790358}.Release|x86.ActiveCfg = Release|Any CPU
