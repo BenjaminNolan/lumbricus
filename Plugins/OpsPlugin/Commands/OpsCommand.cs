@@ -57,7 +57,12 @@ namespace TwoWholeWorms.Lumbricus.Plugins.OpsPlugin.Commands
                         string c = channels.GetValue(i).ToString();
                         Channel opsChannel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == c);
                         if (opsChannel != null) {
-                            string nicks = opsChannel.ConnectedNicks.Aggregate("", (accumulator, target) => accumulator + ", " + target.DisplayName);
+                            string nicks = "";
+                            foreach (Nick n in opsChannel.ConnectedNicks) {
+                                if (n.Name == conn.Server.BotNick.ToLower()) continue;
+                                if (nicks.Length > 0) nicks += ", ";
+                                nicks += n.DisplayName;
+                            }
                             conn.SendPrivmsg(opsChannel.Name, string.Format("{0}: `{1}` is calling for the attention of a channel op in `{2}`.", nicks, nick.DisplayName, channelName));
                         }
                     }
