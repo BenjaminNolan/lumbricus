@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{314ED665-069A-4244-89B1-B61A3FA31B8B}</ProjectGuid>
+    <ProjectGuid>{314ED665-069A-4244-89C2-B61A3FA31B8B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>TwoWholeWorms.Lumbricus.Plugins.ControlPlugin</RootNamespace>
     <AssemblyName>ControlPlugin</AssemblyName>

@@ -23,6 +23,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlPlugin", "Plugins\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpsPlugin", "Plugins\OpsPlugin\OpsPlugin.csproj", "{314ED665-069A-4244-89B1-B61A3FA31B9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlizePlugin", "Plugins\AlizePlugin\AlizePlugin.csproj", "{314ED665-069A-4244-89B1-B61A4FA31B8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuardianPlugin", "Plugins\GuardianPlugin\GuardianPlugin.csproj", "{315ED665-069A-4244-89B1-B61A3FA31B8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnailKillerPlugin", "Plugins\SnailKillerPlugin\SnailKillerPlugin.csproj", "{314ED665-069A-5244-89B1-B61A3FA31B8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TellPlugin", "Plugins\TellPlugin\TellPlugin.csproj", "{314ED665-069A-4254-89B1-B61A3FA31B8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAdminPlugin", "Plugins\WebAdminPlugin\WebAdminPlugin.csproj", "{314ED665-069A-4244-89C2-B61A3FA31B8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -45,6 +55,26 @@ Global
 		{314ED665-069A-4244-89B1-B61A3FA31B9B}.Debug|x86.Build.0 = Debug|Any CPU
 		{314ED665-069A-4244-89B1-B61A3FA31B9B}.Release|x86.ActiveCfg = Release|Any CPU
 		{314ED665-069A-4244-89B1-B61A3FA31B9B}.Release|x86.Build.0 = Release|Any CPU
+		{314ED665-069A-4244-89B1-B61A4FA31B8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{314ED665-069A-4244-89B1-B61A4FA31B8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{314ED665-069A-4244-89B1-B61A4FA31B8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{314ED665-069A-4244-89B1-B61A4FA31B8B}.Release|x86.Build.0 = Release|Any CPU
+		{314ED665-069A-4244-89C2-B61A3FA31B8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{314ED665-069A-4244-89C2-B61A3FA31B8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{314ED665-069A-4244-89C2-B61A3FA31B8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{314ED665-069A-4244-89C2-B61A3FA31B8B}.Release|x86.Build.0 = Release|Any CPU
+		{314ED665-069A-4254-89B1-B61A3FA31B8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{314ED665-069A-4254-89B1-B61A3FA31B8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{314ED665-069A-4254-89B1-B61A3FA31B8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{314ED665-069A-4254-89B1-B61A3FA31B8B}.Release|x86.Build.0 = Release|Any CPU
+		{314ED665-069A-5244-89B1-B61A3FA31B8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{314ED665-069A-5244-89B1-B61A3FA31B8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{314ED665-069A-5244-89B1-B61A3FA31B8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{314ED665-069A-5244-89B1-B61A3FA31B8B}.Release|x86.Build.0 = Release|Any CPU
+		{315ED665-069A-4244-89B1-B61A3FA31B8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{315ED665-069A-4244-89B1-B61A3FA31B8B}.Debug|x86.Build.0 = Debug|Any CPU
+		{315ED665-069A-4244-89B1-B61A3FA31B8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{315ED665-069A-4244-89B1-B61A3FA31B8B}.Release|x86.Build.0 = Release|Any CPU
 		{46DCB608-8208-4DE4-A036-7FF29A790358}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{46DCB608-8208-4DE4-A036-7FF29A790358}.Debug|x86.Build.0 = Debug|Any CPU
 		{46DCB608-8208-4DE4-A036-7FF29A790358}.Release|x86.ActiveCfg = Release|Any CPU

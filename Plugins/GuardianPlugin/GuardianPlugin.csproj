@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{314ED665-069A-4244-89B1-B61A3FA31B8B}</ProjectGuid>
+    <ProjectGuid>{315ED665-069A-4244-89B1-B61A3FA31B8B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>TwoWholeWorms.Lumbricus.Plugins.ControlPlugin</RootNamespace>
-    <AssemblyName>ControlPlugin</AssemblyName>
+    <RootNamespace>TwoWholeWorms.Lumbricus.Plugins.GuardianPlugin</RootNamespace>
+    <AssemblyName>GuardianPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ControlPlugin.cs" />
+    <Compile Include="GuardianPlugin.cs" />
     <Compile Include="Commands\JoinCommand.cs" />
     <Compile Include="Commands\PartCommand.cs" />
   </ItemGroup>
