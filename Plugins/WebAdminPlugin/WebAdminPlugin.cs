@@ -15,6 +15,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.WebAdminPlugin
         {
             logger.Trace("Registering web admin plugin");
             LumbricusConfiguration.AddPlugin(new WebAdminPlugin());
+            LumbricusConfiguration.AddPluginThread(new WebAdminPluginThread());
         }
 
         public override void RegisterPlugin(IrcConnection conn)

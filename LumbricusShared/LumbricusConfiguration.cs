@@ -14,6 +14,9 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
+        public static List<AbstractPlugin> Plugins = new List<AbstractPlugin>();
+        public static List<AbstractPluginThread> PluginThreads = new List<AbstractPluginThread>();
+
         [ConfigurationProperty("plugins")]
         public PluginConfigCollection PluginConfigs
         {
@@ -28,12 +31,16 @@ namespace TwoWholeWorms.Lumbricus.Shared
             return current;
         }
 
-        public static List<AbstractPlugin> Plugins = new List<AbstractPlugin>();
-
         public static void AddPlugin(AbstractPlugin plugin)
         {
             logger.Debug("Registered plugin {0}", plugin.GetType());
             Plugins.Add(plugin);
+        }
+
+        public static void AddPluginThread(AbstractPluginThread pluginThread)
+        {
+            logger.Debug("Registered plugin thread {0}", pluginThread.GetType());
+            PluginThreads.Add(pluginThread);
         }
 
     }

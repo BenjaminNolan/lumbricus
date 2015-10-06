@@ -18,6 +18,7 @@ namespace TwoWholeWorms.Lumbricus
 
         static List<IrcConnection> connections;
         static List<Thread> threads;
+        static List<Thread> pluginThreads;
 
         public static LumbricusConfiguration config;
 
@@ -56,6 +57,14 @@ namespace TwoWholeWorms.Lumbricus
             InitialisePlugins(config);
 
             LumbricusContext.Initialise(config);
+
+            logger.Debug("Starting plugin threads");
+            foreach (AbstractPluginThread pluginThread in LumbricusConfiguration.PluginThreads) {
+                Thread t = new Thread(() => RunPluginThread(pluginThread));
+                t.Start();
+
+                pluginThreads.Add(t);
+            }
 
             logger.Debug("Initialising server connections");
             var servers = Server.Fetch();
@@ -105,7 +114,7 @@ namespace TwoWholeWorms.Lumbricus
                 } else if(!plugin.Enabled) {
                     logger.Trace("Skipping core plugin `{0}` as it's disabled in the configuration", pluginName);
                 } else {
-                    LumbricusConfiguration.AddPlugin(Activator.CreateInstance(Type.GetType("TwoWholeWorms.Lumbricus.Shared.Plugins.Core." + pluginName)););
+                    LumbricusConfiguration.AddPlugin((AbstractPlugin)Activator.CreateInstance(Type.GetType("TwoWholeWorms.Lumbricus.Shared.Plugins.Core." + pluginName)));
                 }
             }
 
@@ -151,6 +160,15 @@ namespace TwoWholeWorms.Lumbricus
         {
             try {
                 conn.Run();
+            } catch (Exception e) {
+                logger.Error(e);
+            }
+        }
+
+        public static void RunPluginThread(AbstractPluginThread pluginThread)
+        {
+            try {
+                pluginThread.Run();
             } catch (Exception e) {
                 logger.Error(e);
             }

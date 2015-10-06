@@ -50,6 +50,7 @@
     <Compile Include="InfoContext.cs" />
     <Compile Include="Commands\ClearInfoCommand.cs" />
     <Compile Include="Commands\SetInfoCommand.cs" />
+    <Compile Include="Commands\InfoCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -46,8 +46,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TellPlugin.cs" />
-    <Compile Include="Commands\JoinCommand.cs" />
-    <Compile Include="Commands\PartCommand.cs" />
+    <Compile Include="Commands\TellCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

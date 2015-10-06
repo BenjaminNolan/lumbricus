@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{314ED665-069A-4244-89C2-B61A3FA31B8B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>TwoWholeWorms.Lumbricus.Plugins.ControlPlugin</RootNamespace>
+    <RootNamespace>TwoWholeWorms.Lumbricus.Plugins.WebAdminPlugin</RootNamespace>
     <AssemblyName>ControlPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -42,12 +42,18 @@
     <Reference Include="NLog">
       <HintPath>..\..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy">
+      <HintPath>..\..\packages\Nancy.1.3.0\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Hosting.Self">
+      <HintPath>..\..\packages\Nancy.Hosting.Self.1.3.0\lib\net40\Nancy.Hosting.Self.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ControlPlugin.cs" />
-    <Compile Include="Commands\JoinCommand.cs" />
-    <Compile Include="Commands\PartCommand.cs" />
+    <Compile Include="WebAdminPlugin.cs" />
+    <Compile Include="WebAdminPluginThread.cs" />
+    <Compile Include="WebAdminModule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -58,8 +64,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
   </ItemGroup>
 </Project>

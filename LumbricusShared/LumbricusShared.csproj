@@ -86,6 +86,7 @@
     <Compile Include="Exceptions\LumbricusException.cs" />
     <Compile Include="Plugins\Core\Commands\SeenCommand.cs" />
     <Compile Include="Plugins\Core\Commands\HelpCommand.cs" />
+    <Compile Include="Plugins\AbstractPluginThread.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
