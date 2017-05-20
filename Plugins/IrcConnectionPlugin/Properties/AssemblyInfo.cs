@@ -1,30 +1,20 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Resources;
+using System.Reflection;
 using TwoWholeWorms.Lumbricus.Plugins.IrcConnectionPlugin;
 using TwoWholeWorms.Lumbricus.Shared.Plugins;
-
-// Information about this assembly is defined by the following attributes.
-// Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("IrcConnectionPlugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Benjamin Nolan")]
+[assembly: AssemblyProduct("IrcConnectionPlugin")]
+[assembly: AssemblyCopyright("Copyright © Benjamin Nolan 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en")]
 
-[assembly: LumbricusPlugin(typeof(InfoPlugin))]
-
-// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
-// The form "{Major}.{Minor}.*" will automatically update the build and revision,
-// and "{Major}.{Minor}.{Build}.*" will update just the revision.
+// This tells the core system which class to initialise when the assembly is loaded.
+[assembly: LumbricusPlugin(typeof(IrcPlugin))]
 
 [assembly: AssemblyVersion("1.0.*")]
-
-// The following attributes are used to specify the signing key for the assembly,
-// if desired. See the Mono documentation for more information about signing.
-
-//[assembly: AssemblyDelaySign(false)]
-//[assembly: AssemblyKeyFile("")]
+[assembly: AssemblyFileVersion("1.0.*")]

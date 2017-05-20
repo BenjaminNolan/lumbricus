@@ -20,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docs\users.md = docs\users.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrcConnectionPlugin", "Plugins\IrcConnectionPlugin\IrcConnectionPlugin.csproj", "{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrcPlugin", "Plugins\IrcConnectionPlugin\IrcPlugin.csproj", "{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramConnectionPlugin", "Plugins\TelegramConnectionPlugin\TelegramConnectionPlugin.csproj", "{02A465CC-2178-4BAD-8009-B576CC766C44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramPlugin", "Plugins\TelegramConnectionPlugin\TelegramPlugin.csproj", "{02A465CC-2178-4BAD-8009-B576CC766C44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,13 @@
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\obj\Debug\TelegramConnectionPlugin.csprojResolveAssemblyReference.cache
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\TelegramConnectionPlugin.dll
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\TelegramConnectionPlugin.pdb
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\EntityFramework.dll
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\LumbricusShared.dll
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\NLog.dll
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\LumbricusShared.pdb
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\EntityFramework.xml
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\bin\Debug\NLog.xml
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\obj\Debug\TelegramConnectionPlugin.dll
+C:\Projects\lumbricus\Plugins\TelegramConnectionPlugin\obj\Debug\TelegramConnectionPlugin.pdb

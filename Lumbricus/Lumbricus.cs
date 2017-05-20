@@ -6,9 +6,7 @@ using System.Reflection;
 using System.Threading;
 using System.Collections.Generic;
 using TwoWholeWorms.Lumbricus.Shared;
-using TwoWholeWorms.Lumbricus.Shared.Model;
 using TwoWholeWorms.Lumbricus.Shared.Plugins;
-using TwoWholeWorms.Lumbricus.Shared.Plugins.Core;
 using TwoWholeWorms.Lumbricus.Shared.Utilities;
 
 namespace TwoWholeWorms.Lumbricus
@@ -17,7 +15,10 @@ namespace TwoWholeWorms.Lumbricus
 	public static class Lumbricus
 	{
 
-        static List<Connection> connections;
+        public delegate AbstractConnectionPlugin ConnectionPluginDelegate();
+        public static ConnectionPluginDelegate ConnectionPlugins;
+
+        static List<AbstractConnectionPlugin> connectionPlugins;
         static List<Thread> threads;
 
         public static LumbricusConfiguration config;
@@ -27,8 +28,8 @@ namespace TwoWholeWorms.Lumbricus
 		public static void Main(string[] args)
 		{
             try {
-                connections = new List<Connection>();
-                threads     = new List<Thread>();
+                connectionPlugins = new List<AbstractConnectionPlugin>();
+                threads           = new List<Thread>();
 
                 config = LumbricusConfiguration.GetConfig();
 
@@ -58,92 +59,38 @@ namespace TwoWholeWorms.Lumbricus
 
             LumbricusContext.Initialise(config);
 
-            logger.Debug("Initialising server connections");
-            var servers = Server.Fetch();
-            foreach (Server server in servers) {
-                Connection conn = new Connection(server, config);
-                connections.Add(conn);
+            logger.Debug("Initialising connection plugins");
+            foreach (ConnectionPluginDelegate connectionPlugin in ConnectionPlugins.GetInvocationList()) {
+                try {
+                    AbstractConnectionPlugin plugin = connectionPlugin();
+                    connectionPlugins.Add(plugin);
+                } catch (Exception e) {
+                    logger.Error(e);
+                }
             }
 
-            foreach (Connection conn in connections) {
-                var channels = Channel.Fetch(conn.Server);
-                conn.Server.SetChannels(channels.ToList());
-            }
+            logger.Debug("Starting threads");
+            foreach (AbstractConnectionPlugin connectionPlugin in connectionPlugins) {
+                try {
+                    Thread t = new Thread(() => RunThread(connectionPlugin));
+                    t.Start();
 
-            logger.Debug("Starting connections");
-            foreach (Connection conn in connections) {
-                Thread t = new Thread(() => RunThread(conn));
-                t.Start();
-
-                threads.Add(t);
+                    threads.Add(t);
+                } catch (Exception e) {
+                    logger.Error(e);
+                }
             }
-		}
+        }
 
         public static void InitialisePlugins(LumbricusConfiguration config)
         {
             logger.Info("Initialising plugins");
             string pluginsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins");
 
-            // Add the plugin initialiser
-            AppDomain.CurrentDomain.AssemblyLoad += PluginInitializer;
+            // Add the plugin initialiser to the AssemblyLoad delegate so they're handled correctly when loaded
+            AppDomain.CurrentDomain.AssemblyLoad += PluginInitialiser;
 
-            PluginConfigurationElement plugin = null;
-
-            // TODO: This bit needs DRYing up.
-            // TODO: TODO: And probably moving to somewhere in LumbricusShared?
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "AutoRejoinPlugin");
-            if (plugin == null) {
-                logger.Trace("Skipping core plugin `AutoRejoinPlugin` as it is not mentioned in the configuration");
-            } else if(!plugin.Enabled) {
-                logger.Trace("Skipping core plugin `AutoRejoinPlugin` as it's disabled in the configuration");
-            } else {
-                LumbricusConfiguration.AddPlugin(new AutoRejoinPlugin());
-            }
-
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "HelpPlugin");
-            if (plugin == null) {
-                logger.Trace("Skipping core plugin `HelpPlugin` as it is not mentioned in the configuration");
-            } else if(!plugin.Enabled) {
-                logger.Trace("Skipping core plugin `HelpPlugin` as it's disabled in the configuration");
-            } else {
-                LumbricusConfiguration.AddPlugin(new HelpPlugin());
-            }
-            
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "SeenPlugin");
-            if (plugin == null) {
-                logger.Trace("Skipping core plugin `SeenPlugin` as it is not mentioned in the configuration");
-            } else if(!plugin.Enabled) {
-                logger.Trace("Skipping core plugin `SeenPlugin` as it's disabled in the configuration");
-            } else {
-                LumbricusConfiguration.AddPlugin(new SeenPlugin());
-            }
-            
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackBanPlugin");
-            if (plugin == null) {
-                logger.Trace("Skipping core plugin `TrackBanPlugin` as it is not mentioned in the configuration");
-            } else if(!plugin.Enabled) {
-                logger.Trace("Skipping core plugin `TrackBanPlugin` as it's disabled in the configuration");
-            } else {
-                LumbricusConfiguration.AddPlugin(new TrackBanPlugin());
-            }
-            
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackKickPlugin");
-            if (plugin == null) {
-                logger.Trace("Skipping core plugin `TrackKickPlugin` as it is not mentioned in the configuration");
-            } else if(!plugin.Enabled) {
-                logger.Trace("Skipping core plugin `TrackKickPlugin` as it's disabled in the configuration");
-            } else {
-                LumbricusConfiguration.AddPlugin(new TrackKickPlugin());
-            }
-            
-            plugin = config.PluginConfigs.SingleOrDefault(x => x.Name == "TrackUserPlugin");
-            if (plugin == null) {
-                logger.Trace("Skipping core plugin `TrackUserPlugin` as it is not mentioned in the configuration");
-            } else if(!plugin.Enabled) {
-                logger.Trace("Skipping core plugin `TrackUserPlugin` as it's disabled in the configuration");
-            } else {
-                LumbricusConfiguration.AddPlugin(new TrackUserPlugin());
-            }
+            PluginConfigElement plugin = null;
             
             foreach (string dll in Directory.GetFiles(pluginsPath, "*.dll", SearchOption.TopDirectoryOnly)) {
                 try {
@@ -165,28 +112,31 @@ namespace TwoWholeWorms.Lumbricus
                 } catch (BadImageFormatException e) {
                     logger.Trace("`{0}` is not a valid Lumbricus plugin file.", dll);
                     throw e;
+                } catch (Exception e) {
+                    logger.Trace("`{0}` generated an unknown exception whilst attempting to load it.", dll);
+                    throw e;
                 }
             }
 
             // Remove the plugin initialiser as it's no longer needed
-            AppDomain.CurrentDomain.AssemblyLoad -= PluginInitializer;
+            AppDomain.CurrentDomain.AssemblyLoad -= PluginInitialiser;
 
             logger.Info("{0} plugins enabled", LumbricusConfiguration.Plugins.Count);
         }
 
-        static void PluginInitializer(object sender, AssemblyLoadEventArgs args)
+        static void PluginInitialiser(object sender, AssemblyLoadEventArgs args)
         {
             logger.Trace("{0} loaded plugin assembly {1}", sender.ToString(), args.LoadedAssembly.GetName());
-            // Call the static constructors on each plugin class
+            // Call the static constructors on each plugin class to register them with the main thread
             foreach (LumbricusPlugin attr in args.LoadedAssembly.GetCustomAttributes(typeof(LumbricusPlugin), false)) {
                 System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(attr.Type.TypeHandle);
             }
         }
 
-        public static void RunThread(Connection conn)
+        public static void RunThread(AbstractConnectionPlugin plugin)
         {
             try {
-                conn.Run();
+                plugin.Run();
             } catch (Exception e) {
                 logger.Error(e);
             }

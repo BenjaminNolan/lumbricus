@@ -1,10 +1,10 @@
 ﻿using NLog;
 using System.Data.Entity;
-using TwoWholeWorms.Lumbricus.Shared.Model;
 using System.Data.Entity.Validation;
-using TwoWholeWorms.Lumbricus.Shared.Exceptions;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using TwoWholeWorms.Lumbricus.Shared.Model;
+using TwoWholeWorms.Lumbricus.Shared.Exceptions;
 
 namespace TwoWholeWorms.Lumbricus.Shared
 {
@@ -16,17 +16,12 @@ namespace TwoWholeWorms.Lumbricus.Shared
         
         public static LumbricusContext db;
 
+        public DbSet<Setting> Settings { get; set; }
+
         public LumbricusContext() : base()
         {
             // …
         }
-
-        public DbSet<User> Accounts { get; set; }
-        public DbSet<Ban>     Bans     { get; set; }
-        public DbSet<Channel> Channels { get; set; }
-        public DbSet<Nick>    Nicks    { get; set; }
-        public DbSet<Server>  Servers  { get; set; }
-        public DbSet<Setting> Settings { get; set; }
 
         public static void Initialise(LumbricusConfiguration config)
         {
@@ -69,112 +64,8 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Server>()
-                .HasKey<long>(s => s.Id);
-            
-            modelBuilder.Entity<Channel>()
-                .HasKey<long>(c => c.Id);
-
-            modelBuilder.Entity<User>()
-                .HasKey<long>(a => a.Id);
-
-            modelBuilder.Entity<Nick>()
-                .HasKey<long>(n => n.Id);
-
-            modelBuilder.Entity<Ban>()
-                .HasKey<long>(b => b.Id);
-
             modelBuilder.Entity<Setting>()
                 .HasKey<long>(s => s.Id);
-
-            modelBuilder.Entity<Server>()
-                .Property(s => s.Host)
-                .IsRequired()
-                .HasMaxLength(128);
-            
-            modelBuilder.Entity<Server>()
-                .Property(s => s.Port)
-                .IsRequired();
-            
-            modelBuilder.Entity<Server>()
-                .Property(s => s.BotNick)
-                .IsRequired()
-                .HasMaxLength(32);
-            
-            modelBuilder.Entity<Server>()
-                .Property(s => s.BotNickPassword)
-                .IsRequired()
-                .HasMaxLength(64);
-            
-            modelBuilder.Entity<Server>()
-                .Property(s => s.BotUserName)
-                .IsRequired()
-                .HasMaxLength(32);
-            
-            modelBuilder.Entity<Server>()
-                .Property(s => s.BotRealName)
-                .IsRequired()
-                .HasMaxLength(128);
-            
-            modelBuilder.Entity<Server>()
-                .Property(s => s.NickServNick)
-                .IsRequired()
-                .HasMaxLength(32);
-            
-            modelBuilder.Entity<Server>()
-                .Property(s => s.NickServHost)
-                .IsRequired()
-                .HasMaxLength(128);
-            
-            modelBuilder.Entity<User>()
-                .Property(a => a.Name)
-                .IsRequired()
-                .HasMaxLength(32);
-            
-            modelBuilder.Entity<User>()
-                .Property(a => a.DisplayName)
-                .IsRequired()
-                .HasMaxLength(32);
-
-            modelBuilder.Entity<User>()
-                .Property(a => a.UserName)
-                .IsOptional()
-                .HasMaxLength(32);
-
-            modelBuilder.Entity<User>()
-                .Property(a => a.Host)
-                .IsOptional()
-                .HasMaxLength(128);
-
-            modelBuilder.Entity<Ban>()
-                .Property(b => b.BanMessage)
-                .IsOptional()
-                .HasMaxLength(512);
-
-            modelBuilder.Entity<Ban>()
-                .Property(b => b.UnbanMessage)
-                .IsOptional()
-                .HasMaxLength(512);
-
-            modelBuilder.Entity<Nick>()
-                .Property(p => p.Name)
-                .IsRequired()
-                .HasMaxLength(32);
-
-            modelBuilder.Entity<Nick>()
-                .Property(p => p.DisplayName)
-                .IsRequired()
-                .HasMaxLength(32);
-
-            modelBuilder.Entity<Nick>()
-                .Property(p => p.UserName)
-                .IsOptional()
-                .HasMaxLength(32);
-
-            modelBuilder.Entity<Nick>()
-                .Property(p => p.Host)
-                .IsOptional()
-                .HasMaxLength(128);
 
             modelBuilder.Entity<Setting>()
                 .Property(s => s.Section)
@@ -195,66 +86,6 @@ namespace TwoWholeWorms.Lumbricus.Shared
                 .Property(s => s.DefaultValue)
                 .IsRequired()
                 .HasMaxLength(512);
-
-            modelBuilder.Entity<Server>()
-                .HasMany<User>(s => s.ServerAccounts)
-                .WithRequired(a => a.Server)
-                .HasForeignKey(a => a.ServerId);
-
-            modelBuilder.Entity<Server>()
-                .HasMany<Nick>(s => s.ServerNicks)
-                .WithRequired(n => n.Server)
-                .HasForeignKey(n => n.ServerId);
-
-            modelBuilder.Entity<Server>()
-                .HasMany<Channel>(s => s.ServerChannels)
-                .WithRequired(c => c.Server)
-                .HasForeignKey(c => c.ServerId);
-
-            modelBuilder.Entity<Server>()
-                .HasMany<Ban>(s => s.Bans)
-                .WithRequired(b => b.Server)
-                .HasForeignKey(b => b.ServerId);
-
-            modelBuilder.Entity<User>()
-                .HasOptional<Nick>(a => a.MostRecentNick);
-//                .WithMany()
-//                .HasForeignKey(a => a.MostRecentNickId);
-
-            modelBuilder.Entity<User>()
-                .HasOptional<Channel>(a => a.ChannelLastSeenIn);
-//                .WithMany()
-//                .HasForeignKey(a => a.ChannelLastSeenInId);
-
-            modelBuilder.Entity<User>()
-                .HasMany<Nick>(a => a.Nicks)
-                .WithOptional(n => n.Account)
-                .HasForeignKey(n => n.AccountId);
-
-            modelBuilder.Entity<User>()
-                .HasMany<Ban>(a => a.Bans)
-                .WithRequired(b => b.Account)
-                .HasForeignKey(b => b.AccountId);
-
-            modelBuilder.Entity<Channel>()
-                .HasMany<Ban>(c => c.Bans)
-                .WithRequired(b => b.Channel)
-                .HasForeignKey(b => b.ChannelId);
-
-//            modelBuilder.Entity<Nick>()
-//                .HasOptional<Account>(n => n.Account)
-//                .WithMany(a => a.Nicks)
-//                .HasForeignKey(n => n.AccountId);
-            
-            modelBuilder.Entity<Nick>()
-                .HasOptional<Channel>(n => n.ChannelLastSeenIn)
-                .WithMany()
-                .HasForeignKey(n => n.ChannelLastSeenInId);
-
-            modelBuilder.Entity<Nick>()
-                .HasMany<Ban>(n => n.Bans)
-                .WithRequired(b => b.Nick)
-                .HasForeignKey(b => b.NickId);
 
             base.OnModelCreating(modelBuilder);
         }

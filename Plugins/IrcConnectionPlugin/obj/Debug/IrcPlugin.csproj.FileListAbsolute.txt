@@ -1,0 +1,13 @@
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\obj\Debug\IrcPlugin.csprojResolveAssemblyReference.cache
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\obj\Debug\IrcConnectionPlugin.dll
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\obj\Debug\IrcConnectionPlugin.pdb
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\IrcConnectionPlugin.dll
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\IrcConnectionPlugin.pdb
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\EntityFramework.dll
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\LumbricusShared.dll
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\NLog.dll
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\LumbricusShared.pdb
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\EntityFramework.xml
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projects\lumbricus\Plugins\IrcConnectionPlugin\bin\Debug\NLog.xml

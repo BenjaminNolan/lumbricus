@@ -1,6 +1,8 @@
 # Lumbricus
 
-Lumbricus is a modular bot framework written in C♯.
+![The Lumbricus profile picture on Telegram](docs/profile.png)
+
+Lumbricus is a multilingual modular bot framework written in C♯.
 
 [Documentation](docs/index.md) for [users](docs/users.md) and
 [plugin developers](docs/plugin_development.md) is located in the `docs/`

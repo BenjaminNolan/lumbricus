@@ -6,11 +6,11 @@ namespace TwoWholeWorms.Lumbricus.Shared
 {
 
     [ConfigurationCollection(typeof(PluginConfigCollection), AddItemName = "plugin", CollectionType = ConfigurationElementCollectionType.BasicMap)]
-    public class PluginConfigCollection : ConfigurationElementCollection, IEnumerable<PluginConfigurationElement>
+    public class PluginConfigCollection : ConfigurationElementCollection, IEnumerable<PluginConfigElement>
     {
-        public PluginConfigurationElement this[int index]
+        public PluginConfigElement this[int index]
         {
-            get { return (PluginConfigurationElement)BaseGet(index); }
+            get { return (PluginConfigElement)BaseGet(index); }
             set
             {
                 if (BaseGet(index) != null)
@@ -21,7 +21,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
             }
         }
 
-        public void Add(PluginConfigurationElement serviceConfig)
+        public void Add(PluginConfigElement serviceConfig)
         {
             BaseAdd(serviceConfig);
         }
@@ -33,15 +33,15 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
         protected override ConfigurationElement CreateNewElement()
         {
-            return new PluginConfigurationElement();
+            return new PluginConfigElement();
         }
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((PluginConfigurationElement)element).Name;
+            return ((PluginConfigElement)element).Name;
         }
 
-        public void Remove(PluginConfigurationElement pluginConfig)
+        public void Remove(PluginConfigElement pluginConfig)
         {
             BaseRemove(pluginConfig.Name);
         }
@@ -56,12 +56,12 @@ namespace TwoWholeWorms.Lumbricus.Shared
             BaseRemove(name);
         }
 
-        public new IEnumerator<PluginConfigurationElement> GetEnumerator()
+        public new IEnumerator<PluginConfigElement> GetEnumerator()
         {
             int count = base.Count;
             for (int i = 0; i < count; i++)
             {
-                yield return base.BaseGet(i) as PluginConfigurationElement;
+                yield return base.BaseGet(i) as PluginConfigElement;
             }
         }
 

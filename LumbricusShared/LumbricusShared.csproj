@@ -56,37 +56,26 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractSocketConnection.cs" />
+    <Compile Include="Model\Setting.cs" />
+    <Compile Include="PluginConfigCollection.cs" />
+    <Compile Include="PluginConfigSettingsCollection.cs" />
+    <Compile Include="PluginConfigSettingsParametersElement.cs" />
+    <Compile Include="PluginConfigElement.cs" />
+    <Compile Include="Plugins\AbstractConnectionPlugin.cs" />
+    <Compile Include="Plugins\AbstractPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="SocketState.cs" />
     <Compile Include="Utilities\CoreAssembly.cs" />
-    <Compile Include="Connection.cs" />
-    <Compile Include="Plugins\Core\TrackUserPlugin.cs" />
-    <Compile Include="Plugins\Core\TrackBanPlugin.cs" />
-    <Compile Include="Plugins\Core\TrackKickPlugin.cs" />
-    <Compile Include="Model\User.cs" />
-    <Compile Include="Model\Ban.cs" />
-    <Compile Include="Model\Channel.cs" />
-    <Compile Include="Model\Nick.cs" />
-    <Compile Include="Model\Seen.cs" />
-    <Compile Include="Model\Server.cs" />
-    <Compile Include="AbstractCommand.cs" />
-    <Compile Include="Plugins\Core\HelpPlugin.cs" />
-    <Compile Include="Plugins\Core\SeenPlugin.cs" />
-    <Compile Include="Plugins\AbstractPlugin.cs" />
+    <Compile Include="AbstractConnection.cs" />
     <Compile Include="LumbricusContext.cs" />
     <Compile Include="LumbricusConfiguration.cs" />
-    <Compile Include="PluginConfigurationElement.cs" />
-    <Compile Include="PluginConfigCollection.cs" />
-    <Compile Include="Model\Setting.cs" />
-    <Compile Include="PluginSettingsCollection.cs" />
-    <Compile Include="PluginSettingElement.cs" />
+    <Compile Include="PluginConfigSettingsParametersCollection.cs" />
+    <Compile Include="PluginConfigSettingsParameterElement.cs" />
     <Compile Include="Plugins\Attributes.cs" />
     <Compile Include="Exceptions\FormattedDbEntityValidationException.cs" />
-    <Compile Include="Plugins\Core\AutoRejoinPlugin.cs" />
     <Compile Include="Exceptions\LumbricusException.cs" />
-    <Compile Include="Plugins\Core\Commands\SeenCommand.cs" />
-    <Compile Include="Plugins\Core\Commands\HelpCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
