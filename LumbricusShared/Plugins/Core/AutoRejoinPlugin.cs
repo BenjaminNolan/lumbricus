@@ -13,7 +13,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region AbstractPlugin implementation
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.ProcessIrcLine += DoAutoRejoinPlugin;
         }
@@ -26,7 +26,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #endregion
 
-        public void DoAutoRejoinPlugin(IrcConnection conn, IrcLine line)
+        public void DoAutoRejoinPlugin(Connection conn, IrcLine line)
         {
             IrcCommand ircCommand = (IrcCommand)Enum.Parse(typeof(IrcCommand), line.IrcCommand);
             if (ircCommand == IrcCommand.KICK && line.IrcCommandArgs.GetValue(1).ToString() == conn.Server.BotNick) {

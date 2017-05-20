@@ -21,7 +21,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
             LumbricusConfiguration.AddPlugin(new IrcLogPlugin());
         }
 
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.ProcessIrcLine += DoLogPlugin;
 
@@ -35,7 +35,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.IrcLogPlugin
         }
         #endregion
 
-        public void DoLogPlugin(IrcConnection conn, IrcLine line)
+        public void DoLogPlugin(Connection conn, IrcLine line)
         {
             Nick nick = conn.Server.ConnectedNicks.FirstOrDefault(x => x.Name == line.Nick.ToLower());
             Channel ircChannel = conn.Server.ConnectedChannels.FirstOrDefault(x => x.Name == line.IrcCommandArgsRaw.ToLower());

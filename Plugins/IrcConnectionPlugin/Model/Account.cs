@@ -9,7 +9,7 @@ using TwoWholeWorms.Lumbricus.Shared;
 namespace TwoWholeWorms.Lumbricus.Shared.Model
 {
 
-    [Table("Account")]
+    [Table("UserEntity")]
     public class Account : IDisposable
 	{
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
@@ -21,8 +21,9 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
 
         public         long              ServerId            { get; set; }
         public         Server            Server              { get; set; }
-        
-        public         string            Name                { get; set; }
+
+        public         string            ServerUserId        { get; set; }
+        public         string            UserName            { get; set; }
         public         string            DisplayName         { get; set; }
 
         public         string            UserName            { get; set; } = null;
@@ -113,7 +114,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         {
             logger.Debug("Creating new account `" + accountName + "` to server id `" + server.Id + "`");
 
-            Account account = new Account() {
+            Account account = new User() {
                 Name = accountName.ToLower(),
                 DisplayName = accountName,
                 Server = server,

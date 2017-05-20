@@ -3,3 +3,5 @@ packages
 */*.userprefs
 logs/*
 ignore/*
+.vs/
+.vscode/

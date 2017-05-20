@@ -11,4 +11,3 @@ namespace TwoWholeWorms.Lumbricus.Shared
 		public StringBuilder sb = new StringBuilder();
 	}
 }
-

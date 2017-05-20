@@ -14,7 +14,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.ControlPlugin.Commands
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public PartCommand(IrcConnection conn) : base(conn)
+        public PartCommand(Connection conn) : base(conn)
         {
             // …
         }

@@ -8,8 +8,8 @@ namespace TwoWholeWorms.Lumbricus.Shared
     abstract public class AbstractCommand
     {
         
-        protected readonly IrcConnection conn;
-        protected AbstractCommand(IrcConnection conn)
+        protected readonly Connection conn;
+        protected AbstractCommand(Connection conn)
         {
             this.conn = conn;
         }

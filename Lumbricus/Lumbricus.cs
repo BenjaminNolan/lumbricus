@@ -17,7 +17,7 @@ namespace TwoWholeWorms.Lumbricus
 	public static class Lumbricus
 	{
 
-        static List<IrcConnection> connections;
+        static List<Connection> connections;
         static List<Thread> threads;
 
         public static LumbricusConfiguration config;
@@ -27,7 +27,7 @@ namespace TwoWholeWorms.Lumbricus
 		public static void Main(string[] args)
 		{
             try {
-                connections = new List<IrcConnection>();
+                connections = new List<Connection>();
                 threads     = new List<Thread>();
 
                 config = LumbricusConfiguration.GetConfig();
@@ -61,17 +61,17 @@ namespace TwoWholeWorms.Lumbricus
             logger.Debug("Initialising server connections");
             var servers = Server.Fetch();
             foreach (Server server in servers) {
-                IrcConnection conn = new IrcConnection(server, config);
+                Connection conn = new Connection(server, config);
                 connections.Add(conn);
             }
 
-            foreach (IrcConnection conn in connections) {
+            foreach (Connection conn in connections) {
                 var channels = Channel.Fetch(conn.Server);
                 conn.Server.SetChannels(channels.ToList());
             }
 
             logger.Debug("Starting connections");
-            foreach (IrcConnection conn in connections) {
+            foreach (Connection conn in connections) {
                 Thread t = new Thread(() => RunThread(conn));
                 t.Start();
 
@@ -183,7 +183,7 @@ namespace TwoWholeWorms.Lumbricus
             }
         }
 
-        public static void RunThread(IrcConnection conn)
+        public static void RunThread(Connection conn)
         {
             try {
                 conn.Run();

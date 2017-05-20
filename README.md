@@ -1,7 +1,6 @@
 # Lumbricus
 
-Lumbricus is a modular IRC bot written in C♯ which is designed to help channel
-operators who manage several channels keep some semblance of sanity.
+Lumbricus is a modular bot framework written in C♯.
 
 [Documentation](docs/index.md) for [users](docs/users.md) and
 [plugin developers](docs/plugin_development.md) is located in the `docs/`

@@ -13,7 +13,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #region AbstractPlugin implementation
 
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.ProcessIrcLine += DoTrackBanPlugin;
         }
@@ -27,7 +27,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
         #endregion
 
         // This needs to be updated to properly parse mode lines.
-        public void DoTrackBanPlugin(IrcConnection conn, IrcLine line)
+        public void DoTrackBanPlugin(Connection conn, IrcLine line)
         {
             Regex r = new Regex(@"^(?<banchannel>#[^ ]+) (?<bantype>[\+\-]b) (?<banmask>.*)$", RegexOptions.ExplicitCapture);
             Match m = r.Match(line.IrcCommandArgsRaw);
@@ -47,7 +47,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
                     ban = new Ban();
                     if (banMask.StartsWith("$a:")) {
                         string[] maskBits = banMask.Split(" ".ToCharArray(), 2);
-                        Account bannedAccount = Account.Fetch(maskBits[1], conn.Server);
+                        User bannedAccount = User.Fetch(maskBits[1], conn.Server);
                         if (bannedAccount != null) {
                             ban.Account = bannedAccount;
                         }

@@ -12,7 +12,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin.Commands
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public BotBanCommand(IrcConnection conn) : base(conn)
+        public BotBanCommand(Connection conn) : base(conn)
         {
             // …
         }

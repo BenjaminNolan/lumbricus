@@ -14,7 +14,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core.Commands
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public SeenCommand(IrcConnection conn) : base(conn)
+        public SeenCommand(Connection conn) : base(conn)
         {
             // …
         }
@@ -62,11 +62,11 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core.Commands
                     }
 
                     Nick ircNick = null;
-                    Account ircAccount = null;
+                    User ircAccount = null;
                     Channel ircChannel = null;
                     SeenModel ircSeen = null;
                     if (searchType == "account") {
-                        ircAccount = Account.Fetch(search.ToLower(), conn.Server);
+                        ircAccount = User.Fetch(search.ToLower(), conn.Server);
                         if (ircAccount != null) {
                             ircSeen = SeenModel.FetchByAccountId(ircAccount.Id);
                             if (ircSeen != null) {

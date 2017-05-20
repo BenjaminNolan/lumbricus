@@ -13,7 +13,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.InfoPlugin.Commands
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public SetInfoCommand(IrcConnection conn) : base(conn)
+        public SetInfoCommand(Connection conn) : base(conn)
         {
             // …
         }

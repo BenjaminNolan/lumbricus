@@ -13,10 +13,10 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins
 
 //        readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        abstract public void RegisterPlugin(IrcConnection conn);
+        abstract public void RegisterPlugin(Connection conn);
         abstract public string Name { get; }
 
-        protected bool isOp(IrcConnection conn, Nick nick)
+        protected bool isOp(Connection conn, Nick nick)
         {
             if (nick.Account == null) {
                 return false;

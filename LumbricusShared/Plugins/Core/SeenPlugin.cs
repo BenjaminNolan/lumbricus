@@ -14,7 +14,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #region AbstractPlugin implementation
 
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.ProcessIrcLine += DoSeenPlugin;
             conn.RegisterCommand("!seen", new Commands.SeenCommand(conn));
@@ -28,7 +28,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #endregion
 
-        public void DoSeenPlugin(IrcConnection conn, IrcLine line)
+        public void DoSeenPlugin(Connection conn, IrcLine line)
         {
             // :Nick!~User@cpc1-newt1-2-3-cust1.2-3.cable.virginm.net JOIN #channel
             // :Nick!~User@unaffiliated/Nick JOIN #channel

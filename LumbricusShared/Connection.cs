@@ -3,17 +3,17 @@
  * planning to refactor it so the connection is related to a Server instance rather than the other way around.
  */
 
+using MySql.Data.MySqlClient;
+using NLog;
 using System;
 using System.Collections.Generic;
-using NLog;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Linq;
-using MySql.Data.MySqlClient;
 using TwoWholeWorms.Lumbricus.Shared;
 using TwoWholeWorms.Lumbricus.Shared.Model;
 using TwoWholeWorms.Lumbricus.Shared.Plugins;
@@ -21,7 +21,7 @@ using TwoWholeWorms.Lumbricus.Shared.Plugins;
 namespace TwoWholeWorms.Lumbricus.Shared
 {
 
-    public class IrcConnection : IDisposable
+    public class Connection : IDisposable
     {
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
@@ -36,7 +36,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
         bool disposed = false;
         public bool Disposed => disposed;
 
-        public delegate void ProcessIrcLineDelegate(IrcConnection conn, IrcLine line);
+        public delegate void ProcessIrcLineDelegate(Connection conn, IrcLine line);
         public ProcessIrcLineDelegate ProcessIrcLine;
 
         public Dictionary<string, AbstractCommand> Commands = new Dictionary<string, AbstractCommand>();
@@ -44,7 +44,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
         public LumbricusConfiguration Config;
         public IrcLine lastLine;
 
-        public IrcConnection(Server server, LumbricusConfiguration config)
+        public Connection(Server server, LumbricusConfiguration config)
 		{
 			try {
 				Server = server;
@@ -55,7 +55,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
         }
 
         #region IDisposable implementation
-        ~IrcConnection()
+        ~Connection()
         {
             Dispose(true);
         }
@@ -319,11 +319,11 @@ namespace TwoWholeWorms.Lumbricus.Shared
 
         void InsertOrUpdateUserAccountInfo(string account, string nick, string channel, string user, string host, string status)
         {
-            Account ircAccount = null;
+            User ircAccount = null;
             if (account != "0") {
                 ircAccount = Server.ServerAccounts.FirstOrDefault(x => x.Name == account);
                 if (ircAccount == null) {
-                    ircAccount = Account.FetchOrCreate(account, Server);
+                    ircAccount = User.FetchOrCreate(account, Server);
                     if (ircAccount == null) {
                         throw new Exception(String.Format("Unable to fetch or create account `{0}`", account));
                     }
@@ -408,7 +408,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
                     return;
                 }
 
-                Account ircAccount = Account.FetchOrCreate(line.AccountName, Server);
+                User ircAccount = User.FetchOrCreate(line.AccountName, Server);
                 if (ircAccount == null) {
                     if (queue.ContainsKey(line.Nick)) {
                         queue.Remove(line.Nick);
@@ -555,7 +555,7 @@ namespace TwoWholeWorms.Lumbricus.Shared
             return false;
         }
 
-        static bool CheckBans(Nick nick, Account account, string user, string host)
+        static bool CheckBans(Nick nick, User account, string user, string host)
         {
             if (string.IsNullOrEmpty(nick.UserName)) {
                 nick.UserName = user;

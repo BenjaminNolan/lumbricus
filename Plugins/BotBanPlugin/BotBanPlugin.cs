@@ -17,7 +17,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BotBanPlugin
             LumbricusConfiguration.AddPlugin(new BotBanPlugin());
         }
 
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.RegisterCommand("!botban", new Commands.BotBanCommand(conn));
         }

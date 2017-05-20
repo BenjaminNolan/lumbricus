@@ -8,7 +8,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
     {
 
         #region AbstractPlugin implementation
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.RegisterCommand("!help", new Commands.HelpCommand(conn));
         }

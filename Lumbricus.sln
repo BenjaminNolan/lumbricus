@@ -1,72 +1,70 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParser", "Utilities\LogParser\LogParser.csproj", "{1AA965ED-EA01-4E91-9C3F-32F7C2D315B1}"
-EndProject
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LumbricusShared", "LumbricusShared\LumbricusShared.csproj", "{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lumbricus", "Lumbricus\Lumbricus.csproj", "{704F5A66-783B-4F9F-BA8B-F0997D60F8FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrcLogPlugin", "Plugins\IrcLogPlugin\IrcLogPlugin.csproj", "{CE8438DB-5052-4DC3-8447-140523E32208}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F173F1E-365E-489E-9F2B-4D02A13CF7EA}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		build.sh = build.sh
+		docs\index.md = docs\index.md
+		LICENSE = LICENSE
+		docs\operators.md = docs\operators.md
+		docs\plugin_development.md = docs\plugin_development.md
+		README.md = README.md
+		run.sh = run.sh
+		docs\users.md = docs\users.md
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MugshotsPlugin", "Plugins\MugshotsPlugin\MugshotsPlugin.csproj", "{46DCB608-8208-4DE4-A036-7FF29A790358}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrcConnectionPlugin", "Plugins\IrcConnectionPlugin\IrcConnectionPlugin.csproj", "{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotBanPlugin", "Plugins\BotBanPlugin\BotBanPlugin.csproj", "{8667DB89-3E73-4C9C-B097-3686B18E9002}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BanInfoPlugin", "Plugins\BanInfoPlugin\BanInfoPlugin.csproj", "{D36C7443-BD1F-41B1-84D1-29749DCF9540}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchLogPlugin", "Plugins\SearchLogPlugin\SearchLogPlugin.csproj", "{AE965869-93CB-46DC-B94B-7B2137903286}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoPlugin", "Plugins\InfoPlugin\InfoPlugin.csproj", "{314ED665-069A-4244-89B1-B61A3FA31B8A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlPlugin", "Plugins\ControlPlugin\ControlPlugin.csproj", "{314ED665-069A-4244-89B1-B61A3FA31B8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramConnectionPlugin", "Plugins\TelegramConnectionPlugin\TelegramConnectionPlugin.csproj", "{02A465CC-2178-4BAD-8009-B576CC766C44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1AA965ED-EA01-4E91-9C3F-32F7C2D315B1}.Debug|x86.ActiveCfg = Debug|x86
-		{1AA965ED-EA01-4E91-9C3F-32F7C2D315B1}.Debug|x86.Build.0 = Debug|x86
-		{1AA965ED-EA01-4E91-9C3F-32F7C2D315B1}.Release|x86.ActiveCfg = Release|x86
-		{1AA965ED-EA01-4E91-9C3F-32F7C2D315B1}.Release|x86.Build.0 = Release|x86
-		{314ED665-069A-4244-89B1-B61A3FA31B8A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{314ED665-069A-4244-89B1-B61A3FA31B8A}.Debug|x86.Build.0 = Debug|Any CPU
-		{314ED665-069A-4244-89B1-B61A3FA31B8A}.Release|x86.ActiveCfg = Release|Any CPU
-		{314ED665-069A-4244-89B1-B61A3FA31B8A}.Release|x86.Build.0 = Release|Any CPU
-		{314ED665-069A-4244-89B1-B61A3FA31B8B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{314ED665-069A-4244-89B1-B61A3FA31B8B}.Debug|x86.Build.0 = Debug|Any CPU
-		{314ED665-069A-4244-89B1-B61A3FA31B8B}.Release|x86.ActiveCfg = Release|Any CPU
-		{314ED665-069A-4244-89B1-B61A3FA31B8B}.Release|x86.Build.0 = Release|Any CPU
-		{46DCB608-8208-4DE4-A036-7FF29A790358}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{46DCB608-8208-4DE4-A036-7FF29A790358}.Debug|x86.Build.0 = Debug|Any CPU
-		{46DCB608-8208-4DE4-A036-7FF29A790358}.Release|x86.ActiveCfg = Release|Any CPU
-		{46DCB608-8208-4DE4-A036-7FF29A790358}.Release|x86.Build.0 = Release|Any CPU
+		{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}.Debug|x86.Build.0 = Debug|Any CPU
+		{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}.Release|x86.ActiveCfg = Release|Any CPU
 		{6F8EDFFB-65A3-4007-ABE4-BD99CB97654C}.Release|x86.Build.0 = Release|Any CPU
+		{704F5A66-783B-4F9F-BA8B-F0997D60F8FB}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{704F5A66-783B-4F9F-BA8B-F0997D60F8FB}.Debug|x86.ActiveCfg = Debug|x86
 		{704F5A66-783B-4F9F-BA8B-F0997D60F8FB}.Debug|x86.Build.0 = Debug|x86
+		{704F5A66-783B-4F9F-BA8B-F0997D60F8FB}.Release|Any CPU.ActiveCfg = Release|x86
 		{704F5A66-783B-4F9F-BA8B-F0997D60F8FB}.Release|x86.ActiveCfg = Release|x86
 		{704F5A66-783B-4F9F-BA8B-F0997D60F8FB}.Release|x86.Build.0 = Release|x86
-		{8667DB89-3E73-4C9C-B097-3686B18E9002}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8667DB89-3E73-4C9C-B097-3686B18E9002}.Debug|x86.Build.0 = Debug|Any CPU
-		{8667DB89-3E73-4C9C-B097-3686B18E9002}.Release|x86.ActiveCfg = Release|Any CPU
-		{8667DB89-3E73-4C9C-B097-3686B18E9002}.Release|x86.Build.0 = Release|Any CPU
-		{AE965869-93CB-46DC-B94B-7B2137903286}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AE965869-93CB-46DC-B94B-7B2137903286}.Debug|x86.Build.0 = Debug|Any CPU
-		{AE965869-93CB-46DC-B94B-7B2137903286}.Release|x86.ActiveCfg = Release|Any CPU
-		{AE965869-93CB-46DC-B94B-7B2137903286}.Release|x86.Build.0 = Release|Any CPU
-		{CE8438DB-5052-4DC3-8447-140523E32208}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CE8438DB-5052-4DC3-8447-140523E32208}.Debug|x86.Build.0 = Debug|Any CPU
-		{CE8438DB-5052-4DC3-8447-140523E32208}.Release|x86.ActiveCfg = Release|Any CPU
-		{CE8438DB-5052-4DC3-8447-140523E32208}.Release|x86.Build.0 = Release|Any CPU
-		{D36C7443-BD1F-41B1-84D1-29749DCF9540}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D36C7443-BD1F-41B1-84D1-29749DCF9540}.Debug|x86.Build.0 = Debug|Any CPU
-		{D36C7443-BD1F-41B1-84D1-29749DCF9540}.Release|x86.ActiveCfg = Release|Any CPU
-		{D36C7443-BD1F-41B1-84D1-29749DCF9540}.Release|x86.Build.0 = Release|Any CPU
+		{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}.Debug|x86.Build.0 = Debug|Any CPU
+		{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{E24C75CD-A5A7-4CBF-8852-8574B839B2F9}.Release|x86.Build.0 = Release|Any CPU
+		{02A465CC-2178-4BAD-8009-B576CC766C44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02A465CC-2178-4BAD-8009-B576CC766C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02A465CC-2178-4BAD-8009-B576CC766C44}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{02A465CC-2178-4BAD-8009-B576CC766C44}.Debug|x86.Build.0 = Debug|Any CPU
+		{02A465CC-2178-4BAD-8009-B576CC766C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02A465CC-2178-4BAD-8009-B576CC766C44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02A465CC-2178-4BAD-8009-B576CC766C44}.Release|x86.ActiveCfg = Release|Any CPU
+		{02A465CC-2178-4BAD-8009-B576CC766C44}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -78,21 +76,19 @@ Global
 		$2.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $3
 		$3.Rules = $4
-		$4.NamingRule = $5
+		$4.NamingRule = $24
 		$5.Name = Namespaces
 		$5.AffectedEntity = Namespace
 		$5.VisibilityMask = VisibilityMask
 		$5.NamingStyle = PascalCase
 		$5.IncludeInstanceMembers = True
 		$5.IncludeStaticEntities = True
-		$4.NamingRule = $6
 		$6.Name = Types
 		$6.AffectedEntity = Class, Struct, Enum, Delegate
 		$6.VisibilityMask = Public
 		$6.NamingStyle = PascalCase
 		$6.IncludeInstanceMembers = True
 		$6.IncludeStaticEntities = True
-		$4.NamingRule = $7
 		$7.Name = Interfaces
 		$7.RequiredPrefixes = $8
 		$8.String = I
@@ -101,7 +97,6 @@ Global
 		$7.NamingStyle = PascalCase
 		$7.IncludeInstanceMembers = True
 		$7.IncludeStaticEntities = True
-		$4.NamingRule = $9
 		$9.Name = Attributes
 		$9.RequiredSuffixes = $10
 		$10.String = Attribute
@@ -110,7 +105,6 @@ Global
 		$9.NamingStyle = PascalCase
 		$9.IncludeInstanceMembers = True
 		$9.IncludeStaticEntities = True
-		$4.NamingRule = $11
 		$11.Name = Event Arguments
 		$11.RequiredSuffixes = $12
 		$12.String = EventArgs
@@ -119,7 +113,6 @@ Global
 		$11.NamingStyle = PascalCase
 		$11.IncludeInstanceMembers = True
 		$11.IncludeStaticEntities = True
-		$4.NamingRule = $13
 		$13.Name = Exceptions
 		$13.RequiredSuffixes = $14
 		$14.String = Exception
@@ -128,70 +121,60 @@ Global
 		$13.NamingStyle = PascalCase
 		$13.IncludeInstanceMembers = True
 		$13.IncludeStaticEntities = True
-		$4.NamingRule = $15
 		$15.Name = Methods
 		$15.AffectedEntity = Methods
 		$15.VisibilityMask = Protected, Public
 		$15.NamingStyle = PascalCase
 		$15.IncludeInstanceMembers = True
 		$15.IncludeStaticEntities = True
-		$4.NamingRule = $16
 		$16.Name = Static Readonly Fields
 		$16.AffectedEntity = ReadonlyField
 		$16.VisibilityMask = Protected, Public
 		$16.NamingStyle = PascalCase
 		$16.IncludeInstanceMembers = False
 		$16.IncludeStaticEntities = True
-		$4.NamingRule = $17
 		$17.Name = Fields
 		$17.AffectedEntity = Field
 		$17.VisibilityMask = Protected, Public
 		$17.NamingStyle = PascalCase
 		$17.IncludeInstanceMembers = True
 		$17.IncludeStaticEntities = True
-		$4.NamingRule = $18
 		$18.Name = ReadOnly Fields
 		$18.AffectedEntity = ReadonlyField
 		$18.VisibilityMask = Protected, Public
 		$18.NamingStyle = PascalCase
 		$18.IncludeInstanceMembers = True
 		$18.IncludeStaticEntities = False
-		$4.NamingRule = $19
 		$19.Name = Constant Fields
 		$19.AffectedEntity = ConstantField
 		$19.VisibilityMask = Protected, Public
 		$19.NamingStyle = PascalCase
 		$19.IncludeInstanceMembers = True
 		$19.IncludeStaticEntities = True
-		$4.NamingRule = $20
 		$20.Name = Properties
 		$20.AffectedEntity = Property
 		$20.VisibilityMask = Protected, Public
 		$20.NamingStyle = PascalCase
 		$20.IncludeInstanceMembers = True
 		$20.IncludeStaticEntities = True
-		$4.NamingRule = $21
 		$21.Name = Events
 		$21.AffectedEntity = Event
 		$21.VisibilityMask = Protected, Public
 		$21.NamingStyle = PascalCase
 		$21.IncludeInstanceMembers = True
 		$21.IncludeStaticEntities = True
-		$4.NamingRule = $22
 		$22.Name = Enum Members
 		$22.AffectedEntity = EnumMember
 		$22.VisibilityMask = VisibilityMask
 		$22.NamingStyle = PascalCase
 		$22.IncludeInstanceMembers = True
 		$22.IncludeStaticEntities = True
-		$4.NamingRule = $23
 		$23.Name = Parameters
 		$23.AffectedEntity = Parameter
 		$23.VisibilityMask = VisibilityMask
 		$23.NamingStyle = CamelCase
 		$23.IncludeInstanceMembers = True
 		$23.IncludeStaticEntities = True
-		$4.NamingRule = $24
 		$24.Name = Type Parameters
 		$24.RequiredPrefixes = $25
 		$25.String = T

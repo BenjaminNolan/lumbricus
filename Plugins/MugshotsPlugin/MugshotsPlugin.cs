@@ -17,7 +17,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin
             LumbricusConfiguration.AddPlugin(new MugshotsPlugin());
         }
 
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.RegisterCommand("!setmugshot", new Commands.SetMugshotCommand(conn));
             conn.RegisterCommand("!clearmugshot", new Commands.ClearMugshotCommand(conn));

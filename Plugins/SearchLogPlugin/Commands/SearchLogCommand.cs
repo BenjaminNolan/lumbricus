@@ -14,7 +14,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.SearchLogPlugin.Commands
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public SearchLogCommand(IrcConnection conn) : base(conn)
+        public SearchLogCommand(Connection conn) : base(conn)
         {
             // …
         }

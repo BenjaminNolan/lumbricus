@@ -12,7 +12,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.MugshotsPlugin.Commands
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public ClearMugshotCommand(IrcConnection conn) : base(conn)
+        public ClearMugshotCommand(Connection conn) : base(conn)
         {
             // …
         }

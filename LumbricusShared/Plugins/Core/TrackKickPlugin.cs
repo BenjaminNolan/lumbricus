@@ -13,7 +13,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #region AbstractPlugin implementation
 
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.ProcessIrcLine += DoTrackKickPlugin;
         }
@@ -26,7 +26,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #endregion
 
-        public void DoTrackKickPlugin(IrcConnection conn, IrcLine line)
+        public void DoTrackKickPlugin(Connection conn, IrcLine line)
         {
             Regex r = new Regex(@"^(?<channel>#[^ ]+) (?<idiot>.*)$", RegexOptions.ExplicitCapture);
             Match m = r.Match(line.IrcCommandArgsRaw);

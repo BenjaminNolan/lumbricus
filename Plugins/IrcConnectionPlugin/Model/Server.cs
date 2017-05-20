@@ -31,7 +31,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Model
         public         DateTime             CreatedAt       { get; set; } = DateTime.Now;
         public         DateTime             LastModifiedAt  { get; set; } = DateTime.Now;
 
-        public virtual ICollection<Account> ServerAccounts  { get; set; }
+        public virtual ICollection<Account>    Users           { get; set; }
         public virtual ICollection<Channel> ServerChannels  { get; set; }
         public virtual ICollection<Nick>    ServerNicks     { get; set; }
         public virtual ICollection<Ban>     Bans            { get; set; }

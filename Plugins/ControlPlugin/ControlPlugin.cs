@@ -17,7 +17,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.ControlPlugin
             LumbricusConfiguration.AddPlugin(new ControlPlugin());
         }
 
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.RegisterCommand("!join", new Commands.JoinCommand(conn));
             conn.RegisterCommand("!part", new Commands.PartCommand(conn));

@@ -12,7 +12,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #region AbstractPlugin implementation
 
-        public override void RegisterPlugin(IrcConnection conn)
+        public override void RegisterPlugin(Connection conn)
         {
             conn.ProcessIrcLine += DoTrackUserPlugin;
         }
@@ -25,7 +25,7 @@ namespace TwoWholeWorms.Lumbricus.Shared.Plugins.Core
 
         #endregion
 
-        public void DoTrackUserPlugin(IrcConnection conn, IrcLine line)
+        public void DoTrackUserPlugin(Connection conn, IrcLine line)
         {
             Channel c = null;
             Nick nick;

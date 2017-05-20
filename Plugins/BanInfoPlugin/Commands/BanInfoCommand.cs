@@ -15,7 +15,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
 
         readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public BanInfoCommand(IrcConnection conn) : base(conn)
+        public BanInfoCommand(Connection conn) : base(conn)
         {
             // …
         }
