@@ -22,7 +22,7 @@ namespace TwoWholeWorms.Lumbricus.Plugins.BanInfoPlugin.Commands
 
         public override string Name {
             get {
-                return "Set Info Command";
+                return "Ban Info Command";
             }
         }
 
